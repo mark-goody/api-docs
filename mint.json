@@ -9,7 +9,8 @@
     "baseUrl": "https://api.ongoody.com",
     "auth": {
       "method": "bearer"
-    }
+    },
+    "maintainOrder": true
   },
   "openapi": "goody-api-openapi.json",
   "favicon": "/favicon.png",

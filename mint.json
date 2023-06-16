@@ -56,7 +56,8 @@
         "automation-api/access-the-catalog",
         "automation-api/create-an-order",
         "automation-api/retrieve-order-status",
-        "automation-api/webhooks"
+        "automation-api/webhooks",
+        "automation-api/zapier"
       ]
     },
     {

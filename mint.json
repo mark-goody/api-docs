@@ -45,7 +45,8 @@
       "pages": [
         "introduction/overview",
         "introduction/order-lifecycle",
-        "introduction/send-methods"
+        "introduction/send-methods",
+        "introduction/developer-mode"
       ]
     },
     {
@@ -53,10 +54,10 @@
       "pages": [
         "automation-api/overview",
         "automation-api/authentication",
-        "automation-api/access-the-catalog",
         "automation-api/create-an-order",
         "automation-api/retrieve-order-status",
         "automation-api/webhooks",
+        "automation-api/access-the-catalog",
         "automation-api/zapier"
       ]
     },

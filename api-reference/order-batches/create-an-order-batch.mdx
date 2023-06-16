@@ -9,7 +9,7 @@ For a guide on how to create an order batch, see the Getting Started guide for t
 
 Order batches with 10 or fewer recipients are created synchronously, and the returned `status` field will be `completed`. The orders and order links are available immediately inside the `orders_preview` field (which returns the first 10 orders).
 
-## Order batches with more than 10 recipients
+### Order batches with more than 10 recipients
 
 Order batches with more than 10 recipients are created asynchronously, and the order batch will have a `status` of `pending`. The orders and gift links won't be available until the order batch is finished processing synchronously. You can check the status of the order batch by calling the [`/order_batches/:id`](retrieve-an-order-batch) endpoint, or by receiving a webhook notification on the [`order_batch.completed`](/webhooks/events/order_batch.completed) event.
 

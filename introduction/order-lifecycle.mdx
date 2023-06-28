@@ -6,16 +6,17 @@ title: "Order lifecycle"
 
 The status for an order can be found on the `status` field.
 
-| Status            | Meaning                                                                                                                                                                                |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `created`         | The gift has been created.                                                                                                                                                             |
-| `notified`        | Notifications (e.g. email or text) have been sent for this order, if requested. If no notifications are requested, orders will still move to this state without sending notifications. |
-| `opened`          | For gift orders: the recipient has opened a gift.                                                                                                                                      |
-| `accepted`        | For gift orders: the recipient has accepted the gift. For other orders: the order has been accepted for processing.                                                                    |
-| `pending_payment` | The order is awaiting payment. If a payment method has been specified, it will be processed at this stage.                                                                             |
-| `paid`            | The order has been paid for and is being prepared for shipment.                                                                                                                        |
-| `shipped`         | The order has shipped. If the order has multiple shipments, it will enter this state when the first shipment starts moving.                                                            |
-| `delivered`       | The order has been delivered. If the order has multiple shipments, it will enter this state when all shipments have been delivered.                                                    |
+| Status            | Meaning                                                                                                                                                                                                                                                                                 |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `created`         | The gift has been created.                                                                                                                                                                                                                                                              |
+| `notified`        | Notifications (e.g. email or text) have been sent for this order, if requested. If no notifications are requested, orders will still move to this state without sending notifications.                                                                                                  |
+| `opened`          | For gift orders: the recipient has opened a gift.                                                                                                                                                                                                                                       |
+| `accepted`        | For gift orders: the recipient has accepted the gift. For other orders: the order has been accepted for processing.                                                                                                                                                                     |
+| `pending_payment` | The order is awaiting payment. If a payment method has been specified, it will be processed at this stage.                                                                                                                                                                              |
+| `paid`            | The order has been paid for and is being prepared for shipment.                                                                                                                                                                                                                         |
+| `shipped`         | The order has shipped. If the order has multiple shipments, it will enter this state when the first shipment starts moving.                                                                                                                                                             |
+| `delivered`       | The order has been delivered. If the order has multiple shipments, it will enter this state when all shipments have been delivered.                                                                                                                                                     |
+| `failed`          | The order has been canceled. This status will show up if you cancel an order using the cancel order endpoint.                                                                                                                                                                           |
 
 ## Order batches
 
@@ -26,10 +27,12 @@ Order batches are collections of orders. The order batch's `send_status` display
 | `pending`  | For non-scheduled order batches, the order batch is being processed to create orders for each recipient. For scheduled order batches, the order batch is waiting for the scheduled time to send. |
 | `complete` | The order batch has been created and all orders have been created for all recipients.                                                                                                            |
 
-## Testing shipped and delivered statuses
+## Testing shipped and delivered statuses, and refunds
 
 In the sandbox only, we provide some _magic words_ for testing `shipped` and `delivered` orders. When you enter a specific from name, the order will be moved to shipped or delivered after it's accepted. Here's how to use it:
 
 1. Create the order batch with `from_name` set to `[shipped]` or `[delivered]`.
 2. Open the gift link and accept the gift.
 3. Shortly after the gift is accepted, the order will move to Shipped or Delivered, depending on the magic word you use.
+
+To test the refund webhook, you can also use the magic word `[refunded]` by creating an order batch with that `from_name`. This will cause the order to be refunded after it's accepted.

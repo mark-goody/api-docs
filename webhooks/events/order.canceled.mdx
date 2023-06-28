@@ -1,0 +1,302 @@
+---
+title: "Event: order.canceled"
+sidebarTitle: "order.canceled"
+description: "Emitted when an order has been canceled."
+---
+
+## Example
+
+```json
+{
+  "event_type": "order.canceled",
+  "id": "ad097c47-bf12-45c9-8feb-0536a0012c09",
+  "data": {
+    "id": "8999f804-d731-440d-a67d-35444c12c493",
+    "status": "failed",
+    "individual_gift_link": "https://gifts.ongoody.com/gift/IsDyQQWtqrOyGPgZ9bVm6ptz",
+    "recipient_first_name": "Alena",
+    "recipient_last_name": "Kenter",
+    "recipient_email": "alena@ongoody.com",
+    "card_id": "7e79fd96-212b-4468-9989-57b896ca22f4",
+    "message": "Thank you!",
+    "thank_you_note": null,
+    "view_count_recipient": 0,
+    "is_swapped": false,
+    "order_batch_id": "d158184c-6b31-4a72-b39f-8f8ca04ecbdd",
+    "expires_at": null,
+    "cart": {
+      "id": "3ff7dab1-ae03-4b20-a2c8-82a3f3326b83",
+      "items": [
+        {
+          "id": "284dc74f-a2c4-4b62-bfe5-94c464d56ea7",
+          "quantity": 1,
+          "product": {
+            "id": "10227d72-c355-4881-8007-aad34f501055",
+            "name": "Cookies",
+            "brand": {
+              "id": "fe370ec6-1208-4d23-b936-de857ceeae6d",
+              "name": "Cookie Company"
+            }
+          }
+        }
+      ]
+    },
+    "shipments": [],
+    "amounts": {
+      "amount_product": 1000,
+      "amount_shipping": 1000,
+      "amount_processing_fee": 100,
+      "amount_pre_tax_total": 2100,
+      "amount_tax": null,
+      "amount_total": null,
+      "amount_global_relay_cost": null
+    },
+    "sender": {
+      "first_name": "Test",
+      "last_name": "User",
+      "email": "15551494889@test.ongoody.com"
+    },
+    "workspace_id": "dfe0d5cb-2c98-4800-a950-b40cca509250",
+    "workspace_name": "Test Team",
+    "original_cart": null,
+    "original_amounts": null,
+    "reference_id": "2MUPN0YMGIDT7TJNPPFPB7WE"
+  }
+}
+```
+
+## Schema
+<ParamField query="event_type" type="string" required>
+    The type of event that occurred
+</ParamField>
+<ParamField query="event_id" type="string" required>
+    The unique ID for this event
+</ParamField>
+<ResponseField name="data" type="object">
+    An individual order contains the gift link to be sent to the recipient (if applicable) and other information about the order.
+    <Expandable title="properties">
+        <ResponseField name="id" type="string<uuid>" required>
+        </ResponseField>
+        <ResponseField name="recipient_first_name" type="string" required>
+        </ResponseField>
+        <ResponseField name="recipient_last_name" type="string"></ResponseField>
+        <ResponseField name="recipient_email" type="string"></ResponseField>
+        <ResponseField name="status" type="string" required>
+            Allowed values: `created` `notified` `opened` `accepted`
+            `pending_payment` `paid` `ordered` `shipped` `delivered` `failed`
+            `canceled`
+        </ResponseField>
+        <ResponseField name="individual_gift_link" type="string" required>
+            This gift link can be sent to the recipient or shared with the sender.
+            For privacy reasons, this gift link does not display tracking
+            information. A separate link, the recipient link, is sent directly to
+            the recipient after they accept their gift, which does contain
+            tracking information.
+        </ResponseField>
+        <ResponseField name="cart" type="object" required>
+            The cart currently on this order. If the order is a gift that was
+            swapped, `cart` displays the most recent products selected (i.e.
+            post-swap).
+            <Expandable title="properties">
+                <ResponseField name="id" type="string<uuid>" required>
+                </ResponseField>
+                <ResponseField name="items" type="array[object]">
+                    <Expandable title="properties">
+                        <ResponseField name="id" type="string<uuid>" required>
+                        </ResponseField>
+                        <ResponseField name="product" type="object" required>
+                            <Expandable title="properties">
+                                <ResponseField name="id" type="string<uuid>" required>
+                                </ResponseField>
+                                <ResponseField name="name" type="string" required>
+                                </ResponseField>
+                                <ResponseField name="brand" type="object" required>
+                                    The brand that this product is from.
+                                    <Expandable title="properties">
+                                        <ResponseField name="id" type="string<uuid>" required>
+                                        </ResponseField>
+                                        <ResponseField name="name" type="string" required>
+                                        </ResponseField>
+                                    </Expandable>
+                                </ResponseField>
+                            </Expandable>
+                        </ResponseField>
+                        <ResponseField name="quantity" type="integer" required>
+                        </ResponseField>
+                    </Expandable>
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="shipments" type="array[object]" required>
+            A list of the shipments for the order.
+            <Expandable title="properties">
+                <ResponseField name="id" type="string<uuid>" required>
+                </ResponseField>
+                <ResponseField name="status" type="string" required>
+                    Allowed values: `pending` `tracking` `shipped` `delivered` `delivered_override` `failed` `failed_unset_tracking` `failed_with_reship`
+                </ResponseField>
+                <ResponseField name="brand_name" type="string" required>
+                    The name of the brand that this shipment is from
+                </ResponseField>
+                <ResponseField name="tracking_carrier" type="string">
+                    The carrier for this shipment, e.g. UPS.
+                </ResponseField>
+                <ResponseField name="tracking_number" type="string">
+                    Only for approved distribution partners.
+                </ResponseField>
+                <ResponseField name="shipped_at" type="string<date-time>">
+                    ISO 8601
+                </ResponseField>
+                <ResponseField name="delivered_at" type="string<date-time>">
+                    ISO 8601
+                </ResponseField>
+                <ResponseField name="delivery_eta" type="string<date-time>">
+                    The estimated delivery time of this shipment.
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="workspace_id" type="string<uuid>">
+            Organizations are sub-divided into workspaces. Orders are contained in workspaces, identified by this ID.
+        </ResponseField>
+        <ResponseField name="workspace_name" type="string">
+        </ResponseField>
+        <ResponseField name="expires_at" type="string<date-time>">
+            For gifts, the date and time the gift is set to expire.
+        </ResponseField>
+        <ResponseField name="card_id" type="string">
+            The digital greeting card on this gift.
+        </ResponseField>
+        <ResponseField name="message" type="string">
+            The message in this gift, provided by the sender.
+        </ResponseField>
+        <ResponseField name="thank_you_note" type="string">
+            A thank you note sent by the recipient.
+        </ResponseField>
+        <ResponseField name="view_count_recipient" type="integer">
+            The number of times the recipient viewed the gift.
+        </ResponseField>
+        <ResponseField name="is_swapped" type="boolean">
+            If this gift was swapped by the recipient. Swapping allows a recipient to select another product or products, which replaces the `cart`. The original products are saved to `original_cart`.
+        </ResponseField>
+        <ResponseField name="order_batch_id" type="string<uuid>">
+            On Goody for Business, all orders are attached to a order batch, which is a collection of one or more orders.
+        </ResponseField>
+        <ResponseField name="amounts" type="object" required>
+            Costs in USD cents (i.e. $1.00 = 100). If the order was swapped, `amounts` displays the most recent amounts (i.e. post-swap).
+            <Expandable title="properties">
+                <ResponseField name="amount_product" type="integer" required>
+                    Total cost of the products in this order.
+                </ResponseField>
+                <ResponseField name="amount_shipping" type="integer" required>
+                    Total cost of shipping for this order.
+                </ResponseField>
+                <ResponseField name="amount_processing_fee" type="integer">
+                    Total cost of processing fees for this order.
+                </ResponseField>
+                <ResponseField name="amount_credit_applied" type="integer">
+                    Total amount of credit applied to this order.
+                </ResponseField>
+                <ResponseField name="amount_pre_tax_total" type="integer" required>
+                    Total cost of the products, shipping, and processing fees in this order.
+                </ResponseField>
+                <ResponseField name="amount_tax" type="integer">
+                    Total tax for this order.
+                </ResponseField>
+                <ResponseField name="amount_total" type="integer">
+                    Total cost of the products, shipping, processing fees, tax, and global shipping costs in this order.
+                </ResponseField>
+                <ResponseField name="amount_global_relay_cost" type="integer">
+                    Total cost of global shipping for this order through the Global Relay service.
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="event_times" type="object">
+            Only provided when calling the /orders/:id endpoint.
+            <Expandable title="properties">
+                <ResponseField name="created_at" type="string<date-time>" required>
+                    ISO 8601
+                </ResponseField>
+                <ResponseField name="notified_at" type="string<date-time>">
+                    When the recipient was notified of the order.
+                </ResponseField>
+                <ResponseField name="opened_at" type="string<date-time>">
+                    For gifts, when the recipient opened the order.
+                </ResponseField>
+                <ResponseField name="accepted_at" type="string<date-time>">
+                    For gifts, when the recipient accepted the order.
+                </ResponseField>
+                <ResponseField name="pending_payment_at" type="string<date-time>" required>
+                    When the order entered pending payment status.
+                </ResponseField>
+                <ResponseField name="paid_at" type="string<date-time>">
+                    When the order was paid for.
+                </ResponseField>
+                <ResponseField name="shipped_at" type="string<date-time>">
+                    When the order was first shipped. If there are multiple shipments, this is when the first shipment shipped.
+                </ResponseField>
+                <ResponseField name="delivered_at" type="string<date-time>">
+                    When the order was delivered. If there are multiple shipments, this is when all shipments were delivered.
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="original_cart" type="object">
+            If this order is a gift that was swapped, this displays the original cart that was sent to the recipient.
+            <Expandable title="properties">
+                <ResponseField name="id" type="string<uuid>">
+                </ResponseField>
+                <ResponseField name="items" type="array[object]">
+                    <Expandable title="properties">
+                        <ResponseField name="id" type="string<uuid>" required>
+                        </ResponseField>
+                        <ResponseField name="product" type="object" required>
+                            <Expandable title="properties">
+                                <ResponseField name="id" type="string<uuid>" required>
+                                </ResponseField>
+                                <ResponseField name="name" type="string" required>
+                                </ResponseField>
+                                <ResponseField name="brand" type="object" required>
+                                    The brand that this product is from.
+                                    <Expandable title="properties">
+                                        <ResponseField name="id" type="string<uuid>" required>
+                                        </ResponseField>
+                                        <ResponseField name="name" type="string" required>
+                                        </ResponseField>
+                                    </Expandable>
+                                </ResponseField>
+                            </Expandable>
+                        </ResponseField>
+                        <ResponseField name="quantity" type="integer" required>
+                        </ResponseField>
+                    </Expandable>
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="original_amounts" type="object">
+            If this order is a gift that was swapped, this displays the original amounts of the cart that was sent to the recipient.
+            <Expandable title="properties">
+                <ResponseField name="original_amount_product" type="integer">
+                </ResponseField>
+                <ResponseField name="original_amount_shipping" type="integer">
+                </ResponseField>
+                <ResponseField name="original_amount_credit_applied" type="integer">
+                </ResponseField>
+                <ResponseField name="original_amount_pre_tax_total" type="integer">
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="sender" type="object" required>
+            The Goody user who sent this order.
+            <Expandable title="properties">
+                <ResponseField name="first_name" type="string" required>
+                </ResponseField>
+                <ResponseField name="last_name" type="string" required>
+                </ResponseField>
+                <ResponseField name="email" type="string" required>
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        <ResponseField name="reference_id" type="string" required>
+            The reference ID displayed on receipts and other locations as the ID for this order.
+        </ResponseField>
+    </Expandable>
+</ResponseField>

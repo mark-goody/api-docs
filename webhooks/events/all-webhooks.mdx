@@ -3,12 +3,14 @@ title: "Webhooks"
 ---
 
 | Webhook                                                                               | Description                                                                                                              |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **[order_batch.created](/webhooks/events/order_batch.created)**               | When an order batch is newly created. The order batch could still be in process of sending, or scheduled for the future. |
-| **[order_batch.completed](/webhooks/events/order_batch.completed)**           | When an order batch is fully processed and all orders have been created.                                                 |
-| **[order.created](/webhooks/events/order.created)**                           | When an order is created and is ready to be opened.                                                                      |
-| **[order.gift_opened](/webhooks/events/order.gift_opened)**                   | When a gift is opened by the recipient.                                                                                  |
-| **[order.gift_accepted](/webhooks/events/order.gift_accepted)**               | When a gift has been accepted by the recipient.                                                                          |
-| **[order.thank_you_note_added](/webhooks/events/order.thank_you_note_added)** | When a recipient adds a thank you note to a order after accepting it.                                                    |
-| **[order.shipped](/webhooks/events/order.shipped)**                           | When an order starts shipping. If there are multiple shipments, this is called for the first.                            |
-| **[order.delivered](/webhooks/events/order.delivered)**                       | When an order is fully delivered. If there are multiple shipments, this is called when all shipments are delivered       |
+|---------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| **[order_batch.created](/webhooks/events/order_batch.created)**                       | When an order batch is newly created. The order batch could still be in process of sending, or scheduled for the future. |
+| **[order_batch.completed](/webhooks/events/order_batch.completed)**                   | When an order batch is fully processed and all orders have been created.                                                 |
+| **[order.created](/webhooks/events/order.created)**                                   | When an order is created and is ready to be opened.                                                                      |
+| **[order.gift_opened](/webhooks/events/order.gift_opened)**                           | When a gift is opened by the recipient.                                                                                  |
+| **[order.gift_accepted](/webhooks/events/order.gift_accepted)**                       | When a gift has been accepted by the recipient.                                                                          |
+| **[order.thank_you_note_added](/webhooks/events/order.thank_you_note_added)**         | When a recipient adds a thank you note to a order after accepting it.                                                    |
+| **[order.shipped](/webhooks/events/order.shipped)**                                   | When an order starts shipping. If there are multiple shipments, this is called for the first.                            |
+| **[order.delivered](/webhooks/events/order.delivered)**                               | When an order is fully delivered. If there are multiple shipments, this is called when all shipments are delivered       |
+| **[order.canceled](/webhooks/events/order.canceled)**                                 | When an order has been canceled.                                                                                         |
+| **[order.refunded](/webhooks/events/order.refunded)**                                 | When an order has been refunded.                                                                                         |

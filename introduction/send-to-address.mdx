@@ -1,0 +1,148 @@
+---
+title: "Ship to address"
+description: "Ship products directly to an address with the Direct Mail send method."
+---
+
+When you already know the address you want to send an order to, you can use Goody to ship directly to that address using the Direct Mail send method (`direct_mail`).
+
+There are two things to be aware of when using direct mail:
+
+1. You'll enter the address of the recipient in the `mailing_address` field of the recipient object.
+2. If a product in your cart has variants, you must specify the variants to send.
+
+## Specifying the mailing address
+
+To specify the mailing address, you'll need to add a `mailing_address` object to the recipient object. Here's an example:
+
+```json
+"recipients": [
+  {
+    "first_name": "Alena",
+    "last_name": "Kenter",
+    "email": "alena@ongoody.com",
+    "mailing_address": {
+      "first_name": "Alena",
+      "last_name": "Kenter",
+      "address_1": "1 Main St",
+      "address_2": "Apt 123",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10022",
+      "country": "US"
+    }
+  }
+]
+```
+
+## Specifying variants
+
+When sending a gift with Goody, you don't need to specify the variants since the recipient can select the variants on their own. However, when sending with Direct Mail, we need to know which variant to send to the recipient, so you'll need to specify the variant.
+
+If a product has no variants (`variants_num_selectable` is null or zero), you don't need to specify any variants.
+
+### Variants data
+
+When [retrieving products from the product catalog](/api-reference/products/list-all-active-products), you'll see the following information in the product object:
+
+```json
+{
+  "variants_label": "Flavor",
+  "variants_num_selectable": 1,
+  "variants": [
+  {
+    "id": "4da4dfd2-a094-4f9b-80dc-11d9067ff41b",
+    "name": "Chocolate Chip",
+    "subtitle": "Classic chocolate chip.",
+    "image_large": null
+  },
+  {
+    "id": "4d2581b7-b127-4e4b-8fac-7c7835022e3d",
+    "name": "Oatmeal",
+    "subtitle": "Delicious oatmeal.",
+    "image_large": null
+  },
+  {
+    "id": "087da4f9-8f8b-4d36-96b2-498a5b906409",
+    "name": "Sugar",
+    "subtitle": "Tasty sugar.",
+    "image_large": null
+  }
+}
+```
+
+`variants_label` tells you the name of the variant. This can be something like Size, Flavor, Color, etc.
+
+`variants_num_selectable` tells you how many variants can be selected. This is the expected length of the `variants` array that you pass into the cart item. Typically, this is 1, but some products let you select more than one variant, such as a 3-pack of cookies. If this is null or `0`, then you don't need to specify any variants.
+
+`variants` shows you the data for each variant. You'll use the `name` field of the variant when passing variants in the cart item.
+
+### Adding variants to the cart item
+
+Let's say that the product has `variants_num_selectable` equal to `1`, so we must specify one variant in the cart item. Our cart item now looks like this:
+
+```json
+"cart": {
+  "items": [
+    {
+      "product_id": "0b7b7cb3-a8c5-456f-af88-ae73f25092a5",
+      "quantity": 1,
+      "variants": ["Chocolate Chip"]
+    }
+  ]
+}
+```
+
+Now, if we had a product with `variants_num_selectable` equal to `3`, then we must specify three variants in the cart item. Our cart item now looks like this:
+
+```json
+"cart": {
+  "items": [
+    {
+      "product_id": "0b7b7cb3-a8c5-456f-af88-ae73f25092a5",
+      "quantity": 1,
+      "variants": ["Chocolate Chip", "Sugar", "Sugar"]
+    }
+  ]
+}
+```
+
+You can specify the same variant more than once.
+
+## Example direct mail payload
+
+This payload will send a direct mail gift to the specified recipient. This product is a pack of cookies with a single variant selection (`variants_num_selectable` is `1`).
+
+```json
+{
+  "from_name": "Michael",
+  "send_method": "direct_mail",
+  "recipients": [
+    {
+      "first_name": "Alena",
+      "last_name": "Kenter",
+      "email": "alena@ongoody.com",
+      "mailing_address": {
+        "first_name": "Alena",
+        "last_name": "Kenter",
+        "mailing_address": {
+          "address_1": "1 Main St",
+          "address_2": "Apt 123",
+          "city": "New York",
+          "state": "NY",
+          "postal_code": "10022",
+          "country": "US"
+        }
+      }
+    }
+  ],
+  "cart": {
+    "items": [
+      {
+        "product_id": "5ab8967a-0add-426f-a50c-8032b8bae643",
+        "quantity": 1,
+        "variants": ["Bestsellers Mix"]
+      }
+    ]
+  }
+}
+```

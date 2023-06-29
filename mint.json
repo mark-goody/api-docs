@@ -47,7 +47,8 @@
         "introduction/overview",
         "introduction/order-lifecycle",
         "introduction/send-methods",
-        "introduction/developer-mode"
+        "introduction/developer-mode",
+        "introduction/send-to-address"
       ]
     },
     {

@@ -1,11 +1,11 @@
 ---
 title: "Ship to address"
-description: "Ship products directly to an address with the Direct Mail send method."
+description: "Ship products directly to an address with the Direct Send send method."
 ---
 
-When you already know the address you want to send an order to, you can use Goody to ship directly to that address using the Direct Mail send method (`direct_mail`).
+When you already know the address you want to send an order to, you can use Goody to ship directly to that address using the Direct Send send method (`direct_send`).
 
-There are two things to be aware of when using direct mail:
+There are two things to be aware of when using direct send:
 
 1. You'll enter the address of the recipient in the `mailing_address` field of the recipient object.
 2. If a product in your cart has variants, you must specify the variants to send.
@@ -36,7 +36,7 @@ To specify the mailing address, you'll need to add a `mailing_address` object to
 
 ## Specifying variants
 
-When sending a gift with Goody, you don't need to specify the variants since the recipient can select the variants on their own. However, when sending with Direct Mail, we need to know which variant to send to the recipient, so you'll need to specify the variant.
+When sending a gift with Goody, you don't need to specify the variants since the recipient can select the variants on their own. However, when sending with Direct Send, we need to know which variant to send to the recipient, so you'll need to specify the variant.
 
 If a product has no variants (`variants_num_selectable` is null or zero), you don't need to specify any variants.
 
@@ -108,14 +108,14 @@ Now, if we had a product with `variants_num_selectable` equal to `3`, then we mu
 
 You can specify the same variant more than once.
 
-## Example direct mail payload
+## Example direct send payload
 
-This payload will send a direct mail gift to the specified recipient. This product is a pack of cookies with a single variant selection (`variants_num_selectable` is `1`).
+This payload will send a direct send gift to the specified recipient. This product is a pack of cookies with a single variant selection (`variants_num_selectable` is `1`).
 
 ```json
 {
   "from_name": "Michael",
-  "send_method": "direct_mail",
+  "send_method": "direct_send",
   "recipients": [
     {
       "first_name": "Alena",

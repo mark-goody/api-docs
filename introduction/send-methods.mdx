@@ -4,7 +4,7 @@ title: "Send methods"
 
 When creating an order batch, there are several send methods that define the behavior of orders.
 
-The send method (`email_and_link`, `link_multiple_custom_list`, or `direct_mail`) is passed as the `send_method` field on the [create order batch payload](/api-reference/order-batches/create-an-order-batch).
+The send method (`email_and_link`, `link_multiple_custom_list`, or `direct_send`) is passed as the `send_method` field on the [create order batch payload](/api-reference/order-batches/create-an-order-batch).
 
 **Available send methods**
 
@@ -19,9 +19,9 @@ The send method (`email_and_link`, `link_multiple_custom_list`, or `direct_mail`
   href="/introduction/send-methods#gift-links-only"
 ></Card>
 <Card
-  title="Direct Mail"
+  title="Direct Send"
   icon="envelope"
-  href="/introduction/send-methods#direct-mail"
+  href="/introduction/send-methods#direct-send"
 ></Card>
 
 ## Gift – Email Notification
@@ -40,16 +40,16 @@ Orders will be created as gifts. No email notification will be sent to the gift 
 
 Gift recipients can view their gift, swap for another gift (if swap is not disabled), and accept the gift by entering their address.
 
-## Direct Mail
+## Direct Send
 
 <Note>
-  **Direct mail is limited to approved partners**. Contact us if you want to use
-  direct mail for your integration.
+  **Direct Send is limited to approved partners**. Contact us if you want to use
+  direct send for your integration.
 </Note>
 
-Send method: `direct_mail`
+Send method: `direct_send`
 
-Ship products directly to the given address. For more info, see the [documentation page for direct mail](/introduction/send-to-address). The address must be specified in the `mailing_address` field of the recipient payload, like the example below:
+Ship products directly to the given address. For more info, see the [documentation page for direct send](/introduction/send-to-address). The address must be specified in the `mailing_address` field of the recipient payload, like the example below:
 
 ```json
 "recipients": [

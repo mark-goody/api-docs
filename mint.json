@@ -52,6 +52,18 @@
       ]
     },
     {
+      "group": "Commerce API",
+      "pages": [
+        "commerce-api/overview",
+        "commerce-api/authentication",
+        "commerce-api/access-the-catalog",
+        "commerce-api/create-an-order",
+        "commerce-api/retrieve-order-status",
+        "commerce-api/webhooks",
+        "commerce-api/payment"
+      ]
+    },
+    {
       "group": "Automation API",
       "pages": [
         "automation-api/overview",
@@ -61,17 +73,6 @@
         "automation-api/webhooks",
         "automation-api/access-the-catalog",
         "automation-api/zapier"
-      ]
-    },
-    {
-      "group": "Commerce API",
-      "pages": [
-        "commerce-api/overview",
-        "commerce-api/authentication",
-        "commerce-api/access-the-catalog",
-        "commerce-api/create-an-order",
-        "commerce-api/retrieve-order-status",
-        "commerce-api/webhooks"
       ]
     },
     {

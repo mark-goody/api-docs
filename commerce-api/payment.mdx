@@ -13,12 +13,16 @@ The Commerce API supports three payment modes:
 
 The Stored Value payment mode is typically used when you capture payment on your own platform from your customer.
 
-It relies on a stored value balance deposited with Goody. Revenue share goes back to the same account, so no additional revenue share reconciliation is required.
+It relies on a stored value balance deposited with Goody. Revenue share is credited back to the same account, so no additional revenue share reconciliation is required.
 
-1. Create an order batch with `payment_method_id` set to the ID given to you by your partnerships manager.
+1. Create an order batch with `payment_method_id` set to `COMMERCE_STORED_VALUE`.
 2. Capture payment from your customer on your own platform.
 3. Once the order is accepted, the cost of the order will be deducted from your stored value account.
 4. Then, the revenue share will be paid into the stored value account as a separate transaction, so it can be easily separated out in your reports.
+
+Stored Value in the sandbox is test money and can be used freely. If you want to set up stored value in the sandbox, contact your partnerships manager or support@ongoody.com and we'll add some money into your account.
+
+To deposit stored value in production, contact your partnerships manager or support@ongoody.com.
 
 ## Hosted Payment
 

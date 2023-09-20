@@ -118,7 +118,10 @@
     },
     {
       "group": "Products",
-      "pages": ["api-reference/products/list-all-active-products"]
+      "pages": [
+        "api-reference/products/list-all-active-products",
+        "api-reference/products/retrieve-a-product"
+      ]
     },
     {
       "group": "Payment Methods",

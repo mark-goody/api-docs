@@ -41,8 +41,9 @@ Let's take a look at an example payload for creating an order batch:
       }
     ]
   },
+  "payment_method_id": "COMMERCE_STORED_VALUE",
   "card_id": "ff957080-192d-4032-b4c5-fbb057141c4b",
-  "message": "Thank you!"
+  "message": "Thank you!",
 }
 ```
 
@@ -53,7 +54,8 @@ These fields are required in each order batch:
 | `from_name`   | **Who is the gift from?** This name is the "from" when the gift is displayed.                                                                                                                                                                                                                                        |
 | `send_method` | **How do you want to send this gift?** Do you want Goody to send a gift notification email, or just get a link to send on your own? In this case, we're using `link_multiple_custom_list`, which means to get links only without sending an email. For more information, see the Send methods documentation page TK. |
 | `recipients`  | **Who is this gift going to?** If you only have one gift recipient, this array will just have one item. Only `first_name` is required (unless if you want us to send a gift email, in which case you'll also need to provide `email`).                                                                               |
-| `cart`        | **What products do you want to send in your gift?** Each product you send is an item in the `cart.items` array. You can find Product IDs from the product catalog, or by using Developer Mode on the Goody website (TK).                                                                                             |
+| `cart`        | **What products do you want to send in your gift?** Each product you send is an item in the `cart.items` array. You can find Product IDs from the product catalog, or by using [Developer Mode](/introduction/developer-mode) on the Goody website.                                         |
+| `payment_method_id`  | **How do you want to pay for your order?** This is set to `COMMERCE_STORED_VALUE`, which is a special payment method for the Commerce API that gives you a drawdown account. In the sandbox, you have access to this account automatically. In production, you'll need to fund your account with Goody Support before using this.|
 
 These fields are optional, but recommended:
 

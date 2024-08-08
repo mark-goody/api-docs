@@ -98,6 +98,12 @@
       ]
     },
     {
+      "group": "Resources",
+      "pages": [
+        "resources/changelog"
+      ]
+    },
+    {
       "group": "Order Batches",
       "pages": [
         "api-reference/order-batches/create-an-order-batch",

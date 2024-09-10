@@ -3,6 +3,11 @@ title: 'Changelog'
 description: 'Updates to the Goody API'
 ---
 
+### September 10, 2024
+
+- Add `custom_catalog_show_inactive` parameter to the [List all active products (/v1/products)](https://developer.ongoody.com/api-reference/products/list-all-active-products) endpoint (Commerce API custom catalogs only).
+- Add `updated_at` and `status` (Commerce API custom catalogs only) fields to the [Product schema](https://developer.ongoody.com/api-reference/schemas/product). `status` is only for custom catalogs; by default, all products returned are active, unless when using the `custom_catalog_show_inactive` parameter.
+
 ### August 28, 2024
 
 - Add `variant_groups` field to the Product schema.

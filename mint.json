@@ -138,6 +138,10 @@
       "pages": ["api-reference/workspaces/list-all-workspaces"]
     },
     {
+      "group": "Cards",
+      "pages": ["api-reference/cards/list-all-active-cards"]
+    },
+    {
       "group": "Me",
       "pages": ["api-reference/retrieve-current-user"]
     },

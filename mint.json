@@ -111,7 +111,7 @@
         "api-reference/order-batches/retrieve-an-order-batch",
         "api-reference/order-batches/retrieve-orders-for-an-order-batch",
         "api-reference/order-batches/retrieve-recipients-for-an-order-batch",
-        "api-reference/order-batches/calculate-the-price-for-an-order-batch",
+        "api-reference/order-batches/calculate-the-price-for-an-order-batch"
       ]
     },
     {

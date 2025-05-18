@@ -135,6 +135,10 @@
       "pages": ["api-reference/payment-methods/list-all-payment-methods"]
     },
     {
+      "group": "Commerce User Payment Methods",
+      "pages": ["api-reference/commerce-user-payment-methods/create-a-commerce-user-payment-method"]
+    },
+    {
       "group": "Workspaces",
       "pages": ["api-reference/workspaces/list-all-workspaces"]
     },

@@ -3,9 +3,10 @@ title: "Commerce API: Payment"
 sidebarTitle: "Payment"
 ---
 
-The Commerce API supports three payment modes:
+The Commerce API supports several payment modes:
 
 - [Stored Value](#stored-value)
+- Embedded Payment Form
 - [Hosted Payment](#hosted-payment)
 - [Tokenized Payment](#tokenized-payment)
 
@@ -20,9 +21,17 @@ It relies on a stored value balance deposited with Goody. Revenue share is credi
 3. Once the order is accepted, the cost of the order will be deducted from your stored value account.
 4. Then, the revenue share will be paid into the stored value account as a separate transaction, so it can be easily separated out in your reports.
 
-Stored Value in the sandbox is test money and can be used freely. If you want to set up stored value in the sandbox, contact your partnerships manager or support@ongoody.com and we'll add some money into your account.
+Stored Value in the sandbox is test money and can be used freely. If you want to set up stored value in the sandbox, contact your partnerships manager or [support@ongoody.com](mailto:support@ongoody.com) and we'll add some money into your account.
 
-To deposit stored value in production, contact your partnerships manager or support@ongoody.com.
+To deposit stored value in production, contact your partnerships manager or [support@ongoody.com](mailto:support@ongoody.com).
+
+## Embedded Payment Form
+
+![Embedded Payment Form Pn](/images/embedded-payment-form.png)
+
+You can embed Goody's credit card form into your app to allow users to enter their credit card details directly into Goody's payment form. This allows you to sell products without processing payment; all payments are processed by Goody.
+
+You can control virtually all of the styling of the payment form. For more information, see [Embedded Payment Form](/commerce-api/embedded-payment).
 
 ## Hosted Payment
 

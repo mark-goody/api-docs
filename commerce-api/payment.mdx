@@ -7,7 +7,6 @@ The Commerce API supports several payment modes:
 
 - [Stored Value](#stored-value)
 - [Embedded Payment Form](#embedded-payment-form)
-- [Hosted Payment](#hosted-payment)
 - [Tokenized Payment](#tokenized-payment)
 
 ## Stored Value
@@ -33,15 +32,10 @@ You can embed Goody's credit card form into your app to allow users to enter the
 
 You can control virtually all of the styling of the payment form. For more information, see [Embedded Payment Form](/commerce-api/embedded-payment-form).
 
-## Hosted Payment
-
-The Hosted Payment mode allows you to use Goody's payment processing page once an order (typically a gift) is accepted by the recipient.
-
-1. Create an order batch with `payment_method_id` set to `COMMERCE_HOSTED_PAYMENT`.
-2. When the gift is accepted, receive the `order.accepted` webhook. The webhook payload will show that the order is in `pending_payment` status and will contain a `payment_link` field. This field is also available on the `Order` object in the [retrieve an order](/api-reference/orders/retrieve-an-order) endpoint.
-3. Send your customer the `payment_link` URL, which will contain the final cost of the order and a credit card form.
-4. Once the customer completes payment, the order will move to `paid` status.
-
 ## Tokenized Payment
 
 Tokenized payment is available for approved partners. It will allow you to pass credit card details directly from your own platform to Goody's payment processor. Please contact us directly if you have a use case for this.
+
+## Other payment types
+
+If you have a unique use case, contact us at [support@ongoody.com](mailto:support@ongoody.com).

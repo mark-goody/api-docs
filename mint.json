@@ -60,7 +60,8 @@
         "commerce-api/create-an-order",
         "commerce-api/retrieve-order-status",
         "commerce-api/webhooks",
-        "commerce-api/payment"
+        "commerce-api/payment",
+        "commerce-api/embedded-payment-form"
       ]
     },
     {

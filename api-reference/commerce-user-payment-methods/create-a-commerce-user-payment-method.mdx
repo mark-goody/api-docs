@@ -3,8 +3,12 @@ openapi: "POST /v1/commerce_user_payment_methods"
 title: "Create a commerce user payment method"
 ---
 
-<Note>Only for the Commerce API.</Note>
+<Note>
+  Only for the Commerce API.
+</Note>
 
 Apps using the Commerce API can embed Goody's credit card form into their application to allow the app's end users to enter their credit card to save a payment method. Users can then use that payment method to pay for orders.
 
 Call this endpoint to create a payment method associated with a commerce user; provide the user ID as `commerce_end_user_id`. Then, use the returned payment method `id` as the `payment_method_id` in the [Create an Order Batch](/api-reference/order-batches/create-an-order-batch) endpoint along with the `commerce_end_user_id`.
+
+For more information, refer to [Embedded Payment Form](/commerce-api/embedded-payment-form).

@@ -3,7 +3,7 @@ title: "Embedded Payment Form"
 description: "Embed Goody’s credit card form into your application to sell products without processing payment."
 ---
 
-![Embedded Payment Form Pn](/images/embedded-payment-form.png)
+![Embedded Payment Form](/images/embedded-payment-form.png)
 
 You can embed Goody's credit card form into your app to allow users to enter their credit card details directly into Goody's payment form. You can control virtually all of the styling of the payment form.
 
@@ -11,18 +11,18 @@ You can embed Goody's credit card form into your app to allow users to enter the
 
 1. Embed Goody's payment form using our pre-built code sample, or build your own UI. Goody's payment form uses tokenization from [Very Good Security](https://www.verygoodsecurity.com/), the leader in PCI-compliant card tokenization, so your servers never touch any sensitive credit card details.
 2. After your user enters their payment information and billing address, the payment form will tokenize the card data, save the data to Goody's server, and return an `interim_card_key`. This is a key that identifies a temporary record of the card information that can be used to create a payment method.
-3. Call Goody's [POST /commerce-user-payment_methods](/api-reference/commerce-user-payment-methods/create-a-commerce-user-payment-method) endpoint with the `interim_card_key`, cardholder name and billing address, and the `commerce_end_user_id`, the user ID of your app's user to associate this payment method with. You'll receive an `id` of a payment method back.
+3. Call Goody's [POST /commerce_user_payment_methods](/api-reference/commerce-user-payment-methods/create-a-commerce-user-payment-method) endpoint with the `interim_card_key`, cardholder name and billing address, and the `commerce_end_user_id`, the user ID of your app's user to associate this payment method with. You'll receive an `id` of a payment method back.
 4. [Create an order batch](/api-reference/order-batches/create-an-order-batch) by passing the `payment_method_id` and the `commerce_end_user_id` that the payment method belongs to.
 5. When the order batch is paid for, the payment will be processed to the end user's credit card.
 
 ## Code samples
 
-We're here to help you integrate the embedded payment form. Contact us by clicking the "Apply now" button on the [Goody API](https://www.ongoody.com/business/gift-api) homepage.
+We're here to help you integrate the embedded payment form. Contact us by clicking the "Apply now" button on the [Goody API](https://www.ongoody.com/business/gift-api) homepage or contact us at [support@ongoody.com](mailto:support@ongoody.com).
 
 <Card title="GitHub: Example App with Next.js and Python FastAPI" icon="code" href="https://github.com/ongoody/commerce-api-dcc-sample-fastapi-nextjs">
   See the source code for our example app with a Next.js frontend and a Python FastAPI backend.
 </Card>
 
-<Card title="Live Demo: Example App with Next.js and Python FastAPI" icon="browsers" href="https://github.com/ongoody/commerce-api-dcc-sample-fastapi-nextjs">
+<Card title="Live Demo: Example App with Next.js and Python FastAPI" icon="browsers" href="https://commerce-api-dcc-sample-fastapi-nextjs.vercel.app/">
   See our example app in action.
 </Card>

@@ -170,6 +170,14 @@
             "$ref": "#/components/schemas/Cart",
             "description": "The cart currently on this order. If the order is a gift that was swapped, `cart` displays the most recent products selected (i.e. post-swap)."
           },
+          "cart_selections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartSelection"
+            },
+            "description": "Product variant selections for each cart product. Only for commerce app orders.",
+            "nullable": true
+          },
           "shipments": {
             "type": "array",
             "items": {
@@ -466,6 +474,38 @@
           "quantity"
         ]
       },
+      "CartSelection": {
+        "type": "object",
+        "description": "Product variant selections for a specific gift cart product.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cart_product_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The cart product this selection belongs to."
+          },
+          "quantity_index": {
+            "type": "integer",
+            "description": "The index of this selection within multiple quantities of the same product. If a given cart product has multiple quantities, this will be 0 for the first unit, 1 for the second unit, etc."
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The selected variants for this product selection and quantity index."
+          }
+        },
+        "required": [
+          "id",
+          "cart_product_id",
+          "quantity_index",
+          "variants"
+        ]
+      },
       "OrderBatchSendStatus": {
         "type": "string",
         "enum": [
@@ -521,6 +561,11 @@
             "description": "The carrier for this shipment, e.g. UPS."
           },
           "tracking_number": {
+            "type": "string",
+            "nullable": true,
+            "description": "Only for approved distribution partners."
+          },
+          "tracking_url": {
             "type": "string",
             "nullable": true,
             "description": "Only for approved distribution partners."
@@ -1475,7 +1520,7 @@
                     "value": {
                       "data": [
                         {
-                          "id": "2bd48eab-b8d8-499e-9282-909cd856153c",
+                          "id": "0bd02ba4-1069-42e5-8c3f-230700ff1e2e",
                           "image": {
                             "url": "https://assets.ongoody.com/cards/222.png?format=png",
                             "width": 800,
@@ -1492,7 +1537,7 @@
                           ]
                         },
                         {
-                          "id": "c0cde2c1-1883-42ba-8741-459044bed309",
+                          "id": "96b6697e-92c6-477c-94d3-b2ba8db50699",
                           "image": {
                             "url": "https://assets.ongoody.com/cards/111.png?format=png",
                             "width": 800,
@@ -1562,13 +1607,13 @@
                 "examples": {
                   "Commerce user payment method created": {
                     "value": {
-                      "id": "18505d94-1fa2-4b87-955a-9e4253773fd3",
+                      "id": "80d69d31-66e5-49a9-a994-d7f4a8918dc0",
                       "card_brand": "mastercard",
                       "card_last_4": "4444",
                       "card_exp_month": 12,
                       "card_exp_year": 2034,
                       "cardholder_name": "John Doe",
-                      "created_at": "2025-05-18T05:07:20Z"
+                      "created_at": "2025-09-12T05:09:24Z"
                     }
                   }
                 },
@@ -1612,7 +1657,7 @@
                   "summary": "Commerce user payment method created",
                   "value": {
                     "cardholder_name": "John Doe",
-                    "commerce_end_user_id": "test_user_pm_b69ad146",
+                    "commerce_end_user_id": "test_user_pm_3bc4bffe",
                     "payment_method_type": "card",
                     "interim_card_key": "X9edbacqt1CBCRRKRLkuiINj",
                     "billing_address": {
@@ -1686,37 +1731,37 @@
                 "examples": {
                   "Order batch created (10 or fewer recipients)": {
                     "value": {
-                      "id": "a4c92d69-4686-479e-968c-69a1c85d9a40",
+                      "id": "ab0e6117-4764-42c8-bab8-2a68814f001d",
                       "send_status": "complete",
                       "from_name": "John",
                       "message": "Thank you!",
                       "orders_count": 2,
                       "orders_preview": [
                         {
-                          "id": "db8f2159-9fdb-44cf-ae58-84f7424193d4",
+                          "id": "b8e36465-bd81-450f-bd10-d5ee6c293a3c",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/q1fsXaxLnqMEiM0uvtOj8xA3",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/md8a60GZPpkbVkibRaZhOAOd",
                           "recipient_first_name": "Alena",
                           "recipient_last_name": "Kenter",
                           "recipient_email": "alena@ongoody.com",
-                          "card_id": "313cb0b4-8e0b-47f5-b110-138e78e76a19",
+                          "card_id": "4f5a1455-f7dc-4fb4-b158-612b3c28de01",
                           "message": "Thank you!",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "a4c92d69-4686-479e-968c-69a1c85d9a40",
+                          "order_batch_id": "ab0e6117-4764-42c8-bab8-2a68814f001d",
                           "expires_at": null,
                           "cart": {
-                            "id": "b7230ce9-c35a-48e8-b20b-227aec637aa7",
+                            "id": "4879bba0-48ff-4ab7-8a98-d954c3022ad4",
                             "items": [
                               {
-                                "id": "051cfe26-48d4-42fb-a8d3-aad9383fa30b",
+                                "id": "f1ac535f-3b79-42ac-bc00-43a9443e06ef",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "3f9d5d5d-258d-40e3-8583-649ed899b824",
+                                  "id": "9e2d7720-a5ae-4dca-8f76-165056173263",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "40a86b11-9674-40a0-854d-5d5fbe982b8d",
+                                    "id": "ebb4edb2-9792-4354-8b98-89796e663c39",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -1736,40 +1781,40 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15554427289@test.ongoody.com"
+                            "email": "15550094197@test.ongoody.com"
                           },
-                          "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                          "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "6IHXWGUJDLP45STIQSFYTGVK",
+                          "reference_id": "PQTZZSM40OPUK1GBTMU9PVJD",
                           "payment_link": null
                         },
                         {
-                          "id": "24bcf7ef-f442-40e0-8a50-ef0a8540e525",
+                          "id": "2adc3715-23c9-40a3-a58c-28d1760cb328",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/zjivxRmZxhhJ2vMRR9BL1hQ5",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/gaa9TTUzPTqLltzOom5UPRlD",
                           "recipient_first_name": "Michael",
                           "recipient_last_name": "Franci",
                           "recipient_email": "michael@ongoody.com",
-                          "card_id": "313cb0b4-8e0b-47f5-b110-138e78e76a19",
+                          "card_id": "4f5a1455-f7dc-4fb4-b158-612b3c28de01",
                           "message": "Thank you!",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "a4c92d69-4686-479e-968c-69a1c85d9a40",
+                          "order_batch_id": "ab0e6117-4764-42c8-bab8-2a68814f001d",
                           "expires_at": null,
                           "cart": {
-                            "id": "b7230ce9-c35a-48e8-b20b-227aec637aa7",
+                            "id": "4879bba0-48ff-4ab7-8a98-d954c3022ad4",
                             "items": [
                               {
-                                "id": "051cfe26-48d4-42fb-a8d3-aad9383fa30b",
+                                "id": "f1ac535f-3b79-42ac-bc00-43a9443e06ef",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "3f9d5d5d-258d-40e3-8583-649ed899b824",
+                                  "id": "9e2d7720-a5ae-4dca-8f76-165056173263",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "40a86b11-9674-40a0-854d-5d5fbe982b8d",
+                                    "id": "ebb4edb2-9792-4354-8b98-89796e663c39",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -1789,13 +1834,13 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15554427289@test.ongoody.com"
+                            "email": "15550094197@test.ongoody.com"
                           },
-                          "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                          "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "AY7F1V0MASHNVOSZWEZKLGA9",
+                          "reference_id": "FYJ3SJDZODTBU1YJWKNHRTC8",
                           "payment_link": null
                         }
                       ],
@@ -1813,16 +1858,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "b7230ce9-c35a-48e8-b20b-227aec637aa7",
+                        "id": "4879bba0-48ff-4ab7-8a98-d954c3022ad4",
                         "items": [
                           {
-                            "id": "051cfe26-48d4-42fb-a8d3-aad9383fa30b",
+                            "id": "f1ac535f-3b79-42ac-bc00-43a9443e06ef",
                             "quantity": 1,
                             "product": {
-                              "id": "3f9d5d5d-258d-40e3-8583-649ed899b824",
+                              "id": "9e2d7720-a5ae-4dca-8f76-165056173263",
                               "name": "Cookies",
                               "brand": {
-                                "id": "40a86b11-9674-40a0-854d-5d5fbe982b8d",
+                                "id": "ebb4edb2-9792-4354-8b98-89796e663c39",
                                 "name": "Cookie Company"
                               }
                             }
@@ -1834,20 +1879,20 @@
                       "expires_at": null,
                       "send_method": "link_multiple_custom_list",
                       "batch_name": "Alena Kenter and Michael Franci",
-                      "card_id": "313cb0b4-8e0b-47f5-b110-138e78e76a19",
+                      "card_id": "4f5a1455-f7dc-4fb4-b158-612b3c28de01",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15554427289@test.ongoody.com"
+                        "email": "15550094197@test.ongoody.com"
                       },
-                      "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                      "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                       "workspace_name": "Test Team",
-                      "reference_id": "LQBJIKQWDEFLW70WWC6HLWEI"
+                      "reference_id": "5BPMEHQKVUVPZBCZJPWWPHHP"
                     }
                   },
                   "Order batch created (more than 10 recipients)": {
                     "value": {
-                      "id": "f3bc9fe9-d56f-4fc0-968d-ccf9b2b288f4",
+                      "id": "1e4b1dcf-556e-403e-bde9-a17bac9764da",
                       "send_status": "pending",
                       "from_name": "John",
                       "message": "Thank you!",
@@ -1907,16 +1952,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "dbddc58e-db8b-4fa1-8c0c-23c9517da2c2",
+                        "id": "76088923-97b6-44a7-8167-8af91241afc0",
                         "items": [
                           {
-                            "id": "fc32f431-7273-48c3-a193-43c6529593f1",
+                            "id": "04a905b0-0411-4965-82e2-6782308afebf",
                             "quantity": 1,
                             "product": {
-                              "id": "d91c9d73-28e1-49d5-82fc-d8e302d65a0d",
+                              "id": "ad75d725-a5a8-4d57-9d7d-19afb1315ee2",
                               "name": "Cookies",
                               "brand": {
-                                "id": "42c57d5b-10ae-45ff-8d54-e0822a382bc6",
+                                "id": "25d3a2b0-c946-44d1-b8e7-0ca517b94bc6",
                                 "name": "Cookie Company"
                               }
                             }
@@ -1928,20 +1973,20 @@
                       "expires_at": null,
                       "send_method": "link_multiple_custom_list",
                       "batch_name": "11 recipients",
-                      "card_id": "7e7e802e-e767-4ae7-913a-41432490d7ef",
+                      "card_id": "12bc36a8-2b38-423f-8f1a-9de2c18f8ee6",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15554427289@test.ongoody.com"
+                        "email": "15550094197@test.ongoody.com"
                       },
-                      "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                      "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                       "workspace_name": "Test Team",
-                      "reference_id": "BGFNA7H5C5HPITVDJ0KWXERL"
+                      "reference_id": "ASAZ2WS83GJ3SPVOSYYZJ2IQ"
                     }
                   },
                   "Scheduled order batch created": {
                     "value": {
-                      "id": "2cfcdef8-cab0-4785-bd82-39e5e645d0ed",
+                      "id": "a32c4d84-46c8-48ed-a90c-ea327d82af05",
                       "send_status": "pending",
                       "from_name": "John",
                       "message": "Thank you!",
@@ -1961,16 +2006,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "4311047b-4f67-426b-b3c8-3f6d6e7c160a",
+                        "id": "137bce3d-55e2-482f-a4e5-623c19bd83dd",
                         "items": [
                           {
-                            "id": "cd4e93d1-f925-476d-a727-711cb1b707f7",
+                            "id": "524be32a-bd05-4bd9-abe2-3fa90ded17b3",
                             "quantity": 1,
                             "product": {
-                              "id": "fe2bf87b-3353-4995-a269-4a711ddef983",
+                              "id": "e264bd58-d7dc-4d04-953b-3e9f37952e45",
                               "name": "Cookies",
                               "brand": {
-                                "id": "1271e141-8e81-49b0-9b5a-59df5663c2c7",
+                                "id": "d8419ef0-8c6b-4a08-a852-3472ff5abf02",
                                 "name": "Cookie Company"
                               }
                             }
@@ -1978,54 +2023,54 @@
                         ]
                       },
                       "is_scheduled_send": true,
-                      "scheduled_send_on": "2025-05-25T05:07:22Z",
-                      "expires_at": "2025-06-15T05:07:22Z",
+                      "scheduled_send_on": "2025-09-19T05:09:27Z",
+                      "expires_at": "2025-10-10T05:09:27Z",
                       "send_method": "link_multiple_custom_list",
                       "batch_name": "Alena Kenter and Michael Franci",
-                      "card_id": "75cc3f21-3fd2-4c75-9e71-4b4f6e9cbac2",
+                      "card_id": "b7e53368-7ab0-4373-a121-4029b9d75d30",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15554427289@test.ongoody.com"
+                        "email": "15550094197@test.ongoody.com"
                       },
-                      "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                      "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                       "workspace_name": "Test Team",
-                      "reference_id": "PHV6GGDQBXIDQ0LRIZHTT14N"
+                      "reference_id": "JSXWUT1TXTC9O29IZ2NJFUME"
                     }
                   },
                   "Order batch created with recipient address": {
                     "value": {
-                      "id": "2170cde6-adeb-4368-ba9a-68df81158b1b",
+                      "id": "49616a94-aa74-47da-abea-dfa7c9b42622",
                       "send_status": "complete",
                       "from_name": "John",
                       "message": "Thank you!",
                       "orders_count": 2,
                       "orders_preview": [
                         {
-                          "id": "d82e294b-4d48-4660-965f-f1e5349142b9",
+                          "id": "14153f3f-012f-4046-b308-8701508280d8",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/RfoUXdBiexyr838YjrjKUY5X",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/Vn8aqScSxChLqfSu2IY6Kcgt",
                           "recipient_first_name": "Alena",
                           "recipient_last_name": "Kenter",
                           "recipient_email": "alena@ongoody.com",
-                          "card_id": "03588eb1-0839-4a56-adfa-c5ecbcf755da",
+                          "card_id": "558bcbc3-4418-4a43-8932-d5f822781e89",
                           "message": "Thank you!",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "2170cde6-adeb-4368-ba9a-68df81158b1b",
+                          "order_batch_id": "49616a94-aa74-47da-abea-dfa7c9b42622",
                           "expires_at": null,
                           "cart": {
-                            "id": "c9d03b53-5027-49d1-9457-93730eaf0b39",
+                            "id": "f9e534fb-2f2d-4033-9227-dcfd79730df9",
                             "items": [
                               {
-                                "id": "5016ac81-9e25-4dcb-bdde-662c229cdfc5",
+                                "id": "4027ffb2-2d6b-4b9a-8aee-824e7d7afc87",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "e581b3c5-f0a8-42e4-a658-f8c6c8663aa7",
+                                  "id": "fd40c415-3bf2-4a0a-84aa-6b9369c54749",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "4fceec0f-84c5-4987-9a0c-0e8a27a4c622",
+                                    "id": "ef4a8fba-e9e0-4ccf-a132-81981b31d50d",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -2045,40 +2090,40 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15554427289@test.ongoody.com"
+                            "email": "15550094197@test.ongoody.com"
                           },
-                          "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                          "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "FR8UJNUPBA3XQWSTKHCAR6NG",
+                          "reference_id": "WT0GFKGJ5BM5HKCAFAN5VZVK",
                           "payment_link": null
                         },
                         {
-                          "id": "d69daffe-b903-469d-adb6-77d9a52930ee",
+                          "id": "af990fda-2ff3-4408-9ad5-da73be81a468",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/AEKqFYDJCC6Y8U2lm6bogR4H",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/xfAxEYZdBE46NcQIQe2ldXZC",
                           "recipient_first_name": "Michael",
                           "recipient_last_name": "Franci",
                           "recipient_email": "michael@ongoody.com",
-                          "card_id": "03588eb1-0839-4a56-adfa-c5ecbcf755da",
+                          "card_id": "558bcbc3-4418-4a43-8932-d5f822781e89",
                           "message": "Thank you!",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "2170cde6-adeb-4368-ba9a-68df81158b1b",
+                          "order_batch_id": "49616a94-aa74-47da-abea-dfa7c9b42622",
                           "expires_at": null,
                           "cart": {
-                            "id": "c9d03b53-5027-49d1-9457-93730eaf0b39",
+                            "id": "f9e534fb-2f2d-4033-9227-dcfd79730df9",
                             "items": [
                               {
-                                "id": "5016ac81-9e25-4dcb-bdde-662c229cdfc5",
+                                "id": "4027ffb2-2d6b-4b9a-8aee-824e7d7afc87",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "e581b3c5-f0a8-42e4-a658-f8c6c8663aa7",
+                                  "id": "fd40c415-3bf2-4a0a-84aa-6b9369c54749",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "4fceec0f-84c5-4987-9a0c-0e8a27a4c622",
+                                    "id": "ef4a8fba-e9e0-4ccf-a132-81981b31d50d",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -2098,13 +2143,13 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15554427289@test.ongoody.com"
+                            "email": "15550094197@test.ongoody.com"
                           },
-                          "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                          "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "IGRKLCVDBMOQFSMBA8KEQGTN",
+                          "reference_id": "CVPEBQSFEGKWKB639BXZOI1U",
                           "payment_link": null
                         }
                       ],
@@ -2122,16 +2167,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "c9d03b53-5027-49d1-9457-93730eaf0b39",
+                        "id": "f9e534fb-2f2d-4033-9227-dcfd79730df9",
                         "items": [
                           {
-                            "id": "5016ac81-9e25-4dcb-bdde-662c229cdfc5",
+                            "id": "4027ffb2-2d6b-4b9a-8aee-824e7d7afc87",
                             "quantity": 1,
                             "product": {
-                              "id": "e581b3c5-f0a8-42e4-a658-f8c6c8663aa7",
+                              "id": "fd40c415-3bf2-4a0a-84aa-6b9369c54749",
                               "name": "Cookies",
                               "brand": {
-                                "id": "4fceec0f-84c5-4987-9a0c-0e8a27a4c622",
+                                "id": "ef4a8fba-e9e0-4ccf-a132-81981b31d50d",
                                 "name": "Cookie Company"
                               }
                             }
@@ -2143,50 +2188,50 @@
                       "expires_at": null,
                       "send_method": "link_multiple_custom_list",
                       "batch_name": "Alena Kenter and Michael Franci",
-                      "card_id": "03588eb1-0839-4a56-adfa-c5ecbcf755da",
+                      "card_id": "558bcbc3-4418-4a43-8932-d5f822781e89",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15554427289@test.ongoody.com"
+                        "email": "15550094197@test.ongoody.com"
                       },
-                      "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                      "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                       "workspace_name": "Test Team",
-                      "reference_id": "JN5VRG3V5XIE5NYSWVKOXB0D"
+                      "reference_id": "EIJTKDJCD0HV8KNLMRLV59WX"
                     }
                   },
                   "Order batch created (using product URL in cart)": {
                     "value": {
-                      "id": "936c3bd0-b0aa-4be6-8cd6-297cf30aa6b2",
+                      "id": "4af2f995-962e-4cae-a650-52305c610a8d",
                       "send_status": "complete",
                       "from_name": "John",
                       "message": "Thank you!",
                       "orders_count": 2,
                       "orders_preview": [
                         {
-                          "id": "70e7dc2b-006a-41de-afd8-6e2fe65557e2",
+                          "id": "eea74630-fc34-4474-a6dd-75d8a20bf532",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/xpIo8VWPMU6FxUNURhBjLHfJ",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/EzWIvgUWiFl13FVCmqF37oW7",
                           "recipient_first_name": "Alena",
                           "recipient_last_name": "Kenter",
                           "recipient_email": "alena@ongoody.com",
-                          "card_id": "02a7e131-e4be-41a2-a852-12c08789826e",
+                          "card_id": "815b8f2b-6985-46d5-acc0-d7a1762826e3",
                           "message": "Thank you!",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "936c3bd0-b0aa-4be6-8cd6-297cf30aa6b2",
-                          "expires_at": "2025-06-15T05:07:23Z",
+                          "order_batch_id": "4af2f995-962e-4cae-a650-52305c610a8d",
+                          "expires_at": "2025-10-10T05:09:28Z",
                           "cart": {
-                            "id": "a6fad61e-ea25-4bde-aa2e-f35ff7772757",
+                            "id": "227db2f7-2a56-4dc7-9428-877979d89388",
                             "items": [
                               {
-                                "id": "4b5218b4-b3a6-451f-b955-5ae2ade422ba",
+                                "id": "e4292910-e7c8-431a-9202-1c5515a73351",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "5aface53-6571-45a0-a8db-3f40ece3a5f6",
+                                  "id": "3d97fd1a-2c11-4b2c-ab9f-325aadfb1a39",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "6955dc09-a7d8-480f-8d11-a77923c09ae3",
+                                    "id": "e2fa44c1-0afb-47a2-9849-4dc04951e669",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -2206,40 +2251,40 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15554427289@test.ongoody.com"
+                            "email": "15550094197@test.ongoody.com"
                           },
-                          "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                          "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "URBWAOQPTBHM2BHYIXONQFO6",
+                          "reference_id": "VTXKOMOBZ5ICFIPUQD8U10IB",
                           "payment_link": null
                         },
                         {
-                          "id": "1d235e1a-0e6a-4648-8294-398770d9d229",
+                          "id": "99c824d5-546a-4de3-b7ae-bd0d2b270d30",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/cGaU4VGoeim4idnxhw8jCrI3",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/AzG79PUCf6fKErCttvrdHf2M",
                           "recipient_first_name": "Michael",
                           "recipient_last_name": "Franci",
                           "recipient_email": "michael@ongoody.com",
-                          "card_id": "02a7e131-e4be-41a2-a852-12c08789826e",
+                          "card_id": "815b8f2b-6985-46d5-acc0-d7a1762826e3",
                           "message": "Thank you!",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "936c3bd0-b0aa-4be6-8cd6-297cf30aa6b2",
-                          "expires_at": "2025-06-15T05:07:23Z",
+                          "order_batch_id": "4af2f995-962e-4cae-a650-52305c610a8d",
+                          "expires_at": "2025-10-10T05:09:28Z",
                           "cart": {
-                            "id": "a6fad61e-ea25-4bde-aa2e-f35ff7772757",
+                            "id": "227db2f7-2a56-4dc7-9428-877979d89388",
                             "items": [
                               {
-                                "id": "4b5218b4-b3a6-451f-b955-5ae2ade422ba",
+                                "id": "e4292910-e7c8-431a-9202-1c5515a73351",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "5aface53-6571-45a0-a8db-3f40ece3a5f6",
+                                  "id": "3d97fd1a-2c11-4b2c-ab9f-325aadfb1a39",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "6955dc09-a7d8-480f-8d11-a77923c09ae3",
+                                    "id": "e2fa44c1-0afb-47a2-9849-4dc04951e669",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -2259,13 +2304,13 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15554427289@test.ongoody.com"
+                            "email": "15550094197@test.ongoody.com"
                           },
-                          "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                          "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "2ZONRLTCYDPEXZ3ERRKHN09U",
+                          "reference_id": "VKIR6MJAY49ZJK9XD9LJ2SSL",
                           "payment_link": null
                         }
                       ],
@@ -2283,16 +2328,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "a6fad61e-ea25-4bde-aa2e-f35ff7772757",
+                        "id": "227db2f7-2a56-4dc7-9428-877979d89388",
                         "items": [
                           {
-                            "id": "4b5218b4-b3a6-451f-b955-5ae2ade422ba",
+                            "id": "e4292910-e7c8-431a-9202-1c5515a73351",
                             "quantity": 1,
                             "product": {
-                              "id": "5aface53-6571-45a0-a8db-3f40ece3a5f6",
+                              "id": "3d97fd1a-2c11-4b2c-ab9f-325aadfb1a39",
                               "name": "Cookies",
                               "brand": {
-                                "id": "6955dc09-a7d8-480f-8d11-a77923c09ae3",
+                                "id": "e2fa44c1-0afb-47a2-9849-4dc04951e669",
                                 "name": "Cookie Company"
                               }
                             }
@@ -2301,18 +2346,18 @@
                       },
                       "is_scheduled_send": false,
                       "scheduled_send_on": null,
-                      "expires_at": "2025-06-15T05:07:23Z",
+                      "expires_at": "2025-10-10T05:09:28Z",
                       "send_method": "link_multiple_custom_list",
                       "batch_name": "Alena Kenter and Michael Franci",
-                      "card_id": "02a7e131-e4be-41a2-a852-12c08789826e",
+                      "card_id": "815b8f2b-6985-46d5-acc0-d7a1762826e3",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15554427289@test.ongoody.com"
+                        "email": "15550094197@test.ongoody.com"
                       },
-                      "workspace_id": "6e88b40f-4d2f-422e-8657-549a02768299",
+                      "workspace_id": "e8369433-c732-404f-959b-091b913ca19c",
                       "workspace_name": "Test Team",
-                      "reference_id": "ONATH2AU47SEWGHK5UIAIWLZ"
+                      "reference_id": "8RKF04UA4PLNRGD2XF3MYRM9"
                     }
                   }
                 },
@@ -2355,7 +2400,7 @@
                     "send_method": "link_multiple_custom_list",
                     "payment_method_id": null,
                     "workspace_id": null,
-                    "card_id": "313cb0b4-8e0b-47f5-b110-138e78e76a19",
+                    "card_id": "4f5a1455-f7dc-4fb4-b158-612b3c28de01",
                     "recipients": [
                       {
                         "first_name": "Alena",
@@ -2371,7 +2416,7 @@
                     "cart": {
                       "items": [
                         {
-                          "product_id": "3f9d5d5d-258d-40e3-8583-649ed899b824",
+                          "product_id": "9e2d7720-a5ae-4dca-8f76-165056173263",
                           "quantity": 1
                         }
                       ]
@@ -2386,7 +2431,7 @@
                     "send_method": "link_multiple_custom_list",
                     "payment_method_id": null,
                     "workspace_id": null,
-                    "card_id": "75cc3f21-3fd2-4c75-9e71-4b4f6e9cbac2",
+                    "card_id": "b7e53368-7ab0-4373-a121-4029b9d75d30",
                     "recipients": [
                       {
                         "first_name": "Alena",
@@ -2402,13 +2447,13 @@
                     "cart": {
                       "items": [
                         {
-                          "product_id": "fe2bf87b-3353-4995-a269-4a711ddef983",
+                          "product_id": "e264bd58-d7dc-4d04-953b-3e9f37952e45",
                           "quantity": 1
                         }
                       ]
                     },
-                    "scheduled_send_on": "2025-05-25T05:07:22Z",
-                    "expires_at": "2025-06-15T05:07:22Z"
+                    "scheduled_send_on": "2025-09-19T05:09:27Z",
+                    "expires_at": "2025-10-10T05:09:27Z"
                   }
                 },
                 "Order batch created with recipient address": {
@@ -2419,7 +2464,7 @@
                     "send_method": "link_multiple_custom_list",
                     "payment_method_id": null,
                     "workspace_id": null,
-                    "card_id": "03588eb1-0839-4a56-adfa-c5ecbcf755da",
+                    "card_id": "558bcbc3-4418-4a43-8932-d5f822781e89",
                     "recipients": [
                       {
                         "first_name": "Alena",
@@ -2455,7 +2500,7 @@
                     "cart": {
                       "items": [
                         {
-                          "product_id": "e581b3c5-f0a8-42e4-a658-f8c6c8663aa7",
+                          "product_id": "fd40c415-3bf2-4a0a-84aa-6b9369c54749",
                           "quantity": 1
                         }
                       ]
@@ -2470,7 +2515,7 @@
                     "send_method": "link_multiple_custom_list",
                     "payment_method_id": null,
                     "workspace_id": null,
-                    "card_id": "02a7e131-e4be-41a2-a852-12c08789826e",
+                    "card_id": "815b8f2b-6985-46d5-acc0-d7a1762826e3",
                     "recipients": [
                       {
                         "first_name": "Alena",
@@ -2491,7 +2536,7 @@
                         }
                       ]
                     },
-                    "expires_at": "2025-06-15T05:07:23Z"
+                    "expires_at": "2025-10-10T05:09:28Z"
                   }
                 },
                 "Bad request": {
@@ -2502,12 +2547,12 @@
                     "send_method": "link_multiple_custom_list",
                     "payment_method_id": null,
                     "workspace_id": null,
-                    "card_id": "a2f8512d-1d28-4b16-9e91-fe34069cdb3d",
+                    "card_id": "721211d5-874b-47c6-a0e9-89339ee6e32c",
                     "recipients": [],
                     "cart": {
                       "items": [
                         {
-                          "product_id": "dd7467f6-8003-4281-9f63-139a5357d602",
+                          "product_id": "d9353d12-dc8b-4a5c-bae7-1b77bd4b7904",
                           "quantity": 1
                         }
                       ]
@@ -2522,7 +2567,7 @@
                     "send_method": "link_multiple_custom_list",
                     "payment_method_id": null,
                     "workspace_id": null,
-                    "card_id": "7d54b3f6-9ab2-4e42-a437-5a7176eb9941",
+                    "card_id": "865a7906-2ac1-4f6b-acbb-30f743396163",
                     "recipients": [
                       {
                         "first_name": "Alena",
@@ -2543,8 +2588,8 @@
                         }
                       ]
                     },
-                    "scheduled_send_on": "2025-05-25T05:07:24Z",
-                    "expires_at": "2025-06-15T05:07:24Z"
+                    "scheduled_send_on": "2025-09-19T05:09:28Z",
+                    "expires_at": "2025-10-10T05:09:28Z"
                   }
                 }
               }
@@ -2597,37 +2642,37 @@
                     "value": {
                       "data": [
                         {
-                          "id": "48b0aadc-a661-47e9-8122-6ecfc48d310b",
+                          "id": "2fe5a691-cc45-4c71-95c1-de6da2cf682e",
                           "send_status": "complete",
-                          "from_name": "Setsuko",
+                          "from_name": "Jamar",
                           "message": null,
                           "orders_count": 2,
                           "orders_preview": [
                             {
-                              "id": "5d122bd1-8dd8-4134-82de-f4aa726f8bbc",
+                              "id": "e0b24d69-e289-4c23-8e29-426aaef7788b",
                               "status": "created",
-                              "individual_gift_link": "https://gifts.ongoody.com/gift/HUHTQVNY4LCTBREKPZNIOS8H",
+                              "individual_gift_link": "https://gifts.ongoody.com/gift/RTADGH9UEEYZ2R3KECDQSYFN",
                               "recipient_first_name": "Alena",
                               "recipient_last_name": "Kenter",
                               "recipient_email": "alena@ongoody.com",
-                              "card_id": "051a7ad4-314a-446a-94a8-fc0208dece0e",
+                              "card_id": "1e6ad21f-3417-4384-b507-f214919470cd",
                               "message": "Test Message",
                               "thank_you_note": null,
                               "view_count_recipient": 0,
                               "is_swapped": false,
-                              "order_batch_id": "48b0aadc-a661-47e9-8122-6ecfc48d310b",
+                              "order_batch_id": "2fe5a691-cc45-4c71-95c1-de6da2cf682e",
                               "expires_at": null,
                               "cart": {
-                                "id": "db4a96f8-3953-4b86-87c9-604456cab07b",
+                                "id": "7d2f99bc-a2cf-4480-acb7-14bf5a6f5030",
                                 "items": [
                                   {
-                                    "id": "b16a51cf-3d02-4bae-be89-46730b0af5c3",
+                                    "id": "2fdde5ea-15a2-4f58-ae03-163a8969128d",
                                     "quantity": 1,
                                     "product": {
-                                      "id": "7d2c288a-144b-4b03-972f-0737961c2207",
+                                      "id": "a1c94463-f9e6-4a91-a461-c30c7677c1b0",
                                       "name": "Cookies",
                                       "brand": {
-                                        "id": "fc9f55a3-72c0-461a-b674-f598a396909c",
+                                        "id": "f2610d72-b0e0-4ce5-8fc3-390e5227862e",
                                         "name": "Cookie Company"
                                       }
                                     }
@@ -2647,40 +2692,40 @@
                               "sender": {
                                 "first_name": "Test",
                                 "last_name": "User",
-                                "email": "15552740454@test.ongoody.com"
+                                "email": "15557644892@test.ongoody.com"
                               },
-                              "workspace_id": "802d17c1-6a58-4976-8c6c-d1d8bc1d3ff0",
+                              "workspace_id": "83f4ae46-276a-479a-9f12-c94686481838",
                               "workspace_name": "Test Team",
                               "original_cart": null,
                               "original_amounts": null,
-                              "reference_id": "I7Q0SJW89LLRIPA8WITXPRLM",
+                              "reference_id": "LS82MJYBSP37ZG3SAI9EMBQC",
                               "payment_link": null
                             },
                             {
-                              "id": "351abd51-0057-4507-b44d-4fad506fa057",
+                              "id": "6a18944f-9d45-4392-aca7-98667082e50d",
                               "status": "created",
-                              "individual_gift_link": "https://gifts.ongoody.com/gift/8BLFF5TWXTWY7LRFHVCCPU0T",
+                              "individual_gift_link": "https://gifts.ongoody.com/gift/D4HQRTISLEDWS1GBZLGDMWYS",
                               "recipient_first_name": "Michael",
                               "recipient_last_name": "Franci",
                               "recipient_email": "michael@ongoody.com",
-                              "card_id": "051a7ad4-314a-446a-94a8-fc0208dece0e",
+                              "card_id": "1e6ad21f-3417-4384-b507-f214919470cd",
                               "message": "Test Message",
                               "thank_you_note": null,
                               "view_count_recipient": 0,
                               "is_swapped": false,
-                              "order_batch_id": "48b0aadc-a661-47e9-8122-6ecfc48d310b",
+                              "order_batch_id": "2fe5a691-cc45-4c71-95c1-de6da2cf682e",
                               "expires_at": null,
                               "cart": {
-                                "id": "db4a96f8-3953-4b86-87c9-604456cab07b",
+                                "id": "7d2f99bc-a2cf-4480-acb7-14bf5a6f5030",
                                 "items": [
                                   {
-                                    "id": "b16a51cf-3d02-4bae-be89-46730b0af5c3",
+                                    "id": "2fdde5ea-15a2-4f58-ae03-163a8969128d",
                                     "quantity": 1,
                                     "product": {
-                                      "id": "7d2c288a-144b-4b03-972f-0737961c2207",
+                                      "id": "a1c94463-f9e6-4a91-a461-c30c7677c1b0",
                                       "name": "Cookies",
                                       "brand": {
-                                        "id": "fc9f55a3-72c0-461a-b674-f598a396909c",
+                                        "id": "f2610d72-b0e0-4ce5-8fc3-390e5227862e",
                                         "name": "Cookie Company"
                                       }
                                     }
@@ -2700,13 +2745,13 @@
                               "sender": {
                                 "first_name": "Test",
                                 "last_name": "User",
-                                "email": "15552740454@test.ongoody.com"
+                                "email": "15557644892@test.ongoody.com"
                               },
-                              "workspace_id": "802d17c1-6a58-4976-8c6c-d1d8bc1d3ff0",
+                              "workspace_id": "83f4ae46-276a-479a-9f12-c94686481838",
                               "workspace_name": "Test Team",
                               "original_cart": null,
                               "original_amounts": null,
-                              "reference_id": "UC9V44OU4MTRLVEV1RMFQLJ3",
+                              "reference_id": "G1GFB4HWNI3WERHPLNO96WQP",
                               "payment_link": null
                             }
                           ],
@@ -2724,16 +2769,16 @@
                             }
                           ],
                           "cart": {
-                            "id": "db4a96f8-3953-4b86-87c9-604456cab07b",
+                            "id": "7d2f99bc-a2cf-4480-acb7-14bf5a6f5030",
                             "items": [
                               {
-                                "id": "b16a51cf-3d02-4bae-be89-46730b0af5c3",
+                                "id": "2fdde5ea-15a2-4f58-ae03-163a8969128d",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "7d2c288a-144b-4b03-972f-0737961c2207",
+                                  "id": "a1c94463-f9e6-4a91-a461-c30c7677c1b0",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "fc9f55a3-72c0-461a-b674-f598a396909c",
+                                    "id": "f2610d72-b0e0-4ce5-8fc3-390e5227862e",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -2744,49 +2789,49 @@
                           "scheduled_send_on": null,
                           "expires_at": null,
                           "send_method": null,
-                          "batch_name": "Thank You from Ankunding, Koss and Kutch",
-                          "card_id": "051a7ad4-314a-446a-94a8-fc0208dece0e",
+                          "batch_name": "Thank You from Mante, Cormier and Koss",
+                          "card_id": "1e6ad21f-3417-4384-b507-f214919470cd",
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15552740454@test.ongoody.com"
+                            "email": "15557644892@test.ongoody.com"
                           },
-                          "workspace_id": "802d17c1-6a58-4976-8c6c-d1d8bc1d3ff0",
+                          "workspace_id": "83f4ae46-276a-479a-9f12-c94686481838",
                           "workspace_name": "Test Team",
-                          "reference_id": "MWXRUOJXZIKPWD4NMITC5ASA"
+                          "reference_id": "OYHQ0SSCSB7QXV0ZF612PKJE"
                         },
                         {
-                          "id": "c31ef459-b01f-4052-ae05-69aa5405136d",
+                          "id": "fa62078d-d4aa-4ff5-b8ed-864d86eb92fa",
                           "send_status": "complete",
-                          "from_name": "Clarita",
+                          "from_name": "Tyler",
                           "message": null,
                           "orders_count": 2,
                           "orders_preview": [
                             {
-                              "id": "b6400776-44e3-4394-ae8e-e4269f20e1cf",
+                              "id": "7b35f397-0286-41ba-8452-29e92772a27a",
                               "status": "created",
-                              "individual_gift_link": "https://gifts.ongoody.com/gift/JVEW5QTLNEGKAJQFPRZCZ0RO",
+                              "individual_gift_link": "https://gifts.ongoody.com/gift/0YXNPGUU7FTVDB6KJKY0RX1T",
                               "recipient_first_name": "Alena",
                               "recipient_last_name": "Kenter",
                               "recipient_email": "alena@ongoody.com",
-                              "card_id": "051a7ad4-314a-446a-94a8-fc0208dece0e",
+                              "card_id": "1e6ad21f-3417-4384-b507-f214919470cd",
                               "message": "Test Message",
                               "thank_you_note": null,
                               "view_count_recipient": 0,
                               "is_swapped": false,
-                              "order_batch_id": "c31ef459-b01f-4052-ae05-69aa5405136d",
+                              "order_batch_id": "fa62078d-d4aa-4ff5-b8ed-864d86eb92fa",
                               "expires_at": null,
                               "cart": {
-                                "id": "6bf2a115-4469-4b00-ae0e-5b8445cac87f",
+                                "id": "47b669d5-9091-4586-b0f5-2ee8aba86fda",
                                 "items": [
                                   {
-                                    "id": "dc624b47-2eab-4484-9eec-bc0e8a14125a",
+                                    "id": "32fb7e14-52cf-4118-bdec-764e83e720a2",
                                     "quantity": 1,
                                     "product": {
-                                      "id": "4fcc966b-192d-43e2-82eb-b4f79ce823e8",
+                                      "id": "ae75564e-b729-4229-8f1f-c819f8f1ea3b",
                                       "name": "Cookies",
                                       "brand": {
-                                        "id": "fc9f55a3-72c0-461a-b674-f598a396909c",
+                                        "id": "f2610d72-b0e0-4ce5-8fc3-390e5227862e",
                                         "name": "Cookie Company"
                                       }
                                     }
@@ -2806,40 +2851,40 @@
                               "sender": {
                                 "first_name": "Test",
                                 "last_name": "User",
-                                "email": "15552740454@test.ongoody.com"
+                                "email": "15557644892@test.ongoody.com"
                               },
-                              "workspace_id": "802d17c1-6a58-4976-8c6c-d1d8bc1d3ff0",
+                              "workspace_id": "83f4ae46-276a-479a-9f12-c94686481838",
                               "workspace_name": "Test Team",
                               "original_cart": null,
                               "original_amounts": null,
-                              "reference_id": "YAPJATTL6N3D23QQ6GHURDTI",
+                              "reference_id": "TTAII5TX0KXHGW5P0BQRRXOH",
                               "payment_link": null
                             },
                             {
-                              "id": "5084ef51-35d3-4dd1-8610-59a02dd66f55",
+                              "id": "aba75e55-a934-4a5e-8e14-b62ab1284f0e",
                               "status": "created",
-                              "individual_gift_link": "https://gifts.ongoody.com/gift/JJFBRMLXAWGHNFISH6PPBTMK",
+                              "individual_gift_link": "https://gifts.ongoody.com/gift/AZ9MTCA6GCTGW4BFKVULATPE",
                               "recipient_first_name": "Michael",
                               "recipient_last_name": "Franci",
                               "recipient_email": "michael@ongoody.com",
-                              "card_id": "051a7ad4-314a-446a-94a8-fc0208dece0e",
+                              "card_id": "1e6ad21f-3417-4384-b507-f214919470cd",
                               "message": "Test Message",
                               "thank_you_note": null,
                               "view_count_recipient": 0,
                               "is_swapped": false,
-                              "order_batch_id": "c31ef459-b01f-4052-ae05-69aa5405136d",
+                              "order_batch_id": "fa62078d-d4aa-4ff5-b8ed-864d86eb92fa",
                               "expires_at": null,
                               "cart": {
-                                "id": "6bf2a115-4469-4b00-ae0e-5b8445cac87f",
+                                "id": "47b669d5-9091-4586-b0f5-2ee8aba86fda",
                                 "items": [
                                   {
-                                    "id": "dc624b47-2eab-4484-9eec-bc0e8a14125a",
+                                    "id": "32fb7e14-52cf-4118-bdec-764e83e720a2",
                                     "quantity": 1,
                                     "product": {
-                                      "id": "4fcc966b-192d-43e2-82eb-b4f79ce823e8",
+                                      "id": "ae75564e-b729-4229-8f1f-c819f8f1ea3b",
                                       "name": "Cookies",
                                       "brand": {
-                                        "id": "fc9f55a3-72c0-461a-b674-f598a396909c",
+                                        "id": "f2610d72-b0e0-4ce5-8fc3-390e5227862e",
                                         "name": "Cookie Company"
                                       }
                                     }
@@ -2859,13 +2904,13 @@
                               "sender": {
                                 "first_name": "Test",
                                 "last_name": "User",
-                                "email": "15552740454@test.ongoody.com"
+                                "email": "15557644892@test.ongoody.com"
                               },
-                              "workspace_id": "802d17c1-6a58-4976-8c6c-d1d8bc1d3ff0",
+                              "workspace_id": "83f4ae46-276a-479a-9f12-c94686481838",
                               "workspace_name": "Test Team",
                               "original_cart": null,
                               "original_amounts": null,
-                              "reference_id": "S7LYENJN1ZV6N3ZUTCLCFB9J",
+                              "reference_id": "ARJBKY3TDUQLTY6SZ7YLZUA2",
                               "payment_link": null
                             }
                           ],
@@ -2883,16 +2928,16 @@
                             }
                           ],
                           "cart": {
-                            "id": "6bf2a115-4469-4b00-ae0e-5b8445cac87f",
+                            "id": "47b669d5-9091-4586-b0f5-2ee8aba86fda",
                             "items": [
                               {
-                                "id": "dc624b47-2eab-4484-9eec-bc0e8a14125a",
+                                "id": "32fb7e14-52cf-4118-bdec-764e83e720a2",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "4fcc966b-192d-43e2-82eb-b4f79ce823e8",
+                                  "id": "ae75564e-b729-4229-8f1f-c819f8f1ea3b",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "fc9f55a3-72c0-461a-b674-f598a396909c",
+                                    "id": "f2610d72-b0e0-4ce5-8fc3-390e5227862e",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -2903,16 +2948,16 @@
                           "scheduled_send_on": null,
                           "expires_at": null,
                           "send_method": null,
-                          "batch_name": "Thank You from Heller-Rutherford",
-                          "card_id": "051a7ad4-314a-446a-94a8-fc0208dece0e",
+                          "batch_name": "Thank You from Orn-Rath",
+                          "card_id": "1e6ad21f-3417-4384-b507-f214919470cd",
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15552740454@test.ongoody.com"
+                            "email": "15557644892@test.ongoody.com"
                           },
-                          "workspace_id": "802d17c1-6a58-4976-8c6c-d1d8bc1d3ff0",
+                          "workspace_id": "83f4ae46-276a-479a-9f12-c94686481838",
                           "workspace_name": "Test Team",
-                          "reference_id": "ZIRY2B6XNO8M6XRZZUXV6PKT"
+                          "reference_id": "AAQFCEJWTFQFBRYALWLYFWXQ"
                         }
                       ],
                       "list_meta": {
@@ -2996,30 +3041,30 @@
                     "value": {
                       "data": [
                         {
-                          "id": "172555b3-75bd-430b-a6ad-38e7e8274824",
+                          "id": "df8e85b2-7d62-42c9-b5ff-53b8b2553c88",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/NB8WJFJ6BSV3KHUO48RTJP8P",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/FSVSEBAXIDKFYCPZRJOIEPLN",
                           "recipient_first_name": "Alena",
                           "recipient_last_name": "Kenter",
                           "recipient_email": "alena@ongoody.com",
-                          "card_id": "7ae97dd1-93ac-4989-84e0-b4feac1cba74",
+                          "card_id": "402be0b5-e054-4560-94a6-961d48a0136c",
                           "message": "Test Message",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "1381198c-50d8-47f1-9965-65395b33b829",
+                          "order_batch_id": "f388325b-6ac0-4c93-87fb-a484d729fb1b",
                           "expires_at": null,
                           "cart": {
-                            "id": "aee5e64f-6f61-49d4-9f96-525b783ae409",
+                            "id": "42428538-f157-476b-a2dd-b15ab5f91f8c",
                             "items": [
                               {
-                                "id": "ff7f5b8b-61ad-4b79-8b92-321304c925bc",
+                                "id": "3b9d7601-313c-44fa-859f-681cd916d841",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "83669e6b-3a4c-4b35-8286-afeeb618b45a",
+                                  "id": "e961f687-a2b5-4443-b1c8-8409e72c9f7e",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "b542e28a-66e8-41f9-ac77-62f05f0fd418",
+                                    "id": "3112d5de-bc71-4ba7-911c-0e6518e0ffba",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -3039,40 +3084,40 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15556371626@test.ongoody.com"
+                            "email": "15553041792@test.ongoody.com"
                           },
-                          "workspace_id": "5a020532-1ff0-422d-b830-90b3defe6898",
+                          "workspace_id": "f82b6dc6-307d-44fb-ae3f-7fb3eb4ae1fd",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "ROJMLBWKWFPYOVVXN9PI31G4",
+                          "reference_id": "SB1HYIB55EGMQKASEUR5KSZP",
                           "payment_link": null
                         },
                         {
-                          "id": "ea9150f5-a2a5-4516-a118-e4e62b7a764d",
+                          "id": "6122db51-d7ea-4124-aa4e-dcedaa3780dc",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/TPYDYAEUHNIJGRGZRXUSF2G2",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/I9NFGCM3QA8A5P9ILM7MDI3J",
                           "recipient_first_name": "Michael",
                           "recipient_last_name": "Franci",
                           "recipient_email": "michael@ongoody.com",
-                          "card_id": "7ae97dd1-93ac-4989-84e0-b4feac1cba74",
+                          "card_id": "402be0b5-e054-4560-94a6-961d48a0136c",
                           "message": "Test Message",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "1381198c-50d8-47f1-9965-65395b33b829",
+                          "order_batch_id": "f388325b-6ac0-4c93-87fb-a484d729fb1b",
                           "expires_at": null,
                           "cart": {
-                            "id": "aee5e64f-6f61-49d4-9f96-525b783ae409",
+                            "id": "42428538-f157-476b-a2dd-b15ab5f91f8c",
                             "items": [
                               {
-                                "id": "ff7f5b8b-61ad-4b79-8b92-321304c925bc",
+                                "id": "3b9d7601-313c-44fa-859f-681cd916d841",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "83669e6b-3a4c-4b35-8286-afeeb618b45a",
+                                  "id": "e961f687-a2b5-4443-b1c8-8409e72c9f7e",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "b542e28a-66e8-41f9-ac77-62f05f0fd418",
+                                    "id": "3112d5de-bc71-4ba7-911c-0e6518e0ffba",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -3092,13 +3137,13 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15556371626@test.ongoody.com"
+                            "email": "15553041792@test.ongoody.com"
                           },
-                          "workspace_id": "5a020532-1ff0-422d-b830-90b3defe6898",
+                          "workspace_id": "f82b6dc6-307d-44fb-ae3f-7fb3eb4ae1fd",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "4SJS08TPSE5JXHSFGCGGOWRJ",
+                          "reference_id": "N4Y7FPNTOPZULINM01NPFEUG",
                           "payment_link": null
                         }
                       ],
@@ -3285,7 +3330,7 @@
                     "cart": {
                       "items": [
                         {
-                          "product_id": "312b1b60-e789-4133-8881-ba606becc358",
+                          "product_id": "a54193b0-fdfc-4507-9569-1a599f9bb200",
                           "quantity": 1
                         }
                       ]
@@ -3478,37 +3523,37 @@
                 "examples": {
                   "Order batch retrieved": {
                     "value": {
-                      "id": "c97583e0-8305-40f7-9e23-973a92c64581",
+                      "id": "3269d8b5-e5ee-44e7-b709-dc1eaddf86cf",
                       "send_status": "complete",
-                      "from_name": "Herlinda",
+                      "from_name": "Hipolito",
                       "message": null,
                       "orders_count": 2,
                       "orders_preview": [
                         {
-                          "id": "33febcbf-6bed-4902-a077-263d66176964",
+                          "id": "243ee87f-21be-4cde-845c-f9cf083e45f0",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/N8ANGSC5GMDAZXLZKBLLUUDQ",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/NXYDZ42LPSDMQTNIFXKNXJDD",
                           "recipient_first_name": "Alena",
                           "recipient_last_name": "Kenter",
                           "recipient_email": "alena@ongoody.com",
-                          "card_id": "4cb1ac24-f238-49ef-a537-0196fc2757d2",
+                          "card_id": "b46b9e16-4e30-4340-92b2-290c0c1c614d",
                           "message": "Test Message",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "c97583e0-8305-40f7-9e23-973a92c64581",
+                          "order_batch_id": "3269d8b5-e5ee-44e7-b709-dc1eaddf86cf",
                           "expires_at": null,
                           "cart": {
-                            "id": "afaec8ae-66fc-41ea-b4a0-e0fa9985213b",
+                            "id": "3d8f61ea-30c6-46e3-bcd8-fc9224514c63",
                             "items": [
                               {
-                                "id": "d11f394b-9e71-495d-8d1e-cf2f734cf78c",
+                                "id": "78985903-aa3b-4ac7-9329-818d185c7d5d",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "b3a0ac83-05dd-45fc-94a4-b66e9debe27d",
+                                  "id": "992527cf-d58f-4afd-8591-34744343cb84",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "28d2e9ef-0503-4715-9e70-5e2e91c0f752",
+                                    "id": "d01720bb-424d-431e-81ea-a4e2ea888d5d",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -3528,40 +3573,40 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15556935707@test.ongoody.com"
+                            "email": "15557713376@test.ongoody.com"
                           },
-                          "workspace_id": "6b55a6d4-5c6f-4715-84a8-adfbfc25ff56",
+                          "workspace_id": "7fc603c1-67ec-47ce-b4f1-9eb0cdd62680",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "WXTAQ0MHMY8RICJU9XARHB4B",
+                          "reference_id": "KX3Z1HGQ0OTOE1SSRVYTLWAS",
                           "payment_link": null
                         },
                         {
-                          "id": "e5603128-f4c7-43fb-9448-3dbedec6120d",
+                          "id": "7fcd22f2-b6a4-43f7-a460-d88b4192ec61",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/RBJWQDAR4FZ7DEFXD8YWWOXQ",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/NFUSMVPN39ZRXMTPRCQFF5AK",
                           "recipient_first_name": "Michael",
                           "recipient_last_name": "Franci",
                           "recipient_email": "michael@ongoody.com",
-                          "card_id": "4cb1ac24-f238-49ef-a537-0196fc2757d2",
+                          "card_id": "b46b9e16-4e30-4340-92b2-290c0c1c614d",
                           "message": "Test Message",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "c97583e0-8305-40f7-9e23-973a92c64581",
+                          "order_batch_id": "3269d8b5-e5ee-44e7-b709-dc1eaddf86cf",
                           "expires_at": null,
                           "cart": {
-                            "id": "afaec8ae-66fc-41ea-b4a0-e0fa9985213b",
+                            "id": "3d8f61ea-30c6-46e3-bcd8-fc9224514c63",
                             "items": [
                               {
-                                "id": "d11f394b-9e71-495d-8d1e-cf2f734cf78c",
+                                "id": "78985903-aa3b-4ac7-9329-818d185c7d5d",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "b3a0ac83-05dd-45fc-94a4-b66e9debe27d",
+                                  "id": "992527cf-d58f-4afd-8591-34744343cb84",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "28d2e9ef-0503-4715-9e70-5e2e91c0f752",
+                                    "id": "d01720bb-424d-431e-81ea-a4e2ea888d5d",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -3581,13 +3626,13 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15556935707@test.ongoody.com"
+                            "email": "15557713376@test.ongoody.com"
                           },
-                          "workspace_id": "6b55a6d4-5c6f-4715-84a8-adfbfc25ff56",
+                          "workspace_id": "7fc603c1-67ec-47ce-b4f1-9eb0cdd62680",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "YIOTWKAL7ZFLTDSMENCAQRYG",
+                          "reference_id": "YQU1OP6PUUOB3TXTBWV741ZU",
                           "payment_link": null
                         }
                       ],
@@ -3605,16 +3650,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "afaec8ae-66fc-41ea-b4a0-e0fa9985213b",
+                        "id": "3d8f61ea-30c6-46e3-bcd8-fc9224514c63",
                         "items": [
                           {
-                            "id": "d11f394b-9e71-495d-8d1e-cf2f734cf78c",
+                            "id": "78985903-aa3b-4ac7-9329-818d185c7d5d",
                             "quantity": 1,
                             "product": {
-                              "id": "b3a0ac83-05dd-45fc-94a4-b66e9debe27d",
+                              "id": "992527cf-d58f-4afd-8591-34744343cb84",
                               "name": "Cookies",
                               "brand": {
-                                "id": "28d2e9ef-0503-4715-9e70-5e2e91c0f752",
+                                "id": "d01720bb-424d-431e-81ea-a4e2ea888d5d",
                                 "name": "Cookie Company"
                               }
                             }
@@ -3625,23 +3670,23 @@
                       "scheduled_send_on": null,
                       "expires_at": null,
                       "send_method": null,
-                      "batch_name": "Thank You from Kihn, Schultz and Price",
-                      "card_id": "4cb1ac24-f238-49ef-a537-0196fc2757d2",
+                      "batch_name": "Thank You from Bailey, Wisoky and Becker",
+                      "card_id": "b46b9e16-4e30-4340-92b2-290c0c1c614d",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15556935707@test.ongoody.com"
+                        "email": "15557713376@test.ongoody.com"
                       },
-                      "workspace_id": "6b55a6d4-5c6f-4715-84a8-adfbfc25ff56",
+                      "workspace_id": "7fc603c1-67ec-47ce-b4f1-9eb0cdd62680",
                       "workspace_name": "Test Team",
-                      "reference_id": "VREUYCVOI3AEJSPOKIX5OR0I"
+                      "reference_id": "LHVECNPJBHEZZK1DTMVEY9CL"
                     }
                   },
                   "Scheduled order batch retrieved": {
                     "value": {
-                      "id": "c1cab0c5-1fc1-4d5c-aa56-919df2b4c307",
+                      "id": "5383171e-6108-4e18-ad79-9ba88164017d",
                       "send_status": "pending",
-                      "from_name": "Mel",
+                      "from_name": "Christian",
                       "message": null,
                       "orders_count": 0,
                       "orders_preview": [],
@@ -3659,16 +3704,16 @@
                         }
                       ],
                       "cart": {
-                        "id": "05991bf4-953d-4eb7-99b8-5363c5323180",
+                        "id": "25c0d31d-5490-442d-b68b-8d2640d68b79",
                         "items": [
                           {
-                            "id": "f7e7bebb-c331-4e0a-a558-dc2550ee2036",
+                            "id": "19e05a20-767c-4db7-bc17-fefeac783c4d",
                             "quantity": 1,
                             "product": {
-                              "id": "b7fd24e0-dc14-4d7c-99b5-679c5a63179f",
+                              "id": "93394874-7d6e-4189-aea5-0be19d4e1430",
                               "name": "Cookies",
                               "brand": {
-                                "id": "28d2e9ef-0503-4715-9e70-5e2e91c0f752",
+                                "id": "d01720bb-424d-431e-81ea-a4e2ea888d5d",
                                 "name": "Cookie Company"
                               }
                             }
@@ -3676,19 +3721,19 @@
                         ]
                       },
                       "is_scheduled_send": true,
-                      "scheduled_send_on": "2025-05-25T05:07:32Z",
+                      "scheduled_send_on": "2025-09-19T05:09:40Z",
                       "expires_at": null,
                       "send_method": null,
-                      "batch_name": "Thank You from Runolfsson, Kulas and Krajcik",
-                      "card_id": "4cb1ac24-f238-49ef-a537-0196fc2757d2",
+                      "batch_name": "Thank You from Stokes Group",
+                      "card_id": "b46b9e16-4e30-4340-92b2-290c0c1c614d",
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15556935707@test.ongoody.com"
+                        "email": "15557713376@test.ongoody.com"
                       },
-                      "workspace_id": "6b55a6d4-5c6f-4715-84a8-adfbfc25ff56",
+                      "workspace_id": "7fc603c1-67ec-47ce-b4f1-9eb0cdd62680",
                       "workspace_name": "Test Team",
-                      "reference_id": "A9K0DOWOXPVHBFOOHVWZQ4GJ"
+                      "reference_id": "J3HN4DQZYALVUBFGZAUEA8V5"
                     }
                   }
                 },
@@ -3748,36 +3793,44 @@
                 "examples": {
                   "Order canceled": {
                     "value": {
-                      "id": "0f551406-56be-468c-842a-e512a5cf8993",
+                      "id": "31a59fd9-c977-441d-83f4-f24a06d55996",
                       "status": "failed",
-                      "individual_gift_link": "https://gifts.ongoody.com/gift/KOKDCDG0CJR7L7NKG2OH29EY",
+                      "individual_gift_link": "https://gifts.ongoody.com/gift/AQWZCVXX0KXOU4GZBVFJ29WN",
                       "recipient_first_name": "Alena",
                       "recipient_last_name": "Kenter",
                       "recipient_email": "alena@ongoody.com",
-                      "card_id": "3ce0b4f1-1216-4afe-8701-ee8dbfe8251a",
+                      "card_id": "cae4b41b-ad89-4813-b36b-302df2e3bddd",
                       "message": "Test Message",
                       "thank_you_note": null,
                       "view_count_recipient": 0,
                       "is_swapped": false,
-                      "order_batch_id": "adc154c5-d3f9-4e57-b7fd-c3b769f9289a",
+                      "order_batch_id": "5740075e-b331-4164-aa62-df54cc82ca37",
                       "expires_at": null,
                       "cart": {
-                        "id": "8c3f994a-4317-4d9a-b499-ed10a440e011",
+                        "id": "6477b0a7-c5c9-4130-a50b-7bf873736e4b",
                         "items": [
                           {
-                            "id": "33d79407-c9d4-496e-aff4-dda0ee0b86f7",
+                            "id": "d70a68e4-138e-4f12-810d-6a03169c412d",
                             "quantity": 1,
                             "product": {
-                              "id": "d331e2a0-2f2a-4d7f-b29b-a29c3c3051cd",
+                              "id": "2f8d15a9-7c80-46f5-8494-25ca8adb9358",
                               "name": "Cookies",
                               "brand": {
-                                "id": "d1d0df9a-9eab-4409-8d47-be632451af22",
+                                "id": "65b55e8a-1121-40b3-8816-1d2b215a26ed",
                                 "name": "Cookie Company"
                               }
                             }
                           }
                         ]
                       },
+                      "cart_selections": [
+                        {
+                          "id": "9f19b532-dcdc-425a-938d-e07030183d0b",
+                          "cart_product_id": "27d52552-5571-4dfd-8b21-59e4c702b526",
+                          "quantity_index": 0,
+                          "variants": []
+                        }
+                      ],
                       "shipments": [],
                       "amounts": {
                         "amount_product": 2000,
@@ -3791,13 +3844,13 @@
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15552839974@test.ongoody.com"
+                        "email": "15550998203@test.ongoody.com"
                       },
-                      "workspace_id": "3075861c-6678-4cc1-95e2-37dd1f24cf6e",
+                      "workspace_id": "c8803718-7f89-4cdb-8d7a-d2558a9fa2cf",
                       "workspace_name": "Test Team",
                       "original_cart": null,
                       "original_amounts": null,
-                      "reference_id": "SAVWCIEL10ROW00L9UEJ6HKI",
+                      "reference_id": "LWAOHACKQYFEAN5TBEJ8HN4S",
                       "payment_link": null
                     }
                   }
@@ -3874,30 +3927,30 @@
                     "value": {
                       "data": [
                         {
-                          "id": "dad975b9-c1d6-46a0-979b-beeaae3259a3",
+                          "id": "77d57741-3ef9-49df-8881-ab45ee5d06e0",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/O2B1FMDZGWSSCSI8WRV1TWCS",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/HD9YXYKYAYAXGXMHQYPRK07O",
                           "recipient_first_name": "Michael",
                           "recipient_last_name": "Franci",
                           "recipient_email": "michael@ongoody.com",
-                          "card_id": "f9aa7ab2-83ba-4cba-bda8-98eb97760297",
+                          "card_id": "c40017cc-ed01-44b0-b844-b856c5f7ea4c",
                           "message": "Test Message",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "2b9a6bbc-8283-49a8-9c54-657d2ac4dd0d",
+                          "order_batch_id": "87822dae-b884-426e-9178-ed84c306fbe2",
                           "expires_at": null,
                           "cart": {
-                            "id": "2a48d079-c916-40c4-9fd1-8495071f3bd0",
+                            "id": "e04b8839-fc70-454a-8e68-6509c3a94cd7",
                             "items": [
                               {
-                                "id": "8a28b9f0-ca63-4c9f-b5b5-4f129c6b96ec",
+                                "id": "ec531351-413d-4e48-9c77-cc8725ab2e01",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "3c633c95-ab15-4bd3-b2c5-40dc35c51a05",
+                                  "id": "5d66de04-4229-485e-a655-8bdacea94a6f",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "2cc8b4fb-0a95-4a5c-b8c0-c10bc4b32cd0",
+                                    "id": "9d2abc6e-8be1-4607-a028-9862b47174e4",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -3917,40 +3970,40 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15553149993@test.ongoody.com"
+                            "email": "15553965576@test.ongoody.com"
                           },
-                          "workspace_id": "e47194a9-a259-4189-8b2c-3661bb65a794",
+                          "workspace_id": "0fad54c6-7f97-4c42-af74-3053e04c8699",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "72AV3Q545KJKMUEZI5EI4S6Y",
+                          "reference_id": "YFMS1H0SKNCZG5PTOFFYFKCF",
                           "payment_link": null
                         },
                         {
-                          "id": "9659c393-7ab5-4945-9f3b-892011015bd5",
+                          "id": "e51ce007-8b33-49d1-97f2-d52eb60692e7",
                           "status": "created",
-                          "individual_gift_link": "https://gifts.ongoody.com/gift/C48IQBQPTJDD739F94VLYZ18",
+                          "individual_gift_link": "https://gifts.ongoody.com/gift/TKR4N9BZ2BPHDNETKIH9KEIJ",
                           "recipient_first_name": "Alena",
                           "recipient_last_name": "Kenter",
                           "recipient_email": "alena@ongoody.com",
-                          "card_id": "f9aa7ab2-83ba-4cba-bda8-98eb97760297",
+                          "card_id": "c40017cc-ed01-44b0-b844-b856c5f7ea4c",
                           "message": "Test Message",
                           "thank_you_note": null,
                           "view_count_recipient": 0,
                           "is_swapped": false,
-                          "order_batch_id": "2b9a6bbc-8283-49a8-9c54-657d2ac4dd0d",
+                          "order_batch_id": "87822dae-b884-426e-9178-ed84c306fbe2",
                           "expires_at": null,
                           "cart": {
-                            "id": "2a48d079-c916-40c4-9fd1-8495071f3bd0",
+                            "id": "e04b8839-fc70-454a-8e68-6509c3a94cd7",
                             "items": [
                               {
-                                "id": "8a28b9f0-ca63-4c9f-b5b5-4f129c6b96ec",
+                                "id": "ec531351-413d-4e48-9c77-cc8725ab2e01",
                                 "quantity": 1,
                                 "product": {
-                                  "id": "3c633c95-ab15-4bd3-b2c5-40dc35c51a05",
+                                  "id": "5d66de04-4229-485e-a655-8bdacea94a6f",
                                   "name": "Cookies",
                                   "brand": {
-                                    "id": "2cc8b4fb-0a95-4a5c-b8c0-c10bc4b32cd0",
+                                    "id": "9d2abc6e-8be1-4607-a028-9862b47174e4",
                                     "name": "Cookie Company"
                                   }
                                 }
@@ -3970,13 +4023,13 @@
                           "sender": {
                             "first_name": "Test",
                             "last_name": "User",
-                            "email": "15553149993@test.ongoody.com"
+                            "email": "15553965576@test.ongoody.com"
                           },
-                          "workspace_id": "e47194a9-a259-4189-8b2c-3661bb65a794",
+                          "workspace_id": "0fad54c6-7f97-4c42-af74-3053e04c8699",
                           "workspace_name": "Test Team",
                           "original_cart": null,
                           "original_amounts": null,
-                          "reference_id": "UGEVVBYCNWHDU8ZWHMG7CWEH",
+                          "reference_id": "WYNAJQ8JNI5UIWGUMDLBBGTZ",
                           "payment_link": null
                         }
                       ],
@@ -4036,36 +4089,44 @@
                 "examples": {
                   "Order retrieved": {
                     "value": {
-                      "id": "1d862e7b-6ca8-4480-a9c8-48e5970a5463",
+                      "id": "3a8431ba-7b99-4aed-a748-08268b3cc556",
                       "status": "created",
-                      "individual_gift_link": "https://gifts.ongoody.com/gift/UXJJGYRA7YGNZ43KECV2DATR",
-                      "recipient_first_name": "Michael",
-                      "recipient_last_name": "Franci",
-                      "recipient_email": "michael@ongoody.com",
-                      "card_id": "00cdc35a-d331-4f79-94ef-29ae3444c695",
+                      "individual_gift_link": "https://gifts.ongoody.com/gift/OQJTKATNAV1TCV7BDKKPDL9O",
+                      "recipient_first_name": "Alena",
+                      "recipient_last_name": "Kenter",
+                      "recipient_email": "alena@ongoody.com",
+                      "card_id": "8bc31016-63fe-4581-acc5-63236435dab8",
                       "message": "Test Message",
                       "thank_you_note": null,
                       "view_count_recipient": 0,
                       "is_swapped": false,
-                      "order_batch_id": "9866dfa6-66ca-40d2-9bd2-2ddd0b926122",
+                      "order_batch_id": "f6a973e2-2908-4d5d-a988-a3111934b3d6",
                       "expires_at": null,
                       "cart": {
-                        "id": "5caf251e-3935-4e2f-8885-87af9a2b88f9",
+                        "id": "e6369abc-768a-4c3c-bb6a-99948465ebb5",
                         "items": [
                           {
-                            "id": "8784b049-218b-409c-9f0d-6ba76742b00b",
+                            "id": "847a2cac-c37f-4d4f-a853-cb27df4588b0",
                             "quantity": 1,
                             "product": {
-                              "id": "f69bf60c-c3f8-4d31-815f-bf26209d61d6",
+                              "id": "50082274-89be-4d1e-a2bd-317cf89a3587",
                               "name": "Cookies",
                               "brand": {
-                                "id": "3fda9ed2-ee23-4c3d-9aa1-708f2e262197",
+                                "id": "381fe6b6-7089-44fe-9499-66898da71dbb",
                                 "name": "Cookie Company"
                               }
                             }
                           }
                         ]
                       },
+                      "cart_selections": [
+                        {
+                          "id": "e7cdd0f4-9116-4eea-9d80-7eb6e33e93ce",
+                          "cart_product_id": "b1d1d205-a261-4f38-948a-d700aba2a26f",
+                          "quantity_index": 0,
+                          "variants": []
+                        }
+                      ],
                       "shipments": [],
                       "amounts": {
                         "amount_product": 2000,
@@ -4079,15 +4140,91 @@
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15555978403@test.ongoody.com"
+                        "email": "15554653880@test.ongoody.com"
                       },
-                      "workspace_id": "362fe269-6ab0-4de8-a5d1-cdef192fa3c6",
+                      "workspace_id": "bf999c31-8f34-4548-b601-2af9713ae070",
                       "workspace_name": "Test Team",
                       "original_cart": null,
                       "original_amounts": null,
-                      "reference_id": "IUHDN3GWNB2ZNDP4UQYZB9NL",
+                      "reference_id": "3FFLBYHCTV6B3QOJEF0KRRGC",
                       "event_times": {
-                        "created_at": "2025-05-18T05:07:37Z",
+                        "created_at": "2025-09-12T05:09:47Z",
+                        "notified_at": null,
+                        "opened_at": null,
+                        "accepted_at": null,
+                        "thank_you_added_at": null,
+                        "pending_payment_at": null,
+                        "paid_at": null,
+                        "shipped_at": null,
+                        "delivered_at": null
+                      },
+                      "payment_link": null
+                    }
+                  },
+                  "Order with cart selections": {
+                    "value": {
+                      "id": "011fb779-1bfa-4217-877b-e5ee51beffb4",
+                      "status": "created",
+                      "individual_gift_link": "https://gifts.ongoody.com/gift/DAT8YK1OEXNG8CPSKNDFBQM3",
+                      "recipient_first_name": "Michael",
+                      "recipient_last_name": "Franci",
+                      "recipient_email": "michael@ongoody.com",
+                      "card_id": "ac01b8b7-1c55-467e-bd3e-1e6f8d5d829a",
+                      "message": "Test Message",
+                      "thank_you_note": null,
+                      "view_count_recipient": 0,
+                      "is_swapped": false,
+                      "order_batch_id": "e6bc30eb-2b7c-4a3e-a0f8-3131fe14aa92",
+                      "expires_at": null,
+                      "cart": {
+                        "id": "b1e52ec3-90bf-4b31-90aa-b5e0dce8d3e1",
+                        "items": [
+                          {
+                            "id": "a324a5a7-c48b-4637-99ea-460163ca6409",
+                            "quantity": 1,
+                            "product": {
+                              "id": "ca61f1f2-2b6d-42b9-acc8-fd6eeac3e522",
+                              "name": "Cookies",
+                              "brand": {
+                                "id": "eb16104d-50f0-4d14-a721-d92a0008eff3",
+                                "name": "Cookie Company"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "cart_selections": [
+                        {
+                          "id": "a19afa87-7d26-4741-8564-a65a5e184815",
+                          "cart_product_id": "a324a5a7-c48b-4637-99ea-460163ca6409",
+                          "quantity_index": 0,
+                          "variants": [
+                            "Black"
+                          ]
+                        }
+                      ],
+                      "shipments": [],
+                      "amounts": {
+                        "amount_product": 2000,
+                        "amount_shipping": 500,
+                        "amount_processing_fee": 0,
+                        "amount_pre_tax_total": 2500,
+                        "amount_tax": null,
+                        "amount_total": null,
+                        "amount_global_relay_cost": null
+                      },
+                      "sender": {
+                        "first_name": "Test",
+                        "last_name": "User",
+                        "email": "15550264249@test.ongoody.com"
+                      },
+                      "workspace_id": "12809ce5-a445-46b8-aa72-3884e1c48760",
+                      "workspace_name": "Test Team",
+                      "original_cart": null,
+                      "original_amounts": null,
+                      "reference_id": "MCULJHUNU9K8MPKXM3QIDARP",
+                      "event_times": {
+                        "created_at": "2025-09-12T05:09:47Z",
                         "notified_at": null,
                         "opened_at": null,
                         "accepted_at": null,
@@ -4158,30 +4295,30 @@
                 "examples": {
                   "Expiration updated": {
                     "value": {
-                      "id": "3a1d4e77-ef85-4826-b9cd-04d8fc446899",
+                      "id": "1c4db3b1-74d0-4b34-b9d3-f68d099f0263",
                       "status": "created",
-                      "individual_gift_link": "https://gifts.ongoody.com/gift/LPGIWSSWLVC00ADWGEGTTCUZ",
+                      "individual_gift_link": "https://gifts.ongoody.com/gift/NRHB5RF1HCDBOWPMDTUYQIIN",
                       "recipient_first_name": "Michael",
                       "recipient_last_name": "Franci",
                       "recipient_email": "michael@ongoody.com",
-                      "card_id": "af0aff40-e4ce-46d8-949d-ce896c37487a",
+                      "card_id": "e8de92c8-caf5-4e9f-9487-40d17c5bc43f",
                       "message": "Test Message",
                       "thank_you_note": null,
                       "view_count_recipient": 0,
                       "is_swapped": false,
-                      "order_batch_id": "3a3e0097-bd74-42bb-a6f6-fd331983a575",
+                      "order_batch_id": "f55def99-1dc6-43b2-9be0-577444732c12",
                       "expires_at": "2022-02-01T00:00:00Z",
                       "cart": {
-                        "id": "9d43e055-0160-4fef-b4f3-36feb0adc4b1",
+                        "id": "1f90a298-16c3-4cfa-bf96-50fef12357eb",
                         "items": [
                           {
-                            "id": "ce221d75-7536-4749-bbcc-379221e42793",
+                            "id": "076ddc2c-efa1-4e0c-8da4-a9f28e519a56",
                             "quantity": 1,
                             "product": {
-                              "id": "24f4ebb8-abb1-4167-ad3f-203126d08340",
+                              "id": "bfa0e428-0d97-44cc-98c8-24130efc4c4e",
                               "name": "Cookies",
                               "brand": {
-                                "id": "ad1394ec-531b-48c3-bb26-7986124fa9cc",
+                                "id": "36c61bba-9357-4cdb-8462-e69b76b65bc8",
                                 "name": "Cookie Company"
                               }
                             }
@@ -4201,13 +4338,13 @@
                       "sender": {
                         "first_name": "Test",
                         "last_name": "User",
-                        "email": "15555335191@test.ongoody.com"
+                        "email": "15558704946@test.ongoody.com"
                       },
-                      "workspace_id": "50c4fa01-1beb-40b7-9ad6-a3e0a23bbec4",
+                      "workspace_id": "3376592d-26dd-4a9f-ab99-69161b3dc32e",
                       "workspace_name": "Test Team",
                       "original_cart": null,
                       "original_amounts": null,
-                      "reference_id": "QRE5FHXLVXOPBHSMMOYXS6OB",
+                      "reference_id": "RFMBJRTXHGV5DDDBIWIYRA7J",
                       "payment_link": null
                     }
                   }
@@ -4276,12 +4413,12 @@
                     "value": {
                       "data": [
                         {
-                          "id": "2dbc5a55-61fd-4d75-a10c-6cbd4ffa5a51",
+                          "id": "dcf35e5d-eef8-4909-87a3-e3fc23d477d3",
                           "name": "Visa 1234",
                           "cardholder_name": "Card 1"
                         },
                         {
-                          "id": "ca1bb8c8-9c29-4814-8327-830b179afabb",
+                          "id": "cf45cf5f-2924-41f0-b1d4-c945bbb6388b",
                           "name": "Mastercard 5678",
                           "cardholder_name": "Card 2"
                         }
@@ -4403,11 +4540,11 @@
                     "value": {
                       "data": [
                         {
-                          "id": "4e151244-90c2-402f-b4aa-3335110ae0ba",
+                          "id": "b0350bb4-4e81-45d1-a708-f59ae92513c3",
                           "name": "Six Cookies",
                           "brand": {
-                            "id": "1a286c1e-e2aa-40cc-bd91-77c7426de3b7",
-                            "name": "Lakia Reichel LLD",
+                            "id": "0bc64fd1-5127-480a-ae4e-94367511fca5",
+                            "name": "Dollie Rohan",
                             "shipping_price": 1000,
                             "free_shipping_minimum": null,
                             "brand_values": [
@@ -4421,19 +4558,19 @@
                           "variants_num_selectable": 3,
                           "variants": [
                             {
-                              "id": "1c0e26b6-b18e-4a35-89a3-dc50c2024a19",
+                              "id": "8455d82a-54e3-4fb2-a7c8-a0a41476d104",
                               "name": "Chocolate Chip",
                               "subtitle": "Classic chocolate chip.",
                               "image_large": null
                             },
                             {
-                              "id": "13b6e322-6d61-42e3-8ca2-59e1132c4107",
+                              "id": "ab8e916a-0868-40a3-bda2-684fc4df0732",
                               "name": "Oatmeal",
                               "subtitle": "Delicious oatmeal.",
                               "image_large": null
                             },
                             {
-                              "id": "14ec84df-8e33-415b-8ec8-d47208f31e9a",
+                              "id": "6471c5d0-f5cf-44a7-82fd-9d60a386d1f9",
                               "name": "Sugar",
                               "subtitle": "Tasty sugar.",
                               "image_large": null
@@ -4450,61 +4587,15 @@
                               "content": "Made in Miami, FL"
                             }
                           ],
-                          "updated_at": "2025-05-18T05:07:40Z",
+                          "updated_at": "2025-09-12T05:09:51Z",
                           "status": "active"
                         },
                         {
-                          "id": "82083ccc-19f4-480b-9262-c17360106569",
-                          "name": "Dozen Cookies",
-                          "brand": {
-                            "id": "1a286c1e-e2aa-40cc-bd91-77c7426de3b7",
-                            "name": "Lakia Reichel LLD",
-                            "shipping_price": 1000,
-                            "free_shipping_minimum": null,
-                            "brand_values": [
-                              "Sustainable"
-                            ]
-                          },
-                          "subtitle": null,
-                          "subtitle_short": null,
-                          "recipient_description": "",
-                          "variants_label": "option",
-                          "variants_num_selectable": 3,
-                          "variants": [
-                            {
-                              "id": "c50c7517-6600-4af4-bd23-7765d7442b98",
-                              "name": "Chocolate Chip",
-                              "subtitle": "Classic chocolate chip.",
-                              "image_large": null
-                            },
-                            {
-                              "id": "97678dab-c70a-4522-ab41-f24158e8e422",
-                              "name": "Oatmeal",
-                              "subtitle": "Delicious oatmeal.",
-                              "image_large": null
-                            },
-                            {
-                              "id": "e46b9cf9-6551-427a-b349-dc475e115980",
-                              "name": "Sugar",
-                              "subtitle": "Tasty sugar.",
-                              "image_large": null
-                            }
-                          ],
-                          "variant_groups": [],
-                          "images": [],
-                          "price": 1000,
-                          "price_is_variable": false,
-                          "restricted_states": [],
-                          "attributes": [],
-                          "updated_at": "2025-05-18T05:07:40Z",
-                          "status": "active"
-                        },
-                        {
-                          "id": "a94939cf-4af4-4007-accd-a16807f7974c",
+                          "id": "c5d79475-8c35-49e4-ae39-2341da9ff7e9",
                           "name": "Cookie Box",
                           "brand": {
-                            "id": "1a286c1e-e2aa-40cc-bd91-77c7426de3b7",
-                            "name": "Lakia Reichel LLD",
+                            "id": "0bc64fd1-5127-480a-ae4e-94367511fca5",
+                            "name": "Dollie Rohan",
                             "shipping_price": 1000,
                             "free_shipping_minimum": null,
                             "brand_values": [
@@ -4518,37 +4609,37 @@
                           "variants_num_selectable": 1,
                           "variants": [
                             {
-                              "id": "a0257735-de49-420a-89e7-99337ffffdf2",
+                              "id": "39e33c5d-0756-454a-8fbb-66382adeecec",
                               "name": "Grey / Chocolate Chip",
                               "subtitle": null,
                               "image_large": null
                             },
                             {
-                              "id": "cbe57e10-efc6-4cdc-a06d-f026333cc59e",
+                              "id": "8ed9d1ef-1b41-4c3e-b48e-abe3337f7f83",
                               "name": "Grey / Oatmeal",
                               "subtitle": null,
                               "image_large": null
                             },
                             {
-                              "id": "43d42703-b48f-40fa-a9f3-e1d1b2ca9ea7",
+                              "id": "a381fbe9-9835-4c4a-8fa2-2987c8d2e411",
                               "name": "Grey / Sugar",
                               "subtitle": null,
                               "image_large": null
                             },
                             {
-                              "id": "288fba29-2d53-4a6a-9606-ce8287e58bf2",
+                              "id": "c30922de-89af-49c4-a579-9a820abae481",
                               "name": "Purple / Chocolate Chip",
                               "subtitle": null,
                               "image_large": null
                             },
                             {
-                              "id": "581f9128-0a94-4303-b848-5f0463d9f5e9",
+                              "id": "d83b0c2b-2bda-4aa3-b246-bd42b7ba67c2",
                               "name": "Purple / Oatmeal",
                               "subtitle": null,
                               "image_large": null
                             },
                             {
-                              "id": "5461af37-22c3-45c4-9d1b-402fe0b51fa7",
+                              "id": "68e72190-e75d-486b-8367-75f756352e1f",
                               "name": "Purple / Sugar",
                               "subtitle": null,
                               "image_large": null
@@ -4556,18 +4647,18 @@
                           ],
                           "variant_groups": [
                             {
-                              "id": "5294a9b4-67c1-4711-a7f0-e917587737a8",
+                              "id": "7b2fe399-e404-4418-8a1c-d336171de3bc",
                               "name": "Box Color",
                               "options": [
                                 {
-                                  "id": "365b3ff4-e76e-480a-b159-3ddf64cd32e3",
+                                  "id": "94f2251c-6065-48f8-9298-ec4f9e22c56c",
                                   "name": "Grey",
                                   "subtitle": null,
                                   "color": null,
                                   "image_large": null
                                 },
                                 {
-                                  "id": "97fa4ef6-4fa4-48d0-8b01-93a8351b3b82",
+                                  "id": "702bf10f-0309-406f-9f2a-e673484b3a5a",
                                   "name": "Purple",
                                   "subtitle": null,
                                   "color": null,
@@ -4576,25 +4667,25 @@
                               ]
                             },
                             {
-                              "id": "5366d8aa-ff10-45e6-b751-e2d332d21f4c",
+                              "id": "2bb94efa-4d1b-4fa9-8581-94c6d232408c",
                               "name": "Flavor",
                               "options": [
                                 {
-                                  "id": "fc84a3b4-dcd7-4429-b6bf-b0aa608780a7",
+                                  "id": "488008e7-58a8-4b75-b814-9be70b0a31f3",
                                   "name": "Chocolate Chip",
                                   "subtitle": null,
                                   "color": null,
                                   "image_large": null
                                 },
                                 {
-                                  "id": "42315ca4-7618-4c85-8245-b3ca42fa842e",
+                                  "id": "f5751156-1b30-408f-be94-0cfd7ac7638e",
                                   "name": "Oatmeal",
                                   "subtitle": null,
                                   "color": null,
                                   "image_large": null
                                 },
                                 {
-                                  "id": "19b25e7d-3275-4382-b3e7-b29e11b85d12",
+                                  "id": "a3108f59-16cc-4135-bdd3-ecf46049f901",
                                   "name": "Sugar",
                                   "subtitle": null,
                                   "color": null,
@@ -4608,7 +4699,53 @@
                           "price_is_variable": false,
                           "restricted_states": [],
                           "attributes": [],
-                          "updated_at": "2025-05-18T05:07:40Z",
+                          "updated_at": "2025-09-12T05:09:51Z",
+                          "status": "active"
+                        },
+                        {
+                          "id": "db05f4d5-3f01-4c50-a42e-37f47417bd0a",
+                          "name": "Dozen Cookies",
+                          "brand": {
+                            "id": "0bc64fd1-5127-480a-ae4e-94367511fca5",
+                            "name": "Dollie Rohan",
+                            "shipping_price": 1000,
+                            "free_shipping_minimum": null,
+                            "brand_values": [
+                              "Sustainable"
+                            ]
+                          },
+                          "subtitle": null,
+                          "subtitle_short": null,
+                          "recipient_description": "",
+                          "variants_label": "option",
+                          "variants_num_selectable": 3,
+                          "variants": [
+                            {
+                              "id": "328f365c-a45f-4361-be29-d660ce69bd88",
+                              "name": "Chocolate Chip",
+                              "subtitle": "Classic chocolate chip.",
+                              "image_large": null
+                            },
+                            {
+                              "id": "370f05b0-1762-4df4-b4ac-88c69a8115df",
+                              "name": "Oatmeal",
+                              "subtitle": "Delicious oatmeal.",
+                              "image_large": null
+                            },
+                            {
+                              "id": "aa3a402e-112c-40c5-9b6b-624646f89e84",
+                              "name": "Sugar",
+                              "subtitle": "Tasty sugar.",
+                              "image_large": null
+                            }
+                          ],
+                          "variant_groups": [],
+                          "images": [],
+                          "price": 1000,
+                          "price_is_variable": false,
+                          "restricted_states": [],
+                          "attributes": [],
+                          "updated_at": "2025-09-12T05:09:51Z",
                           "status": "active"
                         }
                       ],
@@ -4677,11 +4814,11 @@
                 "examples": {
                   "Product retrieved": {
                     "value": {
-                      "id": "857e09f8-4dbc-4c02-93e7-4c60ec0b9ccb",
+                      "id": "ac06df25-f926-430d-8d64-c36c00f69f1e",
                       "name": "Six Cookies",
                       "brand": {
-                        "id": "15e37a41-4726-4c98-98b3-f200a0fb8faf",
-                        "name": "Nolan Lind DDS",
+                        "id": "632637c1-2d3e-4051-9e8a-820162c45d21",
+                        "name": "Theo Brakus",
                         "shipping_price": 1000,
                         "free_shipping_minimum": null,
                         "brand_values": []
@@ -4693,19 +4830,19 @@
                       "variants_num_selectable": 3,
                       "variants": [
                         {
-                          "id": "0e775a47-269d-49bd-a77f-aad743542022",
+                          "id": "16523da2-80b4-49e0-bf99-63a7fea7c280",
                           "name": "Chocolate Chip",
                           "subtitle": "Classic chocolate chip.",
                           "image_large": null
                         },
                         {
-                          "id": "e288f9bd-bd42-4af9-8813-e473791ad8e4",
+                          "id": "57d236e5-ddcc-4ab6-9c11-8232946ee4b2",
                           "name": "Oatmeal",
                           "subtitle": "Delicious oatmeal.",
                           "image_large": null
                         },
                         {
-                          "id": "e2faf508-96d2-4a80-92b7-8079dc10d96b",
+                          "id": "38cd84a5-7e75-46d8-b486-28b8509336a5",
                           "name": "Sugar",
                           "subtitle": "Tasty sugar.",
                           "image_large": null
@@ -4717,7 +4854,7 @@
                       "price_is_variable": false,
                       "restricted_states": [],
                       "attributes": [],
-                      "updated_at": "2025-05-18T05:07:41Z",
+                      "updated_at": "2025-09-12T05:09:52Z",
                       "status": "active"
                     }
                   }
@@ -4768,7 +4905,7 @@
                 "examples": {
                   "Webhook endpoint created": {
                     "value": {
-                      "id": "858c5bd3-4c2b-44cc-bbd5-15f5e4c1bd8b"
+                      "id": "2f4054bc-a089-44d8-afcc-915282e9fdff"
                     }
                   }
                 },
@@ -4911,11 +5048,11 @@
                     "value": {
                       "data": [
                         {
-                          "id": "cbb04923-e559-45ad-96e7-bf8462727579",
+                          "id": "b1df141b-2099-47fe-98a9-a53528c06cb5",
                           "name": "Workspace 1"
                         },
                         {
-                          "id": "349aa9e7-e95c-45a5-aa0e-a77cef5390c9",
+                          "id": "e479b81c-4ec0-4961-a899-a0e423e9fe14",
                           "name": "Workspace 2"
                         }
                       ],

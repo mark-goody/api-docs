@@ -1,0 +1,219 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Goody",
+  "colors": {
+    "primary": "#9159D6",
+    "light": "#B584F1",
+    "dark": "#9159D6"
+  },
+  "favicon": "/favicon.png",
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "introduction/overview",
+              "introduction/order-lifecycle",
+              "introduction/send-methods",
+              "introduction/developer-mode",
+              "introduction/send-to-address"
+            ]
+          },
+          {
+            "group": "Commerce API",
+            "pages": [
+              "commerce-api/overview",
+              "commerce-api/authentication",
+              "commerce-api/access-the-catalog",
+              "commerce-api/create-an-order",
+              "commerce-api/retrieve-order-status",
+              "commerce-api/webhooks",
+              "commerce-api/payment",
+              "commerce-api/embedded-payment-form"
+            ]
+          },
+          {
+            "group": "Automation API",
+            "pages": [
+              "automation-api/overview",
+              "automation-api/authentication",
+              "automation-api/create-an-order",
+              "automation-api/retrieve-order-status",
+              "automation-api/webhooks",
+              "automation-api/access-the-catalog",
+              "automation-api/zapier"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "webhooks/overview",
+              "webhooks/webhook-security",
+              {
+                "group": "Events",
+                "pages": [
+                  "webhooks/events/order_batch.created",
+                  "webhooks/events/order_batch.completed",
+                  "webhooks/events/order.created",
+                  "webhooks/events/order.gift_opened",
+                  "webhooks/events/order.gift_accepted",
+                  "webhooks/events/order.thank_you_note_added",
+                  "webhooks/events/order.shipped",
+                  "webhooks/events/order.delivered",
+                  "webhooks/events/order.canceled",
+                  "webhooks/events/order.refunded"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "resources/changelog"
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "API Reference",
+        "icon": "square-terminal",
+        "groups": [
+          {
+            "group": "Order Batches",
+            "pages": [
+              "api-reference/order-batches/create-an-order-batch",
+              "api-reference/order-batches/list-all-order-batches",
+              "api-reference/order-batches/retrieve-an-order-batch",
+              "api-reference/order-batches/retrieve-orders-for-an-order-batch",
+              "api-reference/order-batches/retrieve-recipients-for-an-order-batch",
+              "api-reference/order-batches/calculate-the-price-for-an-order-batch"
+            ]
+          },
+          {
+            "group": "Orders",
+            "pages": [
+              "api-reference/orders/list-all-orders",
+              "api-reference/orders/retrieve-an-order",
+              "api-reference/orders/cancel-an-order",
+              "api-reference/orders/update-expiration-for-an-order"
+            ]
+          },
+          {
+            "group": "Products",
+            "pages": [
+              "api-reference/products/list-all-active-products",
+              "api-reference/products/retrieve-a-product"
+            ]
+          },
+          {
+            "group": "Payment Methods",
+            "pages": [
+              "api-reference/payment-methods/list-all-payment-methods"
+            ]
+          },
+          {
+            "group": "Commerce User Payment Methods",
+            "pages": [
+              "api-reference/commerce-user-payment-methods/create-a-commerce-user-payment-method"
+            ]
+          },
+          {
+            "group": "Workspaces",
+            "pages": [
+              "api-reference/workspaces/list-all-workspaces"
+            ]
+          },
+          {
+            "group": "Cards",
+            "pages": [
+              "api-reference/cards/list-all-active-cards"
+            ]
+          },
+          {
+            "group": "Me",
+            "pages": [
+              "api-reference/retrieve-current-user"
+            ]
+          },
+          {
+            "group": "Schemas",
+            "pages": [
+              {
+                "group": "Schemas",
+                "pages": [
+                  "api-reference/schemas/error",
+                  "api-reference/schemas/listmeta",
+                  "api-reference/schemas/orderbatch",
+                  "api-reference/schemas/order",
+                  "api-reference/schemas/orderbatchrecipient",
+                  "api-reference/schemas/cart",
+                  "api-reference/schemas/cartitem",
+                  "api-reference/schemas/orderbatchsendstatus",
+                  "api-reference/schemas/orderstatus",
+                  "api-reference/schemas/shipment",
+                  "api-reference/schemas/product",
+                  "api-reference/schemas/brand",
+                  "api-reference/schemas/productimage",
+                  "api-reference/schemas/productvariant",
+                  "api-reference/schemas/image",
+                  "api-reference/schemas/mailingaddress",
+                  "api-reference/schemas/me",
+                  "api-reference/schemas/sender",
+                  "api-reference/schemas/orderbatchinput",
+                  "api-reference/schemas/cartinput",
+                  "api-reference/schemas/cartiteminput",
+                  "api-reference/schemas/orderbatchsendmethod",
+                  "api-reference/schemas/recipientinput",
+                  "api-reference/schemas/commerce",
+                  "api-reference/schemas/recipientinput"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo.svg",
+    "dark": "/logo.svg"
+  },
+  "api": {
+    "openapi": "goody-api-openapi.json",
+    "mdx": {
+      "server": "https://api.ongoody.com",
+      "auth": {
+        "method": "bearer"
+      }
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Commerce API Keys",
+        "href": "https://www.ongoody.com/plus/organization/api/commerce"
+      },
+      {
+        "label": "Automation API Keys",
+        "href": "https://www.ongoody.com/plus/organization/api/automation"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/goodygifting",
+      "linkedin": "https://www.linkedin.com/company/ongoody",
+      "instagram": "https://instagram.com/ongoody"
+    }
+  },
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-7CST37MNCX"
+    }
+  }
+}

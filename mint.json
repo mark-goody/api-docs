@@ -5,6 +5,7 @@
     "light": "/logo.svg",
     "dark": "/logo.svg"
   },
+  "theme": "palm",
   "api": {
     "baseUrl": "https://api.ongoody.com",
     "auth": {

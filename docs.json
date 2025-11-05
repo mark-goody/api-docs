@@ -135,6 +135,13 @@
             ]
           },
           {
+            "group": "Collections",
+            "pages": [
+              "api-reference/collections/list-all-collections",
+              "api-reference/collections/retrieve-a-collection"
+            ]
+          },
+          {
             "group": "Me",
             "pages": [
               "api-reference/retrieve-current-user"

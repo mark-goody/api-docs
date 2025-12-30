@@ -104,6 +104,12 @@
             ]
           },
           {
+            "group": "Order Activities",
+            "pages": [
+              "api-reference/order-activities/list-all-order-activities"
+            ]
+          },
+          {
             "group": "Products",
             "pages": [
               "api-reference/products/list-all-active-products",

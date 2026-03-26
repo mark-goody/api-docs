@@ -104,6 +104,12 @@
             ]
           },
           {
+            "group": "Brands",
+            "pages": [
+              "api-reference/brands/list-all-active-brands"
+            ]
+          },
+          {
             "group": "Products",
             "pages": [
               "api-reference/products/list-all-active-products",

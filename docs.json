@@ -117,6 +117,12 @@
             ]
           },
           {
+            "group": "Brands",
+            "pages": [
+              "api-reference/brands/list-all-brands"
+            ]
+          },
+          {
             "group": "Payment Methods",
             "pages": [
               "api-reference/payment-methods/list-all-payment-methods"

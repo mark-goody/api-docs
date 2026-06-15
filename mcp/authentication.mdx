@@ -1,0 +1,35 @@
+---
+title: "Authentication & permissions"
+sidebarTitle: "Authentication"
+description: "How OAuth sign-in works for the Goody MCP server, and what the Read, Write, and Send gifts permissions allow."
+---
+
+The Goody MCP server authenticates with **OAuth** — authorization code flow with PKCE, refresh tokens, and Dynamic Client Registration. You don't configure any of this by hand: your MCP client discovers the endpoints automatically and walks you through Goody's sign-in screen.
+
+## Signing in
+
+When you connect, your client redirects you to Goody to sign in (or create a Goody for Business account). You then review and approve the permissions the connector requests. You can revoke that approval at any time — see [Disconnecting](#disconnecting).
+
+## Permissions
+
+When you authorize, Goody requests three permissions:
+
+| Permission | What it lets the assistant do |
+|---|---|
+| **Read** | See your account basics — profile, workspaces, contacts, contact lists, past gifts and orders, and saved payment methods (display names only, never card numbers) — and browse Goody's gift catalog and greeting cards. |
+| **Write** | Create and edit things that don't cost money: add or update contacts, create contact lists, and calculate the price of a gift before anything is sent. |
+| **Send gifts** | Send gifts and set up recurring autogifts using your saved payment methods. **This is the only permission that can spend money — and it always works with your confirmation:** the assistant must show the estimated total and get your explicit "yes" before any gift is sent. |
+
+<Warning>
+  Pricing a gift never charges anything — it's a free estimate. Only the **Send
+  gifts** actions move money, and only after you confirm.
+</Warning>
+
+## Disconnecting
+
+You're in control of the connection from either side:
+
+- **From Goody:** open **Goody for Business → account settings → Connect AI tools**. You'll see every connected AI tool, when it connected, and its permissions — click **Disconnect** to revoke it instantly.
+- **From Claude:** remove or disable the Goody connector in **Settings → Connectors**.
+
+A disconnected tool must be re-authorized by you before it can access your account again.

@@ -1,35 +1,49 @@
 ---
-title: "Goody API"
+title: "Goody for developers"
 sidebarTitle: "Overview"
-description: "Goody's API lets you send physical products and gifts programmatically."
+description: "Send physical products and gifts programmatically with the Goody API, or gift directly from Claude and other AI assistants with the Goody MCP server."
 ---
 
-- **Send gifts without an address**. You can generate a gift link where they can view your gift, have the option of swapping it for something else, and enter their address themselves
-- **Ship physical products to an address**. If you already have an address, Goody can ship products and handle all the logistics.
+Goody lets you send gifts and physical products programmatically — no mailing address required.
 
-## Available APIs
+- **Send gifts without an address**. Generate a gift link where the recipient can view the gift, swap it for something else, and enter their own address.
+- **Ship physical products to an address**. If you already have an address, Goody ships the product and handles all the logistics.
 
-Goody provides two APIs depending on your use case:
+There are two ways to build on Goody:
 
-<Card
-    title="Commerce API — to add commerce to your app"
+## The API
+
+Programmatic gifting and commerce over a REST API.
+
+<CardGroup cols={2}>
+  <Card
+    title="Commerce API"
     icon="truck-ramp-couch"
     href="/commerce-api/overview"
     icontype="duotone"
->
-    Sell physical products in your app without handling inventory, partnerships,
-    or logistics. Access our product catalog, gift without an address, and earn a
-    revenue share.
-</Card>
+  >
+    Sell physical products in your app without handling inventory, partnerships, or logistics. Access our catalog, gift without an address, and earn a revenue share.
+  </Card>
+  <Card
+    title="Automation API"
+    icon="wand-sparkles"
+    href="/automation-api/overview"
+    icontype="duotone"
+  >
+    Automate your own gifting and sending. Create custom integrations to send one or hundreds of gifts programmatically — or use our Zapier app for no-code workflows.
+  </Card>
+</CardGroup>
+
+## The MCP server
+
+Send and manage gifts directly from Claude and other AI assistants. Discover a gift, write the card, confirm the price, and send — all in one conversation, with spending always gated behind your confirmation.
+
 <Card
-  title="Automation API — for Goody customers"
-  icon="wand-sparkles"
-  href="/automation-api/overview"
-  icontype="duotone"
+  title="Goody MCP server"
+  icon="robot"
+  href="/mcp/overview"
 >
-  Automate your own gifting and sending. Create custom integrations to send one
-  or hundreds of gifts programmatically. Or use our Zapier app for no-code
-  workflows.
+  Connect Goody to Claude in a couple of clicks and gift in natural language. See the MCP Reference for connection, permissions, and the full tool surface.
 </Card>
 
 ## Production and sandbox environments

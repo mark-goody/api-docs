@@ -1,0 +1,43 @@
+---
+title: "The gifting flow"
+sidebarTitle: "Gifting flow"
+description: "How a gift goes from idea to sent through the Goody connector, and how the spend-confirmation safeguards work."
+---
+
+A send moves through a few clear steps. The assistant orchestrates them for you — this is what's happening under the hood.
+
+<Steps>
+  <Step title="Discover">
+    The assistant searches the catalog by your intent, budget, and occasion (returning up to **5 strong matches**), and can also offer a **Gift of Choice** the recipient picks themselves.
+  </Step>
+  <Step title="Compose">
+    Pick a greeting card and an optional card message (the assistant can draft a few), choose the recipient, and select a payment method.
+  </Step>
+  <Step title="Price">
+    The assistant prices the gift — subtotal, shipping, and estimated tax — and relays the total to you. Pricing is free and can be run as many times as you like.
+  </Step>
+  <Step title="Confirm & send">
+    Only after you say yes does the assistant send the gift. It returns a preview link showing exactly what the recipient will see.
+  </Step>
+</Steps>
+
+## No address needed
+
+Recipients don't need to share an address with you. They receive a gift link (by email, or a link you share), enter their own shipping details when they accept, and can swap the gift for something else — unless you ask to disable swapping.
+
+## How spending is protected
+
+Nothing is charged without you seeing the price and confirming. This is enforced in two layers:
+
+- **In the Goody server.** The send action cannot run until a price has been presented and you've confirmed it. Recurring autogifts are always created **paused** — they can't spend anything until you explicitly activate them.
+- **In the client.** The money-spending actions are flagged as sensitive, so Claude asks your permission before running them rather than acting silently.
+
+Other defaults worth knowing:
+
+- **US shipping is the default.** If your recipient is outside the US, say so — the assistant searches international-friendly gifts and enables global delivery.
+- **Alcohol is excluded by default** unless you explicitly ask for it (alcohol gifts require age attestation and a card payment).
+- **Sending doesn't auto-save recipients** as contacts — the assistant offers to, and only saves if you agree.
+
+## Recurring gifts (autogifts)
+
+An autogift is a rule: "every year on this person's birthday or work anniversary, send this gift." You create one by reusing a gift you've already sent — same gift, card, message, and payment method. Autogifts are always **created paused**, and activating one re-checks that the gift is still available and the payment method still works. Supported triggers today: **birthday**, **work anniversary**, and **employee onboarding**.

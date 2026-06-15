@@ -1,0 +1,66 @@
+---
+title: "Tool reference"
+sidebarTitle: "Tools"
+description: "The 24 tools the Goody MCP server exposes, grouped by area, with the permission each one requires."
+---
+
+The server exposes 24 tools. Each is named `goody_<resource>_<verb>` and requires one of three permissions — **Read**, **Write**, or **Send gifts** (see [Authentication](/mcp/authentication)).
+
+## Account & workspaces
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_me_get` | Read | Get the connected account's profile and the server's current time. |
+| `goody_workspaces_list` | Read | List the workspaces you can gift from. |
+
+## Discover gifts & cards
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_products_search` | Read | Search the catalog by intent, budget, and filters (up to 5 matches). |
+| `goody_products_get` | Read | Retrieve full detail for a single product. |
+| `goody_collections_list` | Read | List curated gift collections. |
+| `goody_gift_of_choice_list` | Read | List "let them pick" Gift of Choice options, optionally budget-framed. |
+| `goody_cards_list` | Read | List greeting cards, filterable by occasion. |
+
+## Contacts
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_contacts_search` | Read | Search workspace contacts by name or email. |
+| `goody_contacts_get` | Read | Retrieve a single contact. |
+| `goody_contacts_create` | Write | Add a workspace contact. |
+| `goody_contacts_update` | Write | Update an existing contact. |
+| `goody_contact_lists_list` | Read | List contact lists. |
+| `goody_contact_lists_create` | Write | Create a contact list. |
+
+## Messages
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_messages_generate` | Read | Draft card-message options for an occasion. |
+
+## Payment methods
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_payment_methods_list` | Read | List saved payment methods (display names only — never card numbers). |
+
+## Send & track gifts
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_order_batches_price` | Write | Calculate the full price of a gift before sending. |
+| `goody_order_batches_create` | Send gifts | Send a gift. Requires explicit confirmation of the price. |
+| `goody_order_batches_list` | Read | List past gift batches. |
+| `goody_order_batches_get` | Read | Retrieve a single gift batch. |
+| `goody_orders_list` | Read | List individual orders. |
+
+## Autogifts
+
+| Tool | Permission | Description |
+|---|---|---|
+| `goody_autogift_rules_list` | Read | List autogift rules. |
+| `goody_autogift_rules_create` | Send gifts | Create a recurring autogift (always created paused). |
+| `goody_autogift_rules_activate` | Send gifts | Activate a paused autogift rule. |
+| `goody_autogift_rules_pause` | Write | Pause an active autogift rule. |

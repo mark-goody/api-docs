@@ -1,0 +1,81 @@
+---
+title: "Capabilities & roadmap"
+sidebarTitle: "Capabilities & roadmap"
+description: "What the Goody MCP server can do today, what it can't do yet, and what's on the roadmap."
+---
+
+A candid map of the connector's surface — what works today, the current limits, and where it's headed. For the exact tools, see the [tool reference](/mcp-reference/tools).
+
+## What you can do today
+
+<AccordionGroup>
+  <Accordion title="Discover gifts & cards" icon="gift">
+    - Search the catalog by intent, budget, and occasion — up to 5 curated matches per search.
+    - Retrieve full detail for a single product.
+    - Browse curated **collections**.
+    - Offer a **Gift of Choice** the recipient picks themselves, optionally framed to a budget.
+    - List Goody greeting cards and filter them by occasion.
+    - Draft card-message options for an occasion.
+  </Accordion>
+  <Accordion title="Send & track gifts" icon="paper-plane">
+    - Price a gift in full (subtotal, shipping, estimated tax) — free and repeatable.
+    - Send a gift by **gift link** or **email**, with a greeting card and message, after explicit price confirmation.
+    - Send to a saved contact or an ad-hoc recipient (name + email).
+    - **International delivery** when the recipient is abroad (US is the default).
+    - Send **gift cards** and other catalog products; recipients can swap their gift unless you disable it.
+    - Review past gift batches and individual orders.
+  </Accordion>
+  <Accordion title="Manage contacts" icon="address-book">
+    - Search, retrieve, create, and update workspace contacts.
+    - Create and list contact lists for group sends and automations.
+  </Accordion>
+  <Accordion title="Automate recurring gifts" icon="repeat">
+    - Create a recurring **autogift** from a gift you've already sent.
+    - Triggers: birthday, work anniversary, and employee onboarding.
+    - List, activate, and pause autogift rules. Rules are always created paused.
+  </Accordion>
+  <Accordion title="Account & workspaces" icon="user">
+    - Identify the connected account and the server's current time.
+    - List the workspaces you can gift from and your saved payment methods (display names only — never card numbers).
+  </Accordion>
+</AccordionGroup>
+
+## Can it do…?
+
+A quick reference for the questions that come up most. "Not yet" means it's on the roadmap; "No" means it's out of scope for the connector.
+
+| Question | Today | Notes |
+|---|---|---|
+| Send a gift without an address | ✅ Yes | Gift link or email; the recipient enters their own address. |
+| Gift of Choice (recipient picks) | ✅ Yes | Optionally budget-framed. |
+| Send a **gift card** | ✅ Yes | Gift-card products live in the catalog — search for them like any product. (Distinct from greeting cards.) |
+| Browse **collections** | ✅ Yes | List curated collections; Gift of Choice draws from them. |
+| **Autogifts** (recurring) | ✅ Yes | Birthday / work anniversary / onboarding; cloned from a past send; created paused. |
+| **Global shipping** | ✅ Yes | US is the default — say the recipient is international and it enables global delivery. |
+| Manage contacts & lists | ✅ Yes | Search, create, update; build lists. |
+| Ship directly to a known address | ⏳ Not yet | Sends go out as a link/email today. |
+| **Calendly** / meeting-request gifts | ⏳ Not yet | Can't attach a meeting requirement to a gift through the connector yet. |
+| Custom / **branded** cards | ⏳ Not yet | Only Goody's standard greeting cards are listed today. |
+| Apply **account credit** (signup/referral/promo) | ⏳ Not yet | Credit isn't applied to gifts sent through the connector yet. |
+| Visual card preview inside the chat | ⏳ Not yet | A preview link is returned after sending; no inline card image yet. |
+| Pre-send preview of the exact gift | ⏳ Not yet | The price is shown before sending; a shareable pre-send preview isn't available yet. |
+| **Smart Links** (reusable, multi-claim links) | ⏳ Not yet | Sends target specific recipients (link or email); reusable claim links aren't exposed. |
+| **Swag** / branded merch on demand | ❌ No | Not available through the connector. |
+| Send from **Gmail** | ❌ No | Goody's Gmail integration is a separate product; this connector is independent of it. |
+| Gift from **another user's** Goody account | ❌ No | The connector acts only as the signed-in user, within workspaces they belong to. |
+
+## Coming soon
+
+<Note>
+  Roadmap items are directional — not commitments or timelines — and reflect what
+  we're actively exploring. They may change.
+</Note>
+
+- Visual card preview and selection inside the conversation.
+- Smarter card discovery, so natural occasion language ("onboarding", "new parent") finds the right card.
+- Access to your workspace's custom and branded cards.
+- A shareable preview of the exact gift before you confirm and send.
+- Richer, recipient-aware gift suggestions.
+- Meeting-request (Calendly-style) settings on gifts.
+- Applying account credit to gifts sent through the connector.
+- One-click connect via the Claude Connectors Directory.

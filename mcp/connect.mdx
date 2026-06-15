@@ -1,0 +1,52 @@
+---
+title: "Connect Goody to Claude"
+sidebarTitle: "Connect"
+description: "Add the Goody connector in Claude from the connectors directory, or as a custom connector using the server URL."
+---
+
+You can connect Goody to Claude — or any MCP-compatible client — in two ways.
+
+## From the connectors directory
+
+<Steps>
+  <Step title="Open Connectors settings">
+    In claude.ai, go to **Settings → Connectors**.
+  </Step>
+  <Step title="Find Goody and connect">
+    Search for **Goody** in the directory and click **Connect**.
+  </Step>
+  <Step title="Sign in to Goody">
+    You'll be redirected to Goody to sign in — or to create a Goody for Business account if you don't have one.
+  </Step>
+  <Step title="Authorize">
+    Review the permissions Goody requests and click **Authorize**. Goody now appears as a connected tool — start a new chat and try an [example prompt](/mcp-reference/example-prompts).
+  </Step>
+</Steps>
+
+## As a custom connector
+
+If you don't see Goody listed yet, add it by URL. This works in Claude and any other MCP client.
+
+<Steps>
+  <Step title="Add a custom connector">
+    In claude.ai, go to **Settings → Connectors → Add custom connector**.
+  </Step>
+  <Step title="Enter the server URL">
+    ```text
+    https://api.ongoody.com/mcp/v1
+    ```
+  </Step>
+  <Step title="Sign in and authorize">
+    Complete the same Goody sign-in and authorization steps as above.
+  </Step>
+</Steps>
+
+<Note>
+  A Goody for Business account is required. The connector acts only within the
+  Goody workspaces you're a member of, and gifts you send appear in your Goody
+  dashboard exactly like gifts sent from the website.
+</Note>
+
+## Supported clients
+
+Any MCP client that supports remote servers with OAuth works, including Claude on web, desktop, and mobile. The server uses the standard Streamable HTTP transport, so no local proxy or command-line setup is required.

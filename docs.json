@@ -50,6 +50,15 @@
             ]
           },
           {
+            "group": "MCP",
+            "pages": [
+              "mcp/overview",
+              "mcp/connect",
+              "mcp/authentication",
+              "mcp/gifting-flow"
+            ]
+          },
+          {
             "group": "Webhooks",
             "pages": [
               "webhooks/overview",
@@ -192,6 +201,26 @@
                   "api-reference/schemas/recipientinput"
                 ]
               }
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "MCP Reference",
+        "icon": "robot",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "mcp-reference/capabilities",
+              "mcp-reference/example-prompts",
+              "mcp-reference/tools"
+            ]
+          },
+          {
+            "group": "Catalog & discovery",
+            "pages": [
+              "mcp-reference/tools/products-search"
             ]
           }
         ]

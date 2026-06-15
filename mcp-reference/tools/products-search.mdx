@@ -1,0 +1,84 @@
+---
+title: "goody_products_search"
+sidebarTitle: "products_search"
+description: "Search Goody's catalog by intent, budget, and filters — returns up to 5 curated matches."
+---
+
+**Permission:** `Read` · **Service:** discovery
+
+Searches Goody's product catalog and returns up to **5** candidate products. There's no pagination — to refine, call again with tighter filters. This is the discovery half of the gifting flow.
+
+## Parameters
+
+<ParamField body="query" type="string">
+  Free-text intent — recipient interests, vibe, or occasion (e.g. "tea lover", "Vermont maple syrup").
+</ParamField>
+
+<ParamField body="price_min" type="integer">
+  Minimum price, in cents (e.g. `2500` for $25).
+</ParamField>
+
+<ParamField body="price_max" type="integer">
+  Maximum price, in cents.
+</ParamField>
+
+<ParamField body="exclude_alcohol" type="boolean" default="true">
+  Defaults to true. Set false only if the user explicitly asked for alcohol gifts.
+</ParamField>
+
+<ParamField body="shipping_tier" type="string" default="domestic_us">
+  One of `domestic_us` (default), `international` (recipient outside the US), or `any`.
+</ParamField>
+
+<ParamField body="category_id" type="string">
+  UUID of a Goody category. Advanced — usually omitted.
+</ParamField>
+
+## Returns
+
+Up to 5 products. Each carries `id`, `name`, `brand`, `price_cents`, `price_type` (`fixed` / `variable` / `tiers`), `is_flex_gift`, `price_min` / `price_max` (for a Gift of Choice), and `alcohol`.
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Find a thank-you gift under $50 for a client who loves coffee."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_products_search",
+  "arguments": { "query": "coffee gift for a client", "price_max": 5000 }
+}
+```
+
+```json ↩️ Result
+{
+  "products": [
+    {
+      "id": "0f3c…",
+      "name": "Cold Brew Starter Kit",
+      "brand": "Grady's",
+      "price_cents": 4200,
+      "price_type": "fixed",
+      "is_flex_gift": false,
+      "alcohol": false
+    },
+    {
+      "id": "9a17…",
+      "name": "Single-Origin Coffee Trio",
+      "brand": "Driftaway Coffee",
+      "price_cents": 3600,
+      "price_type": "fixed",
+      "is_flex_gift": false,
+      "alcohol": false
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Pair with `goody_products_get` for richer detail before committing, or
+  `goody_gift_of_choice_list` when the recipient's taste is unknown — let them pick.
+</Tip>

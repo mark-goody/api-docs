@@ -1,0 +1,81 @@
+---
+title: "Example prompts"
+sidebarTitle: "Example prompts"
+description: "Real flows the Goody connector supports today, with illustrative responses."
+---
+
+These are real flows the connector supports today. Responses are illustrative — your products, prices, and contacts will differ — but the shape matches how the connector actually behaves.
+
+<Note>
+  A few defaults to know: gift searches return up to **5 curated matches** (ask
+  for changes to refine), **US shipping** is the default (say so for
+  international recipients), **alcohol** is excluded unless you ask for it, and
+  **prices are always shown before sending**.
+</Note>
+
+## Find a gift under a budget
+
+> "Find a thank-you gift under $50 for a client who loves coffee."
+
+The assistant searches the catalog with your intent and budget, and typically also offers a **Gift of Choice** — Goody's "let them pick" option where the recipient chooses from a curated collection and you fund the amount.
+
+```text Example response
+Here are five great options under $50:
+
+1. Single-Origin Coffee Trio — Driftaway Coffee, $36
+2. Cold Brew Starter Kit — Grady's, $42
+3. Ceramic Pour-Over Set — Yield Design, $48
+4. Espresso Chocolate Collection — Compartés, $34
+5. Coffee + Mug Gift Box — Bean Box, $45
+
+There's also a Goody Gift of Choice at your $50 budget — they'd pick their own
+gift and you only pay what you fund. Want me to price one of these?
+```
+
+## Price, confirm, and send to one recipient
+
+> "Send the Cold Brew Starter Kit to Sarah Chen at sarah@acme.com with a thank-you card. Email it to her."
+
+The assistant assembles the send — greeting card, optional message, payment method — then **prices it and asks you to confirm before sending**:
+
+```text Example response
+Here's the summary before I send anything:
+
+- Gift: Cold Brew Starter Kit — $42.00
+- Recipient: Sarah Chen (sarah@acme.com) — she'll get an email with her gift link
+- Card: "Thank You" with the message we drafted
+- Payment: Visa ending 4242
+- Estimated total: $51.83 ($42.00 gift + $6.00 shipping + $3.83 estimated tax)
+
+Shall I send it?
+```
+
+After you say yes, it confirms the send and returns a preview link of exactly what the recipient will see. Sarah enters her own shipping details when she accepts — and can swap the gift unless you disable swapping.
+
+## Add contacts and build a list
+
+> "Add three contacts to my workspace: Maya Patel (maya@northwind.com, birthday March 12), James Okafor (james@northwind.com), and Lena Fischer (lena@northwind.com). Then put all three in a list called 'Northwind account team'."
+
+```text Example response
+Done — I added all three contacts and created the list "Northwind account team"
+with all 3 in it. You can use this list for a group send or a recurring autogift.
+```
+
+If a contact with the same email already exists, the assistant won't silently overwrite it — it tells you and offers to update the existing contact instead.
+
+## Turn a send into a recurring autogift
+
+> "Take that gift I just sent to Sarah and turn it into an automatic birthday gift every year."
+
+```text Example response
+I've created the autogift rule:
+
+- Trigger: Sarah Chen's birthday, every year
+- Gift: Cold Brew Starter Kit, with the same Thank You card and message
+- Payment: Visa ending 4242
+
+⏸️ The rule is created paused — autogifts are always created paused so a recurring
+charge is never set up by accident. Want me to activate it now?
+```
+
+Only after you explicitly say yes does the assistant activate the rule. You can ask it to list, pause, or re-activate your autogifts any time ("what autogifts do I have running?").

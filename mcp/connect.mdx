@@ -1,29 +1,17 @@
 ---
 title: "Connect Goody to Claude"
 sidebarTitle: "Connect"
-description: "Add the Goody connector in Claude from the connectors directory, or as a custom connector using the server URL."
+description: "Add Goody to Claude as a custom connector using the server URL. (Directory listing is rolling out.)"
 ---
 
-You can connect Goody to Claude — or any MCP-compatible client — in two ways.
+You can connect Goody to Claude — or any MCP-compatible client — by adding it as a custom connector with the server URL.
 
-## From the connectors directory
+<Note>
+  The Claude Connectors Directory listing is rolling out — for now, add Goody as a
+  custom connector below.
+</Note>
 
-<Steps>
-  <Step title="Open Connectors settings">
-    In claude.ai, go to **Settings → Connectors**.
-  </Step>
-  <Step title="Find Goody and connect">
-    Search for **Goody** in the directory and click **Connect**.
-  </Step>
-  <Step title="Sign in to Goody">
-    You'll be redirected to Goody to sign in — or to create a Goody for Business account if you don't have one.
-  </Step>
-  <Step title="Authorize">
-    Review the permissions Goody requests and click **Authorize**. Goody now appears as a connected tool — start a new chat and try an [example prompt](/mcp-reference/example-prompts).
-  </Step>
-</Steps>
-
-## In any MCP client (custom connector)
+## Add Goody as a custom connector
 
 Any MCP client that supports remote OAuth servers can add Goody by URL — Claude (web, desktop, and mobile) and others. Point the client at the server URL and complete OAuth sign-in. In Claude specifically, use the steps below; in another client, add a custom/remote MCP server with the same URL.
 
@@ -36,8 +24,11 @@ Any MCP client that supports remote OAuth servers can add Goody by URL — Claud
     https://api.ongoody.com/mcp/v1
     ```
   </Step>
-  <Step title="Sign in and authorize">
-    Complete the same Goody sign-in and authorization steps as above.
+  <Step title="Sign in to Goody">
+    You'll be redirected to Goody to sign in — or to create a Goody for Business account if you don't have one.
+  </Step>
+  <Step title="Authorize">
+    Review the permissions Goody requests and click **Authorize**. Goody now appears as a connected tool — start a new chat and try an [example prompt](/mcp-reference/example-prompts).
   </Step>
 </Steps>
 

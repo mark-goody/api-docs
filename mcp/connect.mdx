@@ -23,13 +23,13 @@ You can connect Goody to Claude — or any MCP-compatible client — in two ways
   </Step>
 </Steps>
 
-## As a custom connector
+## In any MCP client (custom connector)
 
-If you don't see Goody listed yet, add it by URL. This works in Claude and any other MCP client.
+Any MCP client that supports remote OAuth servers can add Goody by URL — Claude (web, desktop, and mobile) and others. Point the client at the server URL and complete OAuth sign-in. In Claude specifically, use the steps below; in another client, add a custom/remote MCP server with the same URL.
 
 <Steps>
   <Step title="Add a custom connector">
-    In claude.ai, go to **Settings → Connectors → Add custom connector**.
+    In claude.ai, go to **Settings → Connectors → Add custom connector**. In another MCP client, open its custom or remote MCP server settings.
   </Step>
   <Step title="Enter the server URL">
     ```text
@@ -42,8 +42,15 @@ If you don't see Goody listed yet, add it by URL. This works in Claude and any o
 </Steps>
 
 <Note>
-  A Goody for Business account is required. The connector acts only within the
-  Goody workspaces you're a member of, and gifts you send appear in your Goody
+  The Goody MCP server publishes the standard OAuth authorization-server and
+  protected-resource metadata, so any compliant client discovers the
+  authorization, token, and registration endpoints from the URL alone — there's
+  nothing to configure by hand.
+</Note>
+
+<Note>
+  A Goody for Business account is required. The Goody MCP server acts only within
+  the Goody workspaces you're a member of, and gifts you send appear in your Goody
   dashboard exactly like gifts sent from the website.
 </Note>
 

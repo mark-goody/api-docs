@@ -1,7 +1,7 @@
 ---
 title: "The gifting flow"
 sidebarTitle: "Gifting flow"
-description: "How a gift goes from idea to sent through the Goody connector, and how the spend-confirmation safeguards work."
+description: "How a gift goes from idea to sent through the Goody MCP server, and how the spend-confirmation safeguards work."
 ---
 
 A send moves through a few clear steps. The assistant orchestrates them for you — this is what's happening under the hood.
@@ -29,7 +29,7 @@ Recipients don't need to share an address with you. They receive a gift link (by
 
 Nothing is charged without you seeing the price and confirming. This is enforced in two layers:
 
-- **In the Goody server.** The send action cannot run until a price has been presented and you've confirmed it. Recurring autogifts are always created **paused** — they can't spend anything until you explicitly activate them.
+- **In the Goody MCP server.** The send action cannot run until a price has been presented and you've confirmed it. Recurring autogifts are always created **paused** — they can't spend anything until you explicitly activate them.
 - **In the client.** The money-spending actions are flagged as sensitive, so Claude asks your permission before running them rather than acting silently.
 
 Other defaults worth knowing:

@@ -6,7 +6,7 @@ description: "Send and manage business gifts directly from Claude and other MCP 
 
 The **Goody MCP server** brings Goody's business gifting platform into Claude and any other [Model Context Protocol](https://modelcontextprotocol.io) client. Once connected, you can ask the assistant to find the right gift for a budget and occasion, draft the card message, show you the exact price, and send the gift — without ever needing the recipient's mailing address.
 
-It's not just one-off sends. The assistant can also manage the work around the send — look up and save contacts, organize them into lists, review past gifts and orders, and set up recurring "autogifts" for birthdays and work anniversaries. Anything that spends money always works the same way: **you see the full price first, and nothing is charged until you say yes.**
+It's not just one-off sends. The assistant can also manage the work around a send — look up and save contacts, organize them into lists, review past gifts and orders, and set up recurring "autogifts." Anything that spends money always works the same way: **you see the full price first, and nothing is charged until you say yes.**
 
 ## Endpoint
 
@@ -22,6 +22,10 @@ https://api.sandbox.ongoody.com/mcp/v1
 
 The server speaks the standard MCP **Streamable HTTP** transport and authenticates with OAuth — most clients need only the URL above and will walk you through sign-in.
 
+## Sandbox vs production
+
+The two endpoints are independent environments backed by separate Goody for Business accounts. Sign in to production to send real gifts; sign in to sandbox to test sends without being charged. Point your MCP client at the environment you want and authorize with that environment's account — sign-in is per-environment, and credentials and data do not carry over between the two.
+
 ## What you can do
 
 <CardGroup cols={2}>
@@ -35,7 +39,7 @@ The server speaks the standard MCP **Streamable HTTP** transport and authenticat
     Find, create, and update workspace contacts and organize them into lists.
   </Card>
   <Card title="Automate recurring gifts" icon="repeat">
-    Turn a past send into a birthday or work-anniversary autogift — always created paused until you activate it.
+    Turn a past send into a birthday, work-anniversary, or onboarding autogift — always created paused until you activate it.
   </Card>
 </CardGroup>
 

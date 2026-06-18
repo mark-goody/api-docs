@@ -50,7 +50,7 @@ The server exposes 24 tools. Each is named `goody_<resource>_<verb>` and require
 
 | Tool | Permission | Description |
 |---|---|---|
-| `goody_order_batches_price` | Write | Calculate the full price of a gift before sending. |
+| `goody_order_batches_price` | Write | Calculate the full price of a gift before sending. Needs Write because it builds a draft order to estimate the total — a create-style preview, not a charge (see [Authentication](/mcp/authentication)). |
 | `goody_order_batches_create` | Send gifts | Send a gift. Requires explicit confirmation of the price. |
 | `goody_order_batches_list` | Read | List past gift batches. |
 | `goody_order_batches_get` | Read | Retrieve a single gift batch. |

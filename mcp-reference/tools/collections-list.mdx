@@ -1,12 +1,16 @@
 ---
 title: "goody_collections_list"
 sidebarTitle: "collections_list"
-description: "Lists a workspace's curated gift collections — pre-built bundles to send instead of a single product."
+description: "Browse a workspace's curated gift collections."
 ---
 
 **Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
 
-Lists the curated gift collections in a workspace — each a pre-built bundle the user can pick instead of a single product. Returns up to **25**.
+Lists the curated gift collections in a workspace — each a pre-built, themed bundle. This is a **browse-and-discover** tool: it helps you and the user see what collections exist. Returns up to **25**.
+
+<Note>
+  Collections are read-only through the MCP server. There's no tool to **create** a collection (build those in Goody for Business), and a collection can't be sent by its `id` — the send tools take a `product_id`, not a collection id. To send a "let the recipient pick from a curated set" gift, use [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list); to send a specific item, find it with [`goody_products_search`](/mcp-reference/tools/products-search).
+</Note>
 
 ## Parameters
 
@@ -15,7 +19,7 @@ Lists the curated gift collections in a workspace — each a pre-built bundle th
 </ParamField>
 
 <ParamField body="published_only" type="boolean" default="false">
-  When true, returns only published collections, skipping drafts. Set true when the user is ready to send.
+  When true, returns only published collections, skipping drafts.
 </ParamField>
 
 ## Returns
@@ -23,7 +27,7 @@ Lists the curated gift collections in a workspace — each a pre-built bundle th
 <ResponseField name="collections" type="object[]">
   Up to 25 collections in the workspace.
   <Expandable title="collection">
-    <ResponseField name="id" type="string">Collection UUID.</ResponseField>
+    <ResponseField name="id" type="string">Collection UUID. Identifies the collection for display; it is not a `product_id` and can't be passed to the send tools.</ResponseField>
     <ResponseField name="workspace_id" type="string">UUID of the owning workspace.</ResponseField>
     <ResponseField name="name" type="string | null">Collection name.</ResponseField>
     <ResponseField name="is_published" type="boolean">True when the collection has a published version.</ResponseField>
@@ -35,13 +39,13 @@ Lists the curated gift collections in a workspace — each a pre-built bundle th
 
 <CodeGroup>
 ```text 💬 Prompt
-"Show me our gift collections."
+"What gift collections do we have?"
 ```
 
 ```json 🔧 Tool call
 {
   "name": "goody_collections_list",
-  "arguments": { "workspace_id": "0f3c…" }
+  "arguments": { "workspace_id": "0f3c…", "published_only": true }
 }
 ```
 
@@ -58,9 +62,9 @@ Lists the curated gift collections in a workspace — each a pre-built bundle th
     {
       "id": "c41a…",
       "workspace_id": "0f3c…",
-      "name": "Holiday Cheer (draft)",
-      "is_published": false,
-      "price_cents": null
+      "name": "Client Appreciation Set",
+      "is_published": true,
+      "price_cents": 12000
     }
   ]
 }
@@ -68,5 +72,5 @@ Lists the curated gift collections in a workspace — each a pre-built bundle th
 </CodeGroup>
 
 <Tip>
-  Discover the workspace first with [`goody_workspaces_list`](/mcp-reference/tools/workspaces-list), or browse individual products with [`goody_products_search`](/mcp-reference/tools/products-search).
+  To send a recipient-picks gift, reach for [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list); for a single product, use [`goody_products_search`](/mcp-reference/tools/products-search).
 </Tip>

@@ -54,13 +54,39 @@ For scripts, n8n / Zapier / Make workflows, cron jobs, or headless agent framewo
     In Goody for Business, go to **account settings → Personal MCP token**. Give it a name, choose its [scopes](/mcp/authentication#permissions) (Read / Write / Send gifts), and pick an expiry. The token is shown **once** — copy it now.
   </Step>
   <Step title="Configure your client">
-    Point your MCP client at the same server URL and pass the token as a bearer credential:
+    Point your MCP client at the server URL and pass the token in an `Authorization: Bearer` header. Both are required.
 
-    ```text
-    https://api.ongoody.com/mcp/v1
+    <CodeGroup>
+    ```json Streamable HTTP client
+    {
+      "mcpServers": {
+        "goody": {
+          "url": "https://api.ongoody.com/mcp/v1",
+          "headers": {
+            "Authorization": "Bearer YOUR_PERSONAL_MCP_TOKEN"
+          }
+        }
+      }
+    }
     ```
 
-    Both the URL and the token are required.
+    ```json Via mcp-remote (stdio-only clients)
+    {
+      "mcpServers": {
+        "goody": {
+          "command": "npx",
+          "args": [
+            "-y", "mcp-remote",
+            "https://api.ongoody.com/mcp/v1",
+            "--header", "Authorization: Bearer YOUR_PERSONAL_MCP_TOKEN"
+          ]
+        }
+      }
+    }
+    ```
+    </CodeGroup>
+
+    Use the direct Streamable HTTP form when your client supports remote MCP servers with custom headers. Use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) bridge for clients that only speak stdio.
   </Step>
 </Steps>
 

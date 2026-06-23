@@ -1,15 +1,15 @@
 ---
 title: "goody_collections_list"
 sidebarTitle: "collections_list"
-description: "Browse a workspace's curated gift collections."
+description: "List a workspace's curated gift collections — and get the product_id to send one."
 ---
 
 **Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
 
-Lists the curated gift collections in a workspace — each a pre-built, themed bundle. This is a **browse-and-discover** tool: it helps you and the user see what collections exist. Returns up to **25**.
+Lists the curated gift collections in a workspace — each a pre-built, themed gift the recipient picks from. Returns up to **25**. Each published collection includes a **`product_id`** you can send like any other product: the recipient chooses from the collection before accepting, the same way a Gift of Choice works.
 
 <Note>
-  Collections are read-only through the MCP server. There's no tool to **create** a collection (build those in Goody for Business), and a collection can't be sent by its `id` — the send tools take a `product_id`, not a collection id. To send a "let the recipient pick from a curated set" gift, use [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list); to send a specific item, find it with [`goody_products_search`](/mcp-reference/tools/products-search).
+  Collections are **read-only** through the MCP server — there's no tool to **create** one (build collections in Goody for Business). You can, however, **send** a published collection: use its `product_id` (not the collection `id`).
 </Note>
 
 ## Parameters
@@ -19,7 +19,7 @@ Lists the curated gift collections in a workspace — each a pre-built, themed b
 </ParamField>
 
 <ParamField body="published_only" type="boolean" default="false">
-  When true, returns only published collections, skipping drafts.
+  When true, returns only published collections, skipping drafts. Set true when the user is ready to send — only published collections have a `product_id`.
 </ParamField>
 
 ## Returns
@@ -27,11 +27,12 @@ Lists the curated gift collections in a workspace — each a pre-built, themed b
 <ResponseField name="collections" type="object[]">
   Up to 25 collections in the workspace.
   <Expandable title="collection">
-    <ResponseField name="id" type="string">Collection UUID. Identifies the collection for display; it is not a `product_id` and can't be passed to the send tools.</ResponseField>
+    <ResponseField name="id" type="string">Collection UUID. Identifies the collection itself — **not** what you send. To send, use `product_id`.</ResponseField>
     <ResponseField name="workspace_id" type="string">UUID of the owning workspace.</ResponseField>
     <ResponseField name="name" type="string | null">Collection name.</ResponseField>
     <ResponseField name="is_published" type="boolean">True when the collection has a published version.</ResponseField>
     <ResponseField name="price_cents" type="integer | null">Published price in cents; `null` when there's no published version.</ResponseField>
+    <ResponseField name="product_id" type="string | null">The product to **send** this collection through — pass it as `product_id` to [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview) / [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create). `null` for unpublished collections (nothing to send yet).</ResponseField>
   </Expandable>
 </ResponseField>
 
@@ -39,7 +40,7 @@ Lists the curated gift collections in a workspace — each a pre-built, themed b
 
 <CodeGroup>
 ```text 💬 Prompt
-"What gift collections do we have?"
+"Send our Welcome Aboard collection to the new hire, jordan@acme.com."
 ```
 
 ```json 🔧 Tool call
@@ -57,20 +58,28 @@ Lists the curated gift collections in a workspace — each a pre-built, themed b
       "workspace_id": "0f3c…",
       "name": "Welcome Aboard Bundle",
       "is_published": true,
-      "price_cents": 8500
-    },
-    {
-      "id": "c41a…",
-      "workspace_id": "0f3c…",
-      "name": "Client Appreciation Set",
-      "is_published": true,
-      "price_cents": 12000
+      "price_cents": 8500,
+      "product_id": "e91d…"
     }
   ]
 }
 ```
 </CodeGroup>
 
+To send it, hand that `product_id` to the normal flow — preview, confirm, send:
+
+```json 🔧 goody_order_batches_preview
+{
+  "name": "goody_order_batches_preview",
+  "arguments": {
+    "workspace_id": "0f3c…",
+    "card_id": "a7f9…",
+    "product_id": "e91d…",
+    "recipients": [{ "name": "Jordan Lee", "email": "jordan@acme.com" }]
+  }
+}
+```
+
 <Tip>
-  To send a recipient-picks gift, reach for [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list); for a single product, use [`goody_products_search`](/mcp-reference/tools/products-search).
+  Need the collection's price type or fundable range before sending? Call [`goody_products_get`](/mcp-reference/tools/products-get) on the `product_id`. For an open-ended "let them pick" gift that isn't a saved collection, use [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list).
 </Tip>

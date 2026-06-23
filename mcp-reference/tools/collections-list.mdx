@@ -81,5 +81,5 @@ To send it, hand that `product_id` to the normal flow — preview, confirm, send
 ```
 
 <Tip>
-  Need the collection's price type or fundable range before sending? Call [`goody_products_get`](/mcp-reference/tools/products-get) on the `product_id`. For an open-ended "let them pick" gift that isn't a saved collection, use [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list).
+  The collection's price is in `price_cents`; for the full breakdown, run [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview) with the `product_id`. (Collection products aren't in the searchable catalog, so [`goody_products_get`](/mcp-reference/tools/products-get) won't find them.) For an open-ended "let them pick" gift that isn't a saved collection, use [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list).
 </Tip>

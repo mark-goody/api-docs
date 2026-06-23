@@ -1,0 +1,98 @@
+---
+title: "goody_autogift_rules_preview"
+sidebarTitle: "autogift_rules_preview"
+description: "Preview what a paused autogift rule will send — card, message, products, and cost — without sending."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Previews what a paused autogift rule will send — the greeting card, message, product(s), and expected per-send cost — without sending, charging, or activating anything. Call it before [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate) and relay the result for confirmation.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The rule must belong to this workspace.
+</ParamField>
+
+<ParamField body="autogift_rule_id" type="string" required>
+  Rule UUID — from [`goody_autogift_rules_list`](/mcp-reference/tools/autogift-rules-list) or [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create).
+</ParamField>
+
+## Returns
+
+<ResponseField name="card" type="object | null">
+  The greeting card the rule will send.
+  <Expandable title="card">
+    <ResponseField name="id" type="string">Card UUID.</ResponseField>
+    <ResponseField name="name" type="string">Card name.</ResponseField>
+    <ResponseField name="image_url" type="string">Card image URL.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string | null">The gift-card message template.</ResponseField>
+<ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
+
+<ResponseField name="products" type="object[]">
+  The product(s) the rule will send.
+  <Expandable title="product">
+    <ResponseField name="product_id" type="string">Product UUID.</ResponseField>
+    <ResponseField name="name" type="string">Product name.</ResponseField>
+    <ResponseField name="quantity" type="integer">How many are included.</ResponseField>
+    <ResponseField name="flex_amount" type="integer | null">Funded amount in cents, for a Gift of Choice.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="expected_spend_per_send" type="object">
+  Estimated cost for a single recipient, in cents.
+  <Expandable title="expected_spend_per_send">
+    <ResponseField name="est_group_total_low" type="integer">Low end of the estimate, in cents.</ResponseField>
+    <ResponseField name="est_group_total_high" type="integer">High end of the estimate, in cents.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"What will my Clients birthday autogift actually send?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_autogift_rules_preview",
+  "arguments": { "workspace_id": "3f8a…", "autogift_rule_id": "6d2a…" }
+}
+```
+
+```json ↩️ Result
+{
+  "card": {
+    "id": "a7f9…",
+    "name": "Happy Birthday Confetti",
+    "image_url": "https://ongoody.com/cards/a7f9….png"
+  },
+  "message": "Happy birthday, {{firstname}}!",
+  "from_name": "Jordan at Acme",
+  "products": [
+    {
+      "product_id": "0f3c…",
+      "name": "Cold Brew Starter Kit",
+      "quantity": 1,
+      "flex_amount": null
+    }
+  ],
+  "expected_spend_per_send": {
+    "est_group_total_low": 4200,
+    "est_group_total_high": 5000
+  }
+}
+```
+</CodeGroup>
+
+<Note>
+  The message is shown as its raw template — personalization tags (e.g. the recipient's first name) are filled per-recipient at send time, so no placeholder recipient is invented.
+</Note>
+
+<Tip>
+  Once the preview looks right, turn the rule on with [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate).
+</Tip>

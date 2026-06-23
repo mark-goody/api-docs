@@ -1,0 +1,33 @@
+---
+title: "Data handling & support"
+sidebarTitle: "Data handling"
+description: "What Goody records about MCP usage, what it never stores, and how to reach support."
+---
+
+The Goody MCP server is deliberately thin on what it keeps. It records enough to operate the service and understand usage — and nothing about the content of your conversation.
+
+## What Goody records
+
+For each tool call, Goody stores a single usage record containing:
+
+- the **tool name** (e.g. `goody_products_search`),
+- the **permission** it ran under (Read / Write / Send gifts),
+- the **outcome** — success or error, and the error type if it failed,
+- how **long** it took, and
+- for money-spending tools, a few **non-identifying numbers** — such as an estimated amount and the resulting gift-batch reference — used to track spend.
+
+This is operational telemetry: it powers metrics, debugging, and the spend safeguards.
+
+## What Goody never stores
+
+- Your **conversation** or prompts.
+- The **arguments** you pass to tools — recipient names, emails, phone numbers, mailing addresses, or card-message text.
+- Any **free-text** content. The usage record is restricted to small, non-identifying values by design, so personal data can't leak into it.
+
+Gifts you actually send are, of course, recorded in your Goody account — the same way a gift sent from the website is — so they appear in your dashboard, receipts, and order history. That's your account data, not MCP telemetry.
+
+For full details on how Goody handles personal data, see the [Goody Privacy Policy](https://www.ongoody.com/legal/privacy-policy).
+
+## Support
+
+Questions, issues, or feedback about the Goody MCP server? Email [support@ongoody.com](mailto:support@ongoody.com). You can also send feedback to the Goody team directly from a conversation — just ask the assistant to pass it along.

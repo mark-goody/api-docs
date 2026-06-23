@@ -1,0 +1,79 @@
+---
+title: "goody_autogift_rules_pause"
+sidebarTitle: "autogift_rules_pause"
+description: "Pause an active autogift rule so no further gifts are scheduled."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+Pauses an active rule so no further gifts are scheduled against its contact list. Reversible via [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate).
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The rule must belong to this workspace.
+</ParamField>
+
+<ParamField body="autogift_rule_id" type="string" required>
+  Rule UUID — from [`goody_autogift_rules_list`](/mcp-reference/tools/autogift-rules-list).
+</ParamField>
+
+## Returns
+
+<ResponseField name="autogift_rule" type="object">
+  The now-paused rule.
+  <Expandable title="autogift_rule">
+    <ResponseField name="id" type="string">Rule UUID.</ResponseField>
+    <ResponseField name="status" type="string">Now `paused`.</ResponseField>
+    <ResponseField name="event_type" type="string">The occasion that triggers a send.</ResponseField>
+    <ResponseField name="contact_list" type="object">
+      The contact list the rule watches.
+      <Expandable title="contact_list">
+        <ResponseField name="id" type="string">Contact list UUID.</ResponseField>
+        <ResponseField name="name" type="string">The list's visible name.</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="card_id" type="string | null">The greeting card chosen for the rule.</ResponseField>
+    <ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
+    <ResponseField name="message" type="string | null">The gift-card message template.</ResponseField>
+    <ResponseField name="tenure_min" type="integer | null">Lowest years of service the rule applies to.</ResponseField>
+    <ResponseField name="tenure_max" type="integer | null">Highest years of service the rule applies to.</ResponseField>
+    <ResponseField name="created_at" type="string">When the rule was created.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Pause my Clients birthday autogift."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_autogift_rules_pause",
+  "arguments": { "workspace_id": "3f8a…", "autogift_rule_id": "6d2a…" }
+}
+```
+
+```json ↩️ Result
+{
+  "autogift_rule": {
+    "id": "6d2a…",
+    "status": "paused",
+    "event_type": "birthday",
+    "contact_list": { "id": "d052…", "name": "Clients" },
+    "card_id": "a7f9…",
+    "from_name": "Jordan at Acme",
+    "message": "Happy birthday, {{firstname}}!",
+    "tenure_min": null,
+    "tenure_max": null,
+    "created_at": "2026-05-02T14:11:00Z"
+  }
+}
+```
+</CodeGroup>
+
+<Tip>
+  Turn the rule back on with [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate), or browse all your rules with [`goody_autogift_rules_list`](/mcp-reference/tools/autogift-rules-list).
+</Tip>

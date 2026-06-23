@@ -1,0 +1,68 @@
+---
+title: "goody_me_get"
+sidebarTitle: "me_get"
+description: "Returns the connected Goody account's identity plus the server's current time."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global)
+
+Returns the authenticated Goody user's identity plus the server's current time. The first tool to call in a session to confirm which account is connected, and the anchor for any relative dates.
+
+## Parameters
+
+This tool takes no arguments.
+
+## Returns
+
+<ResponseField name="id" type="string">
+  The Goody user's UUID.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  The account's email address.
+</ResponseField>
+
+<ResponseField name="first_name" type="string | null">
+  Given name, if set.
+</ResponseField>
+
+<ResponseField name="last_name" type="string | null">
+  Family name, if set.
+</ResponseField>
+
+<ResponseField name="server_time" type="string">
+  The server's authoritative "now", as an ISO 8601 UTC timestamp.
+</ResponseField>
+
+<Note>
+  Scheduled-send dates are anchored to `server_time` — not the assistant's own clock. A scheduled date must be in the future and at most 3 months out.
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Which Goody account am I connected to?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_me_get",
+  "arguments": {}
+}
+```
+
+```json ↩️ Result
+{
+  "id": "0f3c…",
+  "email": "jordan@northwind.example",
+  "first_name": "Jordan",
+  "last_name": "Rivera",
+  "server_time": "2026-06-23T14:05:00Z"
+}
+```
+</CodeGroup>
+
+<Tip>
+  Call [`goody_workspaces_list`](/mcp-reference/tools/workspaces-list) next to discover the workspaces this account can gift from.
+</Tip>

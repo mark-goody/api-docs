@@ -1,0 +1,109 @@
+---
+title: "goody_contacts_create"
+sidebarTitle: "contacts_create"
+description: "Add a new contact to a workspace and return the saved record."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+Creates a contact in the workspace. Only `first_name` is required; everything else is optional. Returns the saved contact.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The contact is created in this workspace.
+</ParamField>
+
+<ParamField body="first_name" type="string" required>
+  The contact's given name.
+</ParamField>
+
+<ParamField body="last_name" type="string">
+  Family name.
+</ParamField>
+
+<ParamField body="email" type="string">
+  Email address.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Phone number in any format — it's normalized automatically.
+</ParamField>
+
+<ParamField body="company" type="string">
+  Company name.
+</ParamField>
+
+<ParamField body="title" type="string">
+  Job title.
+</ParamField>
+
+<ParamField body="birthday" type="string">
+  Date as `YYYY-MM-DD`. Use year `1900` if only the month and day are known.
+</ParamField>
+
+<ParamField body="work_anniversary" type="string">
+  Date as `YYYY-MM-DD`. Use year `1900` if only the month and day are known.
+</ParamField>
+
+<Warning>
+  If a contact with the same email or phone already exists in this workspace, the request is rejected rather than overwriting the existing contact. Call [`goody_contacts_update`](/mcp-reference/tools/contacts-update) to modify that contact instead.
+</Warning>
+
+## Returns
+
+<ResponseField name="contact" type="object">
+  The saved contact.
+  <Expandable title="contact">
+    <ResponseField name="id" type="string">Contact UUID.</ResponseField>
+    <ResponseField name="first_name" type="string | null">Given name.</ResponseField>
+    <ResponseField name="last_name" type="string | null">Family name.</ResponseField>
+    <ResponseField name="email" type="string | null">Email address.</ResponseField>
+    <ResponseField name="phone" type="string | null">Phone number.</ResponseField>
+    <ResponseField name="company" type="string | null">Company name.</ResponseField>
+    <ResponseField name="title" type="string | null">Job title.</ResponseField>
+    <ResponseField name="birthday" type="string | null">Date as `YYYY-MM-DD`; year `1900` means month and day only.</ResponseField>
+    <ResponseField name="work_anniversary" type="string | null">Date as `YYYY-MM-DD`.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Add James Okafor (james@northwind.com) to my workspace."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_contacts_create",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "first_name": "James",
+    "last_name": "Okafor",
+    "email": "james@northwind.com"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "contact": {
+    "id": "a1d7…",
+    "first_name": "James",
+    "last_name": "Okafor",
+    "email": "james@northwind.com",
+    "phone": null,
+    "company": null,
+    "title": null,
+    "birthday": null,
+    "work_anniversary": null
+  }
+}
+```
+</CodeGroup>
+
+<Tip>
+  To edit a contact you already have, use [`goody_contacts_update`](/mcp-reference/tools/contacts-update). To find one first, use
+  [`goody_contacts_search`](/mcp-reference/tools/contacts-search).
+</Tip>

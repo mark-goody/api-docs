@@ -1,0 +1,82 @@
+---
+title: "goody_gift_of_choice_list"
+sidebarTitle: "gift_of_choice_list"
+description: "Lists Goody's Gifts of Choice — flex gifts where the recipient picks and the sender funds an amount."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global)
+
+Lists Goody's Gifts of Choice — variable-amount flex gifts where the recipient picks from a curated set and the sender funds an amount. Use when the user wants to "let the recipient choose" or is unsure what to send.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string">
+  Optional. The catalog is global — pass a workspace UUID only to scope or validate against a workspace.
+</ParamField>
+
+<ParamField body="budget_cents" type="integer">
+  Optional, in cents (e.g. `7500` for $75); must be positive. When set, each result's `suggested_variable_price` echoes the fundable amount — your budget clamped to the gift's range.
+</ParamField>
+
+## Returns
+
+<ResponseField name="gifts_of_choice" type="object[]">
+  Matching Gifts of Choice.
+  <Expandable title="gift_of_choice">
+    <ResponseField name="id" type="string">Gift UUID — pass as `product_id` to send.</ResponseField>
+    <ResponseField name="name" type="string">Gift name.</ResponseField>
+    <ResponseField name="kind" type="string">`default` or `seasonal`.</ResponseField>
+    <ResponseField name="price_min" type="integer | null">Lowest fundable amount, in cents.</ResponseField>
+    <ResponseField name="price_max" type="integer | null">Highest fundable amount; `null` means unlimited.</ResponseField>
+    <ResponseField name="suggested_variable_price" type="integer | null">Your budget clamped to `[price_min, price_max]`; `null` if the budget is below `price_min` or no budget was given.</ResponseField>
+    <ResponseField name="occasions" type="string[]">Occasion tags for this gift.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<Note>
+  To send one, pass its `id` as `product_id` plus `variable_price` (cents, within the range) to [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"I don't know their taste — give me a $75 let-them-pick option."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_gift_of_choice_list",
+  "arguments": { "budget_cents": 7500 }
+}
+```
+
+```json ↩️ Result
+{
+  "gifts_of_choice": [
+    {
+      "id": "0f3c…",
+      "name": "Gift of Choice",
+      "kind": "default",
+      "price_min": 2000,
+      "price_max": null,
+      "suggested_variable_price": 7500,
+      "occasions": ["Thank You", "Congratulations"]
+    },
+    {
+      "id": "9a17…",
+      "name": "Holiday Gift of Choice",
+      "kind": "seasonal",
+      "price_min": 5000,
+      "price_max": 25000,
+      "suggested_variable_price": 7500,
+      "occasions": ["Happy Holidays"]
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Browse fixed-price gifts with [`goody_products_search`](/mcp-reference/tools/products-search), then send the chosen gift with [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).
+</Tip>

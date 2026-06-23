@@ -1,0 +1,90 @@
+---
+title: "goody_order_batches_list"
+sidebarTitle: "order_batches_list"
+description: "List previously-sent gift batches in a workspace, most recent first."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Lists previously-sent gift batches in a workspace, most recent first. This is how you answer "what did I send recently?".
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Listing is always scoped to this workspace.
+</ParamField>
+
+<ParamField body="page" type="integer" default="1">
+  Page number, starting at `1`.
+</ParamField>
+
+<ParamField body="per_page" type="integer" default="25">
+  Batches per page. Defaults to `25`, max `100`.
+</ParamField>
+
+## Returns
+
+<ResponseField name="order_batches" type="object[]">
+  Batch summaries, most recent first. Each object also includes additional summary fields beyond those listed here.
+  <Expandable title="order batch">
+    <ResponseField name="id" type="string">Batch UUID — pass as `order_batch_id` to [`goody_order_batches_get`](/mcp-reference/tools/order-batches-get) or [`goody_orders_list`](/mcp-reference/tools/orders-list).</ResponseField>
+    <ResponseField name="batch_name" type="string | null">The batch's name.</ResponseField>
+    <ResponseField name="send_status" type="string">Where the batch is in its lifecycle.</ResponseField>
+    <ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
+    <ResponseField name="message" type="string | null">The gift-card message.</ResponseField>
+    <ResponseField name="orders_count" type="integer">Number of orders in the batch.</ResponseField>
+    <ResponseField name="recipients_count" type="integer">Number of recipients.</ResponseField>
+    <ResponseField name="scheduled_send_on" type="string | null">When the batch is scheduled to send, if scheduled.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="total_count" type="integer">
+  Total number of batches across all pages.
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Show me my last few gifts."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_order_batches_list",
+  "arguments": { "workspace_id": "3f8a…", "per_page": 3 }
+}
+```
+
+```json ↩️ Result
+{
+  "order_batches": [
+    {
+      "id": "b92e…",
+      "batch_name": "Q2 client thank-yous",
+      "send_status": "sent",
+      "from_name": "Jordan at Acme",
+      "message": "Thank you for a great quarter, {{firstname}}!",
+      "orders_count": 12,
+      "recipients_count": 12,
+      "scheduled_send_on": null
+    },
+    {
+      "id": "4a07…",
+      "batch_name": "Welcome — new hires",
+      "send_status": "scheduled",
+      "from_name": "The Acme Team",
+      "message": "Welcome aboard, {{firstname}}!",
+      "orders_count": 3,
+      "recipients_count": 3,
+      "scheduled_send_on": "2026-07-01T09:00:00Z"
+    }
+  ],
+  "total_count": 47
+}
+```
+</CodeGroup>
+
+<Tip>
+  For the full detail of one batch use [`goody_order_batches_get`](/mcp-reference/tools/order-batches-get); to list the individual orders inside a batch use [`goody_orders_list`](/mcp-reference/tools/orders-list).
+</Tip>

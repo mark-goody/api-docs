@@ -1,0 +1,113 @@
+---
+title: "goody_order_batches_get"
+sidebarTitle: "order_batches_get"
+description: "Fetch full detail for a single gift batch — cart, recipients, and send timing."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Fetches full detail for a single gift batch — read back the cart, see who received it, or check scheduled-send timing.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The batch must belong to this workspace.
+</ParamField>
+
+<ParamField body="order_batch_id" type="string" required>
+  Batch UUID — from [`goody_order_batches_list`](/mcp-reference/tools/order-batches-list).
+</ParamField>
+
+## Returns
+
+<ResponseField name="id" type="string">Batch UUID.</ResponseField>
+<ResponseField name="batch_name" type="string | null">The batch's name.</ResponseField>
+<ResponseField name="send_status" type="string">Where the batch is in its lifecycle.</ResponseField>
+<ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
+<ResponseField name="message" type="string | null">The gift-card message.</ResponseField>
+<ResponseField name="orders_count" type="integer">Number of orders in the batch.</ResponseField>
+<ResponseField name="orders_preview" type="object[]">Up to 10 orders from the batch, for a quick look.</ResponseField>
+<ResponseField name="recipients_count" type="integer">Number of recipients.</ResponseField>
+<ResponseField name="recipients_preview" type="object[]">Up to 10 recipients, for a quick look.</ResponseField>
+<ResponseField name="cart" type="object | null">The gift contents (products) for the batch.</ResponseField>
+<ResponseField name="sender" type="object | null">
+  Who sent the batch.
+  <Expandable title="sender">
+    <ResponseField name="first_name" type="string">Sender's given name.</ResponseField>
+    <ResponseField name="last_name" type="string">Sender's family name.</ResponseField>
+    <ResponseField name="email" type="string">Sender's email.</ResponseField>
+  </Expandable>
+</ResponseField>
+<ResponseField name="is_scheduled_send" type="boolean | null">True if the batch is set to send at a future time.</ResponseField>
+<ResponseField name="scheduled_send_on" type="string | null">When the batch is scheduled to send.</ResponseField>
+<ResponseField name="expires_at" type="string | null">When the gift expires. `null` means it does not expire on a fixed date.</ResponseField>
+<ResponseField name="send_method" type="string | null">How recipients are notified.</ResponseField>
+<ResponseField name="card_id" type="string | null">The gift card chosen for the batch.</ResponseField>
+<ResponseField name="workspace_id" type="string | null">The workspace the batch belongs to.</ResponseField>
+<ResponseField name="workspace_name" type="string | null">The workspace's name.</ResponseField>
+<ResponseField name="reference_id" type="string | null">Caller-supplied reference, if one was set.</ResponseField>
+<ResponseField name="preview_url" type="string | null">The sender's "see what you sent" link.</ResponseField>
+<ResponseField name="sender_preview_urls" type="string[]">Per-recipient preview links for the sender.</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Show me the details of that batch."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_order_batches_get",
+  "arguments": { "workspace_id": "3f8a…", "order_batch_id": "b92e…" }
+}
+```
+
+```json ↩️ Result
+{
+  "id": "b92e…",
+  "batch_name": "Q2 client thank-yous",
+  "send_status": "sent",
+  "from_name": "Jordan at Acme",
+  "message": "Thank you for a great quarter, {{firstname}}!",
+  "orders_count": 12,
+  "orders_preview": [
+    { "id": "1c4d…", "recipient_first_name": "Sarah", "status": "accepted" }
+  ],
+  "recipients_count": 12,
+  "recipients_preview": [
+    { "first_name": "Sarah", "last_name": "Chen", "email": "sarah@acme.com" }
+  ],
+  "cart": {
+    "items": [
+      { "product_id": "0f3c…", "name": "Cold Brew Starter Kit" }
+    ]
+  },
+  "sender": {
+    "first_name": "Jordan",
+    "last_name": "Lee",
+    "email": "jordan@acme.com"
+  },
+  "is_scheduled_send": false,
+  "scheduled_send_on": null,
+  "expires_at": null,
+  "send_method": "email",
+  "card_id": "a7f9…",
+  "workspace_id": "3f8a…",
+  "workspace_name": "Acme",
+  "reference_id": null,
+  "preview_url": "https://ongoody.com/g/b92e…",
+  "sender_preview_urls": [
+    "https://ongoody.com/g/b92e…/1c4d…"
+  ]
+}
+```
+</CodeGroup>
+
+<Note>
+  You'll get a not-found error if the id is unknown or belongs to another workspace.
+</Note>
+
+<Tip>
+  To browse other batches, use [`goody_order_batches_list`](/mcp-reference/tools/order-batches-list); to list every individual order inside this batch, use [`goody_orders_list`](/mcp-reference/tools/orders-list).
+</Tip>

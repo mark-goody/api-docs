@@ -10,7 +10,7 @@ These are real flows the Goody MCP server supports today. Responses are illustra
   A few defaults to know: gift searches return up to **5 curated matches** (ask
   for changes to refine), **US shipping** is the default (say so for
   international recipients), **alcohol** is excluded unless you ask for it, and
-  **prices are always shown before sending**.
+  **you always see a preview and price before anything is sent**.
 </Note>
 
 ## Find a gift under a budget
@@ -29,50 +29,63 @@ Here are five great options under $50:
 5. Coffee + Mug Gift Box — Bean Box, $45
 
 There's also a Goody Gift of Choice at your $50 budget — they'd pick their own
-gift and you only pay what you fund. Want me to price one of these?
+gift and you only pay what you fund. Want me to preview one of these?
 ```
 
-## Price, confirm, and send to one recipient
+## Preview, confirm, and send to one recipient
 
 > "Send the Cold Brew Starter Kit to Sarah Chen at sarah@acme.com with a thank-you card. Email it to her."
 
-The assistant assembles the send — greeting card, optional message, payment method — then **prices it and asks you to confirm before sending**:
+The assistant assembles the send — greeting card, optional message, payment method — then **builds a preview link and prices it**, and asks you to confirm before sending:
 
 ```text Example response
-Here's the summary before I send anything:
+Here's a preview of the gift before I send anything:
+
+🔗 Preview: https://ongoody.com/p/preview/2f9c…  (this is what Sarah will see)
 
 - Gift: Cold Brew Starter Kit — $42.00
 - Recipient: Sarah Chen (sarah@acme.com) — she'll get an email with her gift link
 - Card: "Thank You" with the message we drafted
+- From: Alex Rivera
 - Payment: Visa ending 4242
 - Estimated total: $51.83 ($42.00 gift + $6.00 shipping + $3.83 estimated tax)
 
 Shall I send it?
 ```
 
-After you say yes, it confirms the send and returns a preview link of exactly what the recipient will see. Sarah enters her own shipping details when she accepts — and can swap the gift unless you disable swapping.
+After you say yes, it sends and confirms whether the recipient was notified. Sarah enters her own shipping details when she accepts — and can swap the gift unless you disable swapping.
+
+<Tip>
+  Prefer to ship straight to an address? Say "ship it directly to 123 Main St…"
+  and the assistant uses **direct send** — no email or link, the physical gift
+  goes to the address you give. Want to send later? "Schedule it for next
+  Monday" works too (up to 3 months out).
+</Tip>
 
 ## Add contacts and build a list
 
-> "Add three contacts to my workspace: Maya Patel (maya@northwind.com, birthday March 12), James Okafor (james@northwind.com), and Lena Fischer (lena@northwind.com). Then put all three in a list called 'Northwind account team'."
+> "Add these three new hires to my workspace and put them in an 'Onboarding' list: Maya Patel (maya@northwind.com, birthday March 12), James Okafor (james@northwind.com), and Lena Fischer (lena@northwind.com)."
 
 ```text Example response
-Done — I added all three contacts and created the list "Northwind account team"
-with all 3 in it. You can use this list for a group send or a recurring autogift.
+Done — I added all three contacts and created the list "Onboarding" with all 3
+in it. You can use this list for a group send or a recurring autogift.
 ```
 
 If a contact with the same email already exists, the assistant won't silently overwrite it — it tells you and offers to update the existing contact instead.
 
-## Turn a send into a recurring autogift
+## Turn a gift into a recurring autogift
 
-> "Take that gift I just sent to Sarah and turn it into an automatic birthday gift every year."
+> "Set up a birthday autogift for my Clients list, using that gift I just sent to Sarah as the template."
+
+You can clone a past send like this, or build a brand-new rule from scratch ("set up a $50 birthday autogift for my Clients list with the Cold Brew Kit and a birthday card"). Either way the rule is created paused:
 
 ```text Example response
-I've created the autogift rule:
+Here's a preview of the autogift rule before I activate anything:
 
-- Trigger: Sarah Chen's birthday, every year
-- Gift: Cold Brew Starter Kit, with the same Thank You card and message
+- Trigger: each client's birthday, every year
+- Gift: Cold Brew Starter Kit, with a "Happy Birthday" card and message
 - Payment: Visa ending 4242
+- Expected cost per send: ~$51.83
 
 ⏸️ The rule is created paused — autogifts are always created paused so a recurring
 charge is never set up by accident. Want me to activate it now?

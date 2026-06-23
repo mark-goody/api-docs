@@ -1,0 +1,78 @@
+---
+title: "goody_contacts_search"
+sidebarTitle: "contacts_search"
+description: "Find a workspace contact by name, email, or phone — returns up to 25 matches."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Searches the contacts in a workspace and returns up to `limit` matches. Use it to find a recipient before pricing or sending a gift. Match a free-text `query` across name, email, and phone — or omit it to list everyone alphabetically.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Search is always scoped to this workspace.
+</ParamField>
+
+<ParamField body="query" type="string">
+  Free-text search matched across first name, last name, email, and phone. Name matches outrank email matches, which outrank phone matches. Omit to list contacts alphabetically.
+</ParamField>
+
+<ParamField body="limit" type="integer" default="25">
+  Maximum contacts to return. Range 1–25; higher values are clamped to 25. There's no pagination — narrow `query` instead of raising the limit.
+</ParamField>
+
+## Returns
+
+<ResponseField name="contacts" type="object[]">
+  Up to `limit` matching contacts.
+  <Expandable title="contact">
+    <ResponseField name="id" type="string">Contact UUID — pass as `contact_id` to [`goody_contacts_get`](/mcp-reference/tools/contacts-get) or [`goody_contacts_update`](/mcp-reference/tools/contacts-update).</ResponseField>
+    <ResponseField name="first_name" type="string | null">Given name.</ResponseField>
+    <ResponseField name="last_name" type="string | null">Family name.</ResponseField>
+    <ResponseField name="email" type="string | null">Email address.</ResponseField>
+    <ResponseField name="phone" type="string | null">Phone number.</ResponseField>
+    <ResponseField name="company" type="string | null">Company name.</ResponseField>
+    <ResponseField name="title" type="string | null">Job title.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<Note>
+  The search response omits event dates. To get a contact's birthday or work anniversary, call [`goody_contacts_get`](/mcp-reference/tools/contacts-get).
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Find my contact Sarah at Acme."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_contacts_search",
+  "arguments": { "workspace_id": "3f8a…", "query": "Sarah Acme" }
+}
+```
+
+```json ↩️ Result
+{
+  "contacts": [
+    {
+      "id": "7b21…",
+      "first_name": "Sarah",
+      "last_name": "Chen",
+      "email": "sarah@acme.com",
+      "phone": "+14155550148",
+      "company": "Acme",
+      "title": "Head of People"
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Once you have a match, call [`goody_contacts_get`](/mcp-reference/tools/contacts-get) for the full detail (including birthday and work anniversary), or
+  [`goody_contacts_update`](/mcp-reference/tools/contacts-update) to edit it.
+</Tip>

@@ -1,0 +1,71 @@
+---
+title: "goody_payment_methods_list"
+sidebarTitle: "payment_methods_list"
+description: "List the payment methods the user can charge for a gift in a workspace."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Lists the payment methods the user can charge for a gift in the given workspace. Call this before sending so the user can confirm the funding source.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Gates access to the user's payment methods.
+</ParamField>
+
+## Returns
+
+<ResponseField name="items" type="object[]">
+  The payment methods available in this workspace.
+  <Expandable title="payment method">
+    <ResponseField name="id" type="string">A payment-method UUID, or the literal `BALANCE` or `CORPORATE_ACCOUNT`. Pass as `payment_method_id` to [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).</ResponseField>
+    <ResponseField name="name" type="string">Display name, e.g. "Visa 1234", "Balance", or "Corporate Account".</ResponseField>
+    <ResponseField name="cardholder_name" type="string | null">Name on the card, when applicable.</ResponseField>
+    <ResponseField name="balance" type="integer | null">Cents available to spend. Present only for `BALANCE` and `CORPORATE_ACCOUNT`.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"What can I pay with?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_payment_methods_list",
+  "arguments": { "workspace_id": "3f8a…" }
+}
+```
+
+```json ↩️ Result
+{
+  "items": [
+    {
+      "id": "c41d…",
+      "name": "Visa 1234",
+      "cardholder_name": "Jordan Lee",
+      "balance": null
+    },
+    {
+      "id": "BALANCE",
+      "name": "Balance",
+      "cardholder_name": null,
+      "balance": 25000
+    },
+    {
+      "id": "CORPORATE_ACCOUNT",
+      "name": "Corporate Account",
+      "cardholder_name": null,
+      "balance": 480000
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Confirm the funding source with the user, then pass the chosen `id` as `payment_method_id` to [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).
+</Tip>

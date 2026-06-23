@@ -1,0 +1,72 @@
+---
+title: "goody_collections_list"
+sidebarTitle: "collections_list"
+description: "Lists a workspace's curated gift collections — pre-built bundles to send instead of a single product."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Lists the curated gift collections in a workspace — each a pre-built bundle the user can pick instead of a single product. Returns up to **25**.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID, from [`goody_workspaces_list`](/mcp-reference/tools/workspaces-list).
+</ParamField>
+
+<ParamField body="published_only" type="boolean" default="false">
+  When true, returns only published collections, skipping drafts. Set true when the user is ready to send.
+</ParamField>
+
+## Returns
+
+<ResponseField name="collections" type="object[]">
+  Up to 25 collections in the workspace.
+  <Expandable title="collection">
+    <ResponseField name="id" type="string">Collection UUID.</ResponseField>
+    <ResponseField name="workspace_id" type="string">UUID of the owning workspace.</ResponseField>
+    <ResponseField name="name" type="string | null">Collection name.</ResponseField>
+    <ResponseField name="is_published" type="boolean">True when the collection has a published version.</ResponseField>
+    <ResponseField name="price_cents" type="integer | null">Published price in cents; `null` when there's no published version.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Show me our gift collections."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_collections_list",
+  "arguments": { "workspace_id": "0f3c…" }
+}
+```
+
+```json ↩️ Result
+{
+  "collections": [
+    {
+      "id": "7b22…",
+      "workspace_id": "0f3c…",
+      "name": "Welcome Aboard Bundle",
+      "is_published": true,
+      "price_cents": 8500
+    },
+    {
+      "id": "c41a…",
+      "workspace_id": "0f3c…",
+      "name": "Holiday Cheer (draft)",
+      "is_published": false,
+      "price_cents": null
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Discover the workspace first with [`goody_workspaces_list`](/mcp-reference/tools/workspaces-list), or browse individual products with [`goody_products_search`](/mcp-reference/tools/products-search).
+</Tip>

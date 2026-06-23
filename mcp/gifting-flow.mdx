@@ -13,31 +13,53 @@ A send moves through a few clear steps. The assistant orchestrates them for you 
   <Step title="Compose">
     Pick a greeting card and an optional card message (the assistant can draft a few), choose the recipient, and select a payment method.
   </Step>
-  <Step title="Price">
-    The assistant prices the gift — subtotal, shipping, and estimated tax — and relays the total to you. Pricing is free and can be run as many times as you like.
+  <Step title="Preview">
+    The assistant builds a **preview link** — a real page showing the assembled gift (card, message, products) — and prices it in full: subtotal, shipping, and estimated tax. Nothing is charged. This is the step you confirm against: you see exactly what the recipient will get, and the total, before anything happens.
   </Step>
   <Step title="Confirm & send">
-    Only after you say yes does the assistant send the gift. It returns a preview link showing exactly what the recipient will see.
+    Only after you say yes does the assistant send the gift. It returns the same preview link plus a one-line summary of whether and how the recipient was notified.
   </Step>
 </Steps>
 
-## No address needed
+<Note>
+  Need just a number? The assistant can run a quick **price estimate** at any time without building a preview. The preview is the richer, confirm-against-it step — it returns the link, the price, the From name, the payment method, and how recipients are notified, all in one.
+</Note>
 
-Recipients don't need to share an address with you. They receive a gift link (by email, or a link you share), enter their own shipping details when they accept, and can swap the gift for something else — unless you ask to disable swapping.
+## How recipients receive a gift
+
+You choose one of three send methods, and the assistant tells you which it's using — because each reaches the recipient differently:
+
+- **Gift link you share** — the recipient is *not* automatically notified; you get a link to send them yourself.
+- **Email** — Goody emails each recipient a notification with their gift link.
+- **Direct shipping** — Goody ships the physical product straight to a mailing address you provide (no email). US addresses today.
+
+For the link and email methods, recipients don't need to share an address up front: they enter their own shipping details when they accept, and can swap the gift for something else — unless you disable swapping.
 
 ## How spending is protected
 
-Nothing is charged without you seeing the price and confirming. This is enforced in two layers:
+Nothing is charged without you seeing the price and confirming. This is enforced in a few layers:
 
 - **In the Goody MCP server.** The send action cannot run until a price has been presented and you've confirmed it. Recurring autogifts are always created **paused** — they can't spend anything until you explicitly activate them.
 - **In the client.** The money-spending actions are flagged as sensitive, so Claude asks your permission before running them rather than acting silently.
+- **A daily spend cap.** Gifts sent through AI connectors are held under a rolling daily spend limit, which you can review and adjust (including turning it off, or down to zero) in **Goody for Business → account settings → Connect AI tools**.
 
 Other defaults worth knowing:
 
 - **US shipping is the default.** If your recipient is outside the US, say so — the assistant searches international-friendly gifts and enables global delivery.
-- **Alcohol is excluded by default** unless you explicitly ask for it (alcohol gifts require age attestation and a card payment).
+- **Alcohol is excluded by default** unless you explicitly ask for it (alcohol gifts require age attestation and a card payment, and can't be paid from Balance).
 - **Sending doesn't auto-save recipients** as contacts — the assistant offers to, and only saves if you agree.
+
+## Scheduling, expiration, and payment
+
+- **Schedule for later.** Ask to send on a future date and the assistant schedules it — any time in the next 3 months.
+- **Expiration.** A gift link can expire if the recipient hasn't accepted it. The assistant asks rather than guessing; Goody's standard window is about 10 weeks. (An expiration date is required when you pay from your Goody Balance.)
+- **Payment source.** Pay with a saved card, your **Goody Balance**, or a **Corporate Account**. The assistant shows you which funding source it will charge before you confirm.
 
 ## Recurring gifts (autogifts)
 
-An autogift is a rule: "every year on this person's birthday or work anniversary, send this gift." You create one by reusing a gift you've already sent — same gift, card, message, and payment method. Autogifts are always **created paused**, and activating one re-checks that the gift is still available and the payment method still works. Supported triggers today: **birthday**, **work anniversary**, and **employee onboarding**.
+An autogift is a rule: "every year on this person's birthday or work anniversary, send this gift." You can create one two ways:
+
+- **Clone a past send** — reuse a gift you've already sent (same gift, card, message, and payment method).
+- **Build from scratch** — no prior send required: pick a product, card, message, and payment method, and the assistant assembles the rule directly.
+
+Autogifts are always **created paused**. Before activating, ask the assistant to **preview** the rule — it shows the card, message, product, and the expected per-send cost. Activating one re-checks that the gift is still available and the payment method still works. Supported triggers today: **birthday**, **work anniversary**, and **employee onboarding**.

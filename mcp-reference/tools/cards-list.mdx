@@ -1,0 +1,65 @@
+---
+title: "goody_cards_list"
+sidebarTitle: "cards_list"
+description: "Lists Goody's greeting cards — the card shown with a gift."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global)
+
+Lists Goody's greeting cards — the card shown with a gift (distinct from gift-card products). [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) requires a `card_id`, so call this before composing a gift. Returns up to **25** cards.
+
+## Parameters
+
+<ParamField body="occasion" type="string">
+  Optional. Filters to cards tagged with a matching occasion name. The match is case-insensitive but **exact** — the full name, not a substring. Common values: `Birthday`, `Congratulations`, `Thank You`, `Work Anniversary`, `Welcome`, `Happy Holidays`, `Get Well`, `Thinking of You`, `Sympathy`, `Just Because`. The vocabulary is data-driven — inspect the `occasions` array on returned cards to find exact tags.
+</ParamField>
+
+## Returns
+
+<ResponseField name="cards" type="object[]">
+  Up to 25 matching cards.
+  <Expandable title="card">
+    <ResponseField name="id" type="string">Card UUID — pass as `card_id` when composing a gift.</ResponseField>
+    <ResponseField name="name" type="string">Card name.</ResponseField>
+    <ResponseField name="image_url" type="string | null">The card artwork.</ResponseField>
+    <ResponseField name="occasions" type="string[]">Occasion tags for this card.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Show me thank-you cards."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_cards_list",
+  "arguments": { "occasion": "Thank You" }
+}
+```
+
+```json ↩️ Result
+{
+  "cards": [
+    {
+      "id": "0f3c…",
+      "name": "Heartfelt Thanks",
+      "image_url": "https://cards.goody.example/heartfelt-thanks.png",
+      "occasions": ["Thank You"]
+    },
+    {
+      "id": "9a17…",
+      "name": "Many Thanks",
+      "image_url": "https://cards.goody.example/many-thanks.png",
+      "occasions": ["Thank You", "Just Because"]
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Pass a `card_id` from here to [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) when composing a gift.
+</Tip>

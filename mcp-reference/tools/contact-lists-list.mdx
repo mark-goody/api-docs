@@ -1,0 +1,70 @@
+---
+title: "goody_contact_lists_list"
+sidebarTitle: "contact_lists_list"
+description: "List a workspace's active contact lists, newest first."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Lists the active contact lists in a workspace, newest first. Use it before [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create) so the user can pick a recipient list.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Lists are scoped to this workspace.
+</ParamField>
+
+<ParamField body="page" type="integer" default="1">
+  Page number, 1-indexed.
+</ParamField>
+
+<ParamField body="per_page" type="integer" default="25">
+  Lists per page. Maximum 100.
+</ParamField>
+
+## Returns
+
+<ResponseField name="contact_lists" type="object[]">
+  The active contact lists, newest first.
+  <Expandable title="contact_list">
+    <ResponseField name="id" type="string">Contact list UUID — pass as `contact_list_id` to [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create).</ResponseField>
+    <ResponseField name="name" type="string">The visible list name.</ResponseField>
+    <ResponseField name="kind" type="string">`User-added` (a list the user built) or `HRIS-synced` (mirrored from an HR integration).</ResponseField>
+    <ResponseField name="contact_count" type="integer">Number of contacts in the list.</ResponseField>
+  </Expandable>
+</ResponseField>
+<ResponseField name="page" type="integer">The page returned.</ResponseField>
+<ResponseField name="per_page" type="integer">Lists per page.</ResponseField>
+<ResponseField name="total_count" type="integer">Total active lists in the workspace.</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"What contact lists do I have?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_contact_lists_list",
+  "arguments": { "workspace_id": "3f8a…" }
+}
+```
+
+```json ↩️ Result
+{
+  "contact_lists": [
+    { "id": "c1e9…", "name": "Q3 onboarding cohort", "kind": "User-added", "contact_count": 12 },
+    { "id": "b730…", "name": "Engineering", "kind": "HRIS-synced", "contact_count": 48 }
+  ],
+  "page": 1,
+  "per_page": 25,
+  "total_count": 2
+}
+```
+</CodeGroup>
+
+<Tip>
+  No list yet? Build one with [`goody_contact_lists_create`](/mcp-reference/tools/contact-lists-create), then point an
+  [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create) rule at it.
+</Tip>

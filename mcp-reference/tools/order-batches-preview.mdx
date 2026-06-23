@@ -1,0 +1,150 @@
+---
+title: "goody_order_batches_preview"
+sidebarTitle: "order_batches_preview"
+description: "Build a shareable preview link and price a gift before sending — nothing is charged."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+Builds a shareable preview link **and** prices a gift that has **not** been sent — nothing is charged, nothing is sent. This is the step that lets the user *see* the assembled gift (card, message, products) at a real URL and review the total before sending.
+
+Lead your reply with the `preview_url`, relay the `total_price`, and only after the user confirms call [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) with the same inputs.
+
+<Note>
+  There is no `payment_method_id` here — previewing neither charges nor needs a funding source.
+</Note>
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Scopes the preview to this workspace.
+</ParamField>
+
+<ParamField body="card_id" type="string" required>
+  Card UUID — from [`goody_cards_list`](/mcp-reference/tools/cards-list). Picking a real card means the preview shows the actual card the recipient will see.
+</ParamField>
+
+<ParamField body="product_id" type="string">
+  A single product UUID — from [`goody_products_search`](/mcp-reference/tools/products-search). Use this **or** `cart`, never both.
+</ParamField>
+
+<ParamField body="quantity" type="integer" default="1">
+  Quantity for `product_id`. Defaults to `1`.
+</ParamField>
+
+<ParamField body="variable_price" type="integer">
+  Amount to fund, in cents, for a variable-amount Gift of Choice or variable gift card. Must fall within the gift's `[price_min, price_max]`. Only applies to `product_id`.
+</ParamField>
+
+<ParamField body="cart" type="object">
+  A multi-item cart — an object with an `items` array (not a bare array). Use this **or** `product_id`, never both.
+  <Expandable title="cart">
+    <ParamField body="items" type="object[]" required>
+      One entry per product in the gift.
+      <Expandable title="item">
+        <ParamField body="product_id" type="string" required>Product UUID.</ParamField>
+        <ParamField body="quantity" type="integer" default="1">Quantity of this product.</ParamField>
+        <ParamField body="variable_price" type="integer">Amount in cents for a variable-amount gift, within its `[price_min, price_max]`.</ParamField>
+        <ParamField body="variants" type="string[]">Selected variant option IDs (e.g. size, color) for products that offer them.</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="contact_id" type="string">
+  A single saved-contact UUID — from [`goody_contacts_search`](/mcp-reference/tools/contacts-search). Use this **or** `recipients`. Optional: omit recipients entirely to preview a half-composed gift with a placeholder recipient.
+</ParamField>
+
+<ParamField body="recipients" type="object[]">
+  The people to send to. Use this **or** `contact_id`. Optional here — omit to preview before recipients are known.
+  <Expandable title="recipient">
+    <ParamField body="name" type="string">
+      Full name — split on the **first** space (first token → first name, the rest → last name). Use this or `first_name` + `last_name`.
+    </ParamField>
+    <ParamField body="first_name" type="string">First name. Pair with `last_name`.</ParamField>
+    <ParamField body="last_name" type="string">Last name.</ParamField>
+    <ParamField body="email" type="string">Recipient email.</ParamField>
+    <ParamField body="phone" type="string">Recipient phone, when sending by text.</ParamField>
+    <ParamField body="contact_id" type="string">Link this recipient to an existing saved contact.</ParamField>
+    <ParamField body="mailing_address" type="object">
+      Required on every recipient when `send_method` is `direct_send`.
+      <Expandable title="mailing_address">
+        <ParamField body="first_name" type="string">Recipient first name for the shipping label.</ParamField>
+        <ParamField body="last_name" type="string">Recipient last name for the shipping label.</ParamField>
+        <ParamField body="address_1" type="string" required>Street address.</ParamField>
+        <ParamField body="address_2" type="string">Apartment, suite, etc.</ParamField>
+        <ParamField body="city" type="string" required>City.</ParamField>
+        <ParamField body="state" type="string" required>State or province.</ParamField>
+        <ParamField body="postal_code" type="string" required>ZIP or postal code.</ParamField>
+        <ParamField body="country" type="string" required>Country.</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="message" type="string">
+  The note shown on the gift card. Use [`goody_messages_generate`](/mcp-reference/tools/messages-generate) to draft one.
+</ParamField>
+
+<ParamField body="from_name" type="string">
+  The "From" name the recipient sees. Defaults to the authenticated user.
+</ParamField>
+
+<ParamField body="send_method" type="string" default="link_single">
+  How the recipient receives the gift. One of `link_single` (you share the link yourself), `email_and_link` (Goody emails each recipient their link), or `direct_send` (ships a physical product to each recipient — requires a `mailing_address` on every recipient).
+</ParamField>
+
+## Returns
+
+<ResponseField name="preview_url" type="string">
+  A shareable URL that renders the assembled gift — card, message, and products. **Lead your reply with this** so the user can see exactly what they're sending.
+</ResponseField>
+
+<ResponseField name="draft_batch_id" type="string">
+  UUID of the draft batch the preview was built from.
+</ResponseField>
+
+<ResponseField name="cart_price" type="object">
+  The cart subtotal before tax and shipping.
+</ResponseField>
+
+<ResponseField name="total_price" type="object">
+  The full total — subtotal, tax, and shipping. Relay this to the user before sending.
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Show me a preview of the Cold Brew Kit for Sarah before sending."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_order_batches_preview",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "card_id": "7c20…",
+    "product_id": "0f3c…",
+    "recipients": [
+      { "name": "Sarah Chen", "email": "sarah@acme.com" }
+    ],
+    "message": "Thanks for everything this quarter, Sarah!",
+    "from_name": "Jordan at Acme"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "preview_url": "https://www.ongoody.com/preview/2f9c…",
+  "draft_batch_id": "a18d…",
+  "cart_price": { "subtotal": 4200, "currency": "USD" },
+  "total_price": { "subtotal": 4200, "tax": 357, "shipping": 0, "total": 4557, "currency": "USD" }
+}
+```
+</CodeGroup>
+
+<Tip>
+  When the user confirms, send it with [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) using the same inputs. For just a number without the link, use [`goody_order_batches_price`](/mcp-reference/tools/order-batches-price); to draft the card message, use [`goody_messages_generate`](/mcp-reference/tools/messages-generate).
+</Tip>

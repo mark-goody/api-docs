@@ -1,0 +1,51 @@
+---
+title: "goody_workspaces_list"
+sidebarTitle: "workspaces_list"
+description: "Lists the Goody workspaces the connected user can gift from."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global)
+
+Lists the Goody workspaces the connected user belongs to. Call before any tool that creates, updates, or sends gifts — they all require an explicit `workspace_id`, and this is the only way to discover valid ones.
+
+## Parameters
+
+This tool takes no arguments.
+
+## Returns
+
+<ResponseField name="workspaces" type="object[]">
+  The workspaces the connected user belongs to.
+  <Expandable title="workspace">
+    <ResponseField name="id" type="string">Workspace UUID — pass as `workspace_id` to any tool that requires one.</ResponseField>
+    <ResponseField name="name" type="string">Workspace name.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"What workspaces can I send gifts from?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_workspaces_list",
+  "arguments": {}
+}
+```
+
+```json ↩️ Result
+{
+  "workspaces": [
+    { "id": "0f3c…", "name": "Northwind Trading" },
+    { "id": "9a17…", "name": "Northwind Labs" }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Start a session with [`goody_me_get`](/mcp-reference/tools/me-get) to confirm the account, then pass a `workspace_id` from here to tools like [`goody_collections_list`](/mcp-reference/tools/collections-list) or [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).
+</Tip>

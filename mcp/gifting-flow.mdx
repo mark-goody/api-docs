@@ -63,3 +63,24 @@ An autogift is a rule: "every year on this person's birthday or work anniversary
 - **Build from scratch** — no prior send required: pick a product, card, message, and payment method, and the assistant assembles the rule directly.
 
 Autogifts are always **created paused**. Before activating, ask the assistant to **preview** the rule — it shows the card, message, product, and the expected per-send cost. Activating one re-checks that the gift is still available and the payment method still works. Supported triggers today: **birthday**, **work anniversary**, and **employee onboarding**.
+
+## Automatic & agentic sends
+
+Not every send has a human watching. A gift might go out from a scheduled send, a recurring autogift, or a Claude routine running on its own. Confirmation can't happen at the moment of sending then — so approval moves earlier, and the spending limit backstops it.
+
+There are two modes:
+
+- **Human in the loop** — the everyday case. The assistant previews the gift, you confirm the price, and only then does it send. You approve *each* send.
+- **Unattended** — a scheduled send, an autogift, or an autonomous agent or routine (see [how clients authenticate](/mcp/authentication#two-ways-to-connect)). You approve *once, up front*; the gift sends later with no one watching.
+
+For an unattended send, your confirmation is the consent you give before it ever runs, in three layers:
+
+1. **The permission you granted.** The connection must carry the **Send gifts** permission — granted when you authorize an interactive client over OAuth, or selected as a scope when you mint a [personal MCP token](/mcp/authentication#two-ways-to-connect) for a script, cron job, or headless agent. Without it, the agent can preview and price, but never send.
+2. **The automation you set up.** Activating an autogift, scheduling a send, or writing a routine's standing instructions *is* your advance approval of what gets sent and when. For autogifts, **activation** — not creation — is the commit point: rules are created paused and preview their cost first.
+3. **The spending limit.** The rolling daily cap (set in **Connect AI tools**) bounds total spend however a send is triggered, so an automation that misbehaves can't run away.
+
+<Note>
+  **Worked example.** You ask Claude to run a daily routine: *"Every morning, check my calendar; if it's a direct report's birthday, send them a $50 gift of choice with a warm note."* When it fires next Tuesday you aren't there, so there's no per-gift "send it?" prompt. Your confirmation already happened — you granted **Send gifts** when you connected, you wrote the routine's rule, and your daily spend cap limits the exposure if something goes wrong. The agent assembles and sends each gift on its own, within those bounds.
+</Note>
+
+A calendar- or routine-driven send like that is the **agent** acting autonomously — distinct from a Goody **autogift**, which only triggers on a birthday, work anniversary, or onboarding date and is fired by Goody itself. Reach for an autogift when the occasion is one of those three; use a routine or your own agent for anything else.

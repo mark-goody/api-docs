@@ -45,6 +45,31 @@ Any MCP client that supports remote OAuth servers can add Goody by URL — Claud
   dashboard exactly like gifts sent from the website.
 </Note>
 
+## Connect a script or automation
+
+For scripts, n8n / Zapier / Make workflows, cron jobs, or headless agent frameworks — anywhere a browser-based OAuth sign-in isn't an option — connect with a **personal MCP token** instead.
+
+<Steps>
+  <Step title="Create a personal MCP token">
+    In Goody for Business, go to **account settings → Personal MCP token**. Give it a name, choose its [scopes](/mcp/authentication#permissions) (Read / Write / Send gifts), and pick an expiry. The token is shown **once** — copy it now.
+  </Step>
+  <Step title="Configure your client">
+    Point your MCP client at the same server URL and pass the token as a bearer credential:
+
+    ```text
+    https://api.ongoody.com/mcp/v1
+    ```
+
+    Both the URL and the token are required.
+  </Step>
+</Steps>
+
+<Warning>
+  A personal MCP token is a credential — anyone with it can act with the scopes you granted, including spending money if you selected **Send gifts**. Store it like a password, scope it to only what the automation needs, and revoke it from the same page if it's exposed.
+</Warning>
+
+See [Authentication & permissions](/mcp/authentication) for how the two methods compare and what each permission allows.
+
 ## Supported clients
 
-Any MCP client that supports remote servers with OAuth works, including Claude on web, desktop, and mobile. The server uses the standard Streamable HTTP transport, so no local proxy or command-line setup is required.
+Any MCP client that supports remote servers works. **Interactive clients** (Claude on web, desktop, and mobile; Cursor; ChatGPT's MCP support) connect over OAuth with no setup beyond the server URL. **Scripts and automations** connect with a personal MCP token. The server uses the standard Streamable HTTP transport, so no local proxy or command-line setup is required.

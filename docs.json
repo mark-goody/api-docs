@@ -2,10 +2,18 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
   "name": "Goody Developers",
+  "description": "Build on Goody: send gifts and physical products programmatically with the Goody API, or gift in natural language from Claude and other AI assistants with the Goody MCP server.",
   "colors": {
     "primary": "#9159D6",
     "light": "#B584F1",
     "dark": "#9159D6"
+  },
+  "seo": {
+    "metatags": {
+      "og:site_name": "Goody Developers",
+      "twitter:card": "summary_large_image",
+      "keywords": "Goody API, Goody MCP server, gifting API, gift API, MCP server, send gifts with AI, Claude gifting connector, business gifting, autogift"
+    }
   },
   "favicon": "/favicon.png",
   "navigation": {

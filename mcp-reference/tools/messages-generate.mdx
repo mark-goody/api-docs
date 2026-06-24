@@ -1,0 +1,77 @@
+---
+title: "goody_messages_generate"
+sidebarTitle: "messages_generate"
+description: "Draft three candidate gift-card messages for the user to pick from or refine."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global)
+
+Generates three candidate gift-card messages for the user to pick from or refine. It works two ways — **autopilot** (`category` + `sub_category`) and **collaborative** (`user_prompt`) — and you can combine them: a category plus free-text instructions.
+
+Built-in categories include thank you, congratulations, birthday, work anniversary, welcome/onboarding, apology, sympathy, farewell, and holidays.
+
+## Parameters
+
+<ParamField body="category" type="string">
+  A message category for autopilot mode — pair with `sub_category` (e.g. `category` `"birthday"`). One of: thank you, congratulations, birthday, work anniversary, welcome/onboarding, apology, sympathy, farewell, or holidays.
+</ParamField>
+
+<ParamField body="sub_category" type="string">
+  A narrower variant within the chosen `category`. Use alongside `category` in autopilot mode.
+</ParamField>
+
+<ParamField body="user_prompt" type="string">
+  Free text describing the message you want — e.g. "thank a client for sticking with us through a delay". Required for collaborative mode; optional in autopilot mode as extra instructions on top of the category.
+</ParamField>
+
+<ParamField body="tones" type="string[]" default="empty">
+  Free-text tone hints, e.g. `["warm", "professional"]`. Defaults to empty.
+</ParamField>
+
+<ParamField body="formality_level" type="integer" default="3">
+  How formal the message should read, from `1` (very casual) to `5` (formal). Defaults to `3`.
+</ParamField>
+
+## Returns
+
+<ResponseField name="messages" type="string[]">
+  Exactly three candidate messages. Show them to the user and let them pick or refine.
+</ResponseField>
+
+<Note>
+  Generated messages may contain the placeholder tokens `{{firstname}}` and `{{fullname}}` — Goody fills in each recipient's real name at send time. Pass the chosen message through to [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) with the tokens unchanged. When you **show** a message to the user, render the token with the recipient's actual name for a clean preview.
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Draft a warm thank-you message for a client."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_messages_generate",
+  "arguments": {
+    "category": "thank you",
+    "user_prompt": "thank a client for sticking with us through a delay",
+    "tones": ["warm", "professional"],
+    "formality_level": 3
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "messages": [
+    "Thank you for your patience through the delay, {{firstname}} — your trust means everything to us, and we're grateful to keep working together.",
+    "{{firstname}}, we know the wait wasn't easy. Thank you for sticking with us — here's to a smoother road ahead.",
+    "A small thank-you, {{firstname}}, for your understanding and continued partnership. We don't take it for granted."
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Once the user picks a message, carry the tokens through unchanged to [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) — Goody personalizes each recipient's name at send time.
+</Tip>

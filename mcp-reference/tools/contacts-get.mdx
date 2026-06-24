@@ -1,0 +1,69 @@
+---
+title: "goody_contacts_get"
+sidebarTitle: "contacts_get"
+description: "Fetch one contact's full detail, including birthday and work anniversary."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Fetches the full detail for a single contact, including the event dates the search response omits. Use it before composing a birthday or anniversary gift, or to confirm a recipient's details before sending.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The contact must belong to this workspace.
+</ParamField>
+
+<ParamField body="contact_id" type="string" required>
+  Contact UUID — from a [`goody_contacts_search`](/mcp-reference/tools/contacts-search) result.
+</ParamField>
+
+## Returns
+
+<ResponseField name="id" type="string">Contact UUID.</ResponseField>
+<ResponseField name="first_name" type="string | null">Given name.</ResponseField>
+<ResponseField name="last_name" type="string | null">Family name.</ResponseField>
+<ResponseField name="email" type="string | null">Email address.</ResponseField>
+<ResponseField name="phone" type="string | null">Phone number.</ResponseField>
+<ResponseField name="company" type="string | null">Company name.</ResponseField>
+<ResponseField name="title" type="string | null">Job title.</ResponseField>
+<ResponseField name="birthday" type="string | null">Date as `YYYY-MM-DD`. A year of `1900` means only the month and day are known.</ResponseField>
+<ResponseField name="work_anniversary" type="string | null">Date as `YYYY-MM-DD`.</ResponseField>
+
+<Note>
+  Returns not-found if the id is unknown or belongs to another workspace.
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"When is Maya Patel's birthday?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_contacts_get",
+  "arguments": { "workspace_id": "3f8a…", "contact_id": "9c44…" }
+}
+```
+
+```json ↩️ Result
+{
+  "id": "9c44…",
+  "first_name": "Maya",
+  "last_name": "Patel",
+  "email": "maya@northwind.com",
+  "phone": "+14155550199",
+  "company": "Northwind",
+  "title": "Design Lead",
+  "birthday": "1991-04-12",
+  "work_anniversary": "2020-09-01"
+}
+```
+</CodeGroup>
+
+<Tip>
+  Find the contact first with [`goody_contacts_search`](/mcp-reference/tools/contacts-search), then edit it with
+  [`goody_contacts_update`](/mcp-reference/tools/contacts-update).
+</Tip>

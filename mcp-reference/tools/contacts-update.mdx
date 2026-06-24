@@ -1,0 +1,112 @@
+---
+title: "goody_contacts_update"
+sidebarTitle: "contacts_update"
+description: "Update an existing contact — only the fields you supply are changed."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+Updates an existing contact. Only the fields you supply are written; omitted fields stay untouched. Returns the saved contact.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The contact must belong to this workspace.
+</ParamField>
+
+<ParamField body="contact_id" type="string" required>
+  Contact UUID — from [`goody_contacts_search`](/mcp-reference/tools/contacts-search) or [`goody_contacts_get`](/mcp-reference/tools/contacts-get).
+</ParamField>
+
+<ParamField body="first_name" type="string">
+  Given name.
+</ParamField>
+
+<ParamField body="last_name" type="string">
+  Family name.
+</ParamField>
+
+<ParamField body="email" type="string">
+  Email address.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Phone number in any format — it's normalized automatically.
+</ParamField>
+
+<ParamField body="company" type="string">
+  Company name.
+</ParamField>
+
+<ParamField body="title" type="string">
+  Job title.
+</ParamField>
+
+<ParamField body="birthday" type="string">
+  Date as `YYYY-MM-DD`; use year `1900` if only the month and day are known. Pass an empty string to clear it; omit it entirely to leave it unchanged.
+</ParamField>
+
+<ParamField body="work_anniversary" type="string">
+  Date as `YYYY-MM-DD`. Pass an empty string to clear it; omit it entirely to leave it unchanged.
+</ParamField>
+
+<Warning>
+  If the new email or phone already belongs to a different contact in this workspace, the request is rejected. Re-saving the contact's own current email or phone is fine.
+</Warning>
+
+## Returns
+
+<ResponseField name="contact" type="object">
+  The saved contact.
+  <Expandable title="contact">
+    <ResponseField name="id" type="string">Contact UUID.</ResponseField>
+    <ResponseField name="first_name" type="string | null">Given name.</ResponseField>
+    <ResponseField name="last_name" type="string | null">Family name.</ResponseField>
+    <ResponseField name="email" type="string | null">Email address.</ResponseField>
+    <ResponseField name="phone" type="string | null">Phone number.</ResponseField>
+    <ResponseField name="company" type="string | null">Company name.</ResponseField>
+    <ResponseField name="title" type="string | null">Job title.</ResponseField>
+    <ResponseField name="birthday" type="string | null">Date as `YYYY-MM-DD`; year `1900` means month and day only.</ResponseField>
+    <ResponseField name="work_anniversary" type="string | null">Date as `YYYY-MM-DD`.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Update Maya's email to maya@northwind.io."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_contacts_update",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "contact_id": "9c44…",
+    "email": "maya@northwind.io"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "contact": {
+    "id": "9c44…",
+    "first_name": "Maya",
+    "last_name": "Patel",
+    "email": "maya@northwind.io",
+    "phone": "+14155550199",
+    "company": "Northwind",
+    "title": "Design Lead",
+    "birthday": "1991-04-12",
+    "work_anniversary": "2020-09-01"
+  }
+}
+```
+</CodeGroup>
+
+<Tip>
+  Find the contact first with [`goody_contacts_search`](/mcp-reference/tools/contacts-search), or read its current detail with
+  [`goody_contacts_get`](/mcp-reference/tools/contacts-get).
+</Tip>

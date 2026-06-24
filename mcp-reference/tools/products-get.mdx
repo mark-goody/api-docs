@@ -1,0 +1,118 @@
+---
+title: "goody_products_get"
+sidebarTitle: "products_get"
+description: "Fetches full detail for a single product, richer than a search result."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global)
+
+Fetches full detail for a single product — richer than a search result. Use it when the user is close to committing and you need the description, shipping tier, alcohol status, or US state restrictions.
+
+## Parameters
+
+<ParamField body="product_id" type="string" required>
+  Product UUID, from a [`goody_products_search`](/mcp-reference/tools/products-search) result.
+</ParamField>
+
+## Returns
+
+<ResponseField name="id" type="string">
+  Product UUID.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Product name.
+</ResponseField>
+
+<ResponseField name="brand" type="string | null">
+  Brand name.
+</ResponseField>
+
+<ResponseField name="image_key" type="string | null">
+  Opaque image key for the product photo.
+</ResponseField>
+
+<ResponseField name="price_cents" type="integer | null">
+  Price in cents for fixed-price products.
+</ResponseField>
+
+<ResponseField name="description" type="string | null">
+  Full product description.
+</ResponseField>
+
+<ResponseField name="additional_images" type="string[]">
+  Extra image keys beyond the primary photo.
+</ResponseField>
+
+<ResponseField name="shipping_tier" type="string">
+  `domestic_us`, `international`, or `any`.
+</ResponseField>
+
+<ResponseField name="alcohol" type="boolean">
+  True if the product contains alcohol (extra requirements apply to send).
+</ResponseField>
+
+<ResponseField name="restrictions" type="string[]">
+  US state codes where this product can't ship.
+</ResponseField>
+
+<ResponseField name="price_type" type="string | null">
+  `fixed`, `variable`, or `tiers`.
+</ResponseField>
+
+<ResponseField name="is_flex_gift" type="boolean">
+  True for a Gift of Choice (recipient picks; sender funds an amount).
+</ResponseField>
+
+<ResponseField name="price_min" type="integer | null">
+  Lowest amount (cents) the sender may fund, for a Gift of Choice.
+</ResponseField>
+
+<ResponseField name="price_max" type="integer | null">
+  Highest fundable amount; `null` means unlimited.
+</ResponseField>
+
+<Note>
+  Returns a not-found error if the product id is unknown, private, or inactive.
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Tell me more about the Cold Brew Starter Kit."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_products_get",
+  "arguments": { "product_id": "0f3c…" }
+}
+```
+
+```json ↩️ Result
+{
+  "id": "0f3c…",
+  "name": "Cold Brew Starter Kit",
+  "brand": "Grady's",
+  "image_key": "products/cold-brew-starter-kit.png",
+  "price_cents": 4200,
+  "description": "Everything to brew smooth cold brew at home: a glass carafe, a reusable filter, and two pouches of coarse-ground beans.",
+  "additional_images": [
+    "products/cold-brew-starter-kit-2.png",
+    "products/cold-brew-starter-kit-3.png"
+  ],
+  "shipping_tier": "domestic_us",
+  "alcohol": false,
+  "restrictions": [],
+  "price_type": "fixed",
+  "is_flex_gift": false,
+  "price_min": null,
+  "price_max": null
+}
+```
+</CodeGroup>
+
+<Tip>
+  Pair with [`goody_products_search`](/mcp-reference/tools/products-search) to discover products, or [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list) when the recipient's taste is unknown.
+</Tip>

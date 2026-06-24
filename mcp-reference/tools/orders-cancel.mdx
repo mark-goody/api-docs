@@ -1,0 +1,68 @@
+---
+title: "goody_orders_cancel"
+sidebarTitle: "orders_cancel"
+description: "Cancel a single order (one recipient's gift) before the recipient accepts it."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+Cancels a single order — one recipient's gift.
+
+<Warning>
+  This is irreversible — it releases the recipient's payment hold and refunds any applied credit. Only orders the recipient has **not** yet accepted can be canceled.
+</Warning>
+
+To cancel a whole batch, call this once per order id from [`goody_orders_list`](/mcp-reference/tools/orders-list).
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Scopes the cancellation to this workspace.
+</ParamField>
+
+<ParamField body="order_id" type="string" required>
+  The order to cancel — an order id from a [`goody_orders_list`](/mcp-reference/tools/orders-list) result.
+</ParamField>
+
+## Returns
+
+<ResponseField name="id" type="string">
+  The order id that was canceled.
+</ResponseField>
+
+<ResponseField name="status" type="string | null">
+  The order status after cancellation.
+</ResponseField>
+
+<Note>
+  A person can also self-serve cancellations on the Goody Track page.
+</Note>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Cancel the gift I sent to that wrong address."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_orders_cancel",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "order_id": "d72b…"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "id": "d72b…",
+  "status": "canceled"
+}
+```
+</CodeGroup>
+
+<Tip>
+  Find the order id with [`goody_orders_list`](/mcp-reference/tools/orders-list); for the full detail of the batch it belongs to, use [`goody_order_batches_get`](/mcp-reference/tools/order-batches-get).
+</Tip>

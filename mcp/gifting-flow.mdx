@@ -1,0 +1,86 @@
+---
+title: "The gifting flow"
+sidebarTitle: "Gifting flow"
+description: "How a gift goes from idea to sent through the Goody MCP server, and how the spend-confirmation safeguards work."
+---
+
+A send moves through a few clear steps. The assistant orchestrates them for you — this is what's happening under the hood.
+
+<Steps>
+  <Step title="Discover">
+    The assistant searches the catalog by your intent, budget, and occasion (returning up to **5 strong matches**), and can also offer a **Gift of Choice** the recipient picks themselves.
+  </Step>
+  <Step title="Compose">
+    Pick a greeting card and an optional card message (the assistant can draft a few), choose the recipient, and select a payment method.
+  </Step>
+  <Step title="Preview">
+    The assistant builds a **preview link** — a real page showing the assembled gift (card, message, products) — and prices it in full: subtotal, shipping, and estimated tax. Nothing is charged. This is the step you confirm against: you see exactly what the recipient will get, and the total, before anything happens.
+  </Step>
+  <Step title="Confirm & send">
+    Only after you say yes does the assistant send the gift. It returns the same preview link plus a one-line summary of whether and how the recipient was notified.
+  </Step>
+</Steps>
+
+<Note>
+  Need just a number? The assistant can run a quick **price estimate** at any time without building a preview. The preview is the richer, confirm-against-it step — it returns the link, the price, the From name, the payment method, and how recipients are notified, all in one.
+</Note>
+
+## How recipients receive a gift
+
+You choose one of three send methods, and the assistant tells you which it's using — because each reaches the recipient differently:
+
+- **Gift link you share** — the recipient is *not* automatically notified; you get a link to send them yourself.
+- **Email** — Goody emails each recipient a notification with their gift link.
+- **Direct shipping** — Goody ships the physical product straight to a mailing address you provide (no email). US addresses today.
+
+For the link and email methods, recipients don't need to share an address up front: they enter their own shipping details when they accept, and can swap the gift for something else — unless you disable swapping.
+
+## How spending is protected
+
+Nothing is charged without you seeing the price and confirming. This is enforced in a few layers:
+
+- **In the Goody MCP server.** The send action cannot run until a price has been presented and you've confirmed it. Recurring autogifts are always created **paused** — they can't spend anything until you explicitly activate them.
+- **In the client.** The money-spending actions are flagged as sensitive, so Claude asks your permission before running them rather than acting silently.
+- **A daily spend cap.** Gifts sent through AI connectors are held under a rolling daily spend limit, which you can review and adjust (including turning it off, or down to zero) in **Goody for Business → account settings → Connect AI tools**.
+
+Other defaults worth knowing:
+
+- **US shipping is the default.** If your recipient is outside the US, say so — the assistant searches international-friendly gifts and enables global delivery.
+- **Alcohol is excluded by default** unless you explicitly ask for it (alcohol gifts require age attestation and a card payment, and can't be paid from Balance).
+- **Sending doesn't auto-save recipients** as contacts — the assistant offers to, and only saves if you agree.
+
+## Scheduling, expiration, and payment
+
+- **Schedule for later.** Ask to send on a future date and the assistant schedules it — any time in the next 3 months.
+- **Expiration.** A gift link can expire if the recipient hasn't accepted it. The assistant asks rather than guessing; Goody's standard window is about 10 weeks. (An expiration date is required when you pay from your Goody Balance.)
+- **Payment source.** Pay with a saved card, your **Goody Balance**, or a **Corporate Account**. The assistant shows you which funding source it will charge before you confirm.
+
+## Recurring gifts (autogifts)
+
+An autogift is a rule: "every year on this person's birthday or work anniversary, send this gift." You can create one two ways:
+
+- **Clone a past send** — reuse a gift you've already sent (same gift, card, message, and payment method).
+- **Build from scratch** — no prior send required: pick a product, card, message, and payment method, and the assistant assembles the rule directly.
+
+Autogifts are always **created paused**. Before activating, ask the assistant to **preview** the rule — it shows the card, message, product, and the expected per-send cost. Activating one re-checks that the gift is still available and the payment method still works. Supported triggers today: **birthday**, **work anniversary**, and **employee onboarding**.
+
+## Automatic & agentic sends
+
+Not every send has a human watching. A gift might go out from a scheduled send, a recurring autogift, or a Claude routine running on its own. Confirmation can't happen at the moment of sending then — so approval moves earlier, and the spending limit backstops it.
+
+There are two modes:
+
+- **Human in the loop** — the everyday case. The assistant previews the gift, you confirm the price, and only then does it send. You approve *each* send.
+- **Unattended** — a scheduled send, an autogift, or an autonomous agent or routine (see [how clients authenticate](/mcp/authentication#two-ways-to-connect)). You approve *once, up front*; the gift sends later with no one watching.
+
+For an unattended send, your confirmation is the consent you give before it ever runs, in three layers:
+
+1. **The permission you granted.** The connection must carry the **Send gifts** permission — granted when you authorize an interactive client over OAuth, or selected as a scope when you mint a [personal MCP token](/mcp/authentication#two-ways-to-connect) for a script, cron job, or headless agent. Without it, the agent can preview and price, but never send.
+2. **The automation you set up.** Activating an autogift, scheduling a send, or writing a routine's standing instructions *is* your advance approval of what gets sent and when. For autogifts, **activation** — not creation — is the commit point: rules are created paused and preview their cost first.
+3. **The spending limit.** The rolling daily cap (set in **Connect AI tools**) bounds total spend however a send is triggered, so an automation that misbehaves can't run away.
+
+<Note>
+  **Worked example.** You ask Claude to run a daily routine: *"Every morning, check my calendar; if it's a direct report's birthday, send them a $50 gift of choice with a warm note."* When it fires next Tuesday you aren't there, so there's no per-gift "send it?" prompt. Your confirmation already happened — you granted **Send gifts** when you connected, you wrote the routine's rule, and your daily spend cap limits the exposure if something goes wrong. The agent assembles and sends each gift on its own, within those bounds.
+</Note>
+
+A calendar- or routine-driven send like that is the **agent** acting autonomously — distinct from a Goody **autogift**, which only triggers on a birthday, work anniversary, or onboarding date and is fired by Goody itself. Reach for an autogift when the occasion is one of those three; use a routine or your own agent for anything else.

@@ -1,0 +1,101 @@
+---
+title: "Connect Goody to Claude"
+sidebarTitle: "Connect"
+description: "Add Goody to Claude as a custom connector using the server URL. (Directory listing is rolling out.)"
+---
+
+You can connect Goody to Claude — or any MCP-compatible client — by adding it as a custom connector with the server URL.
+
+<Note>
+  The Claude Connectors Directory listing is rolling out — for now, add Goody as a
+  custom connector below.
+</Note>
+
+## Add Goody as a custom connector
+
+Any MCP client that supports remote OAuth servers can add Goody by URL — Claude (web, desktop, and mobile) and others. Point the client at the server URL and complete OAuth sign-in. In Claude specifically, use the steps below; in another client, add a custom/remote MCP server with the same URL.
+
+<Steps>
+  <Step title="Add a custom connector">
+    In claude.ai, go to **Settings → Connectors → Add custom connector**. In another MCP client, open its custom or remote MCP server settings.
+  </Step>
+  <Step title="Enter the server URL">
+    ```text
+    https://api.ongoody.com/mcp/v1
+    ```
+  </Step>
+  <Step title="Sign in to Goody">
+    You'll be redirected to Goody to sign in — or to create a Goody for Business account if you don't have one.
+  </Step>
+  <Step title="Authorize">
+    Review the permissions Goody requests and click **Authorize**. Goody now appears as a connected tool — start a new chat and try an [example prompt](/mcp-reference/example-prompts).
+  </Step>
+</Steps>
+
+<Note>
+  The Goody MCP server publishes the standard OAuth authorization-server and
+  protected-resource metadata, so any compliant client discovers the
+  authorization, token, and registration endpoints from the URL alone — there's
+  nothing to configure by hand.
+</Note>
+
+<Note>
+  A Goody for Business account is required. The Goody MCP server acts only within
+  the Goody workspaces you're a member of, and gifts you send appear in your Goody
+  dashboard exactly like gifts sent from the website.
+</Note>
+
+## Connect a script or automation
+
+For scripts, n8n / Zapier / Make workflows, cron jobs, or headless agent frameworks — anywhere a browser-based OAuth sign-in isn't an option — connect with a **personal MCP token** instead.
+
+<Steps>
+  <Step title="Create a personal MCP token">
+    In Goody for Business, go to **account settings → Personal MCP token**. Give it a name, choose its [scopes](/mcp/authentication#permissions) (Read / Write / Send gifts), and pick an expiry. The token is shown **once** — copy it now.
+  </Step>
+  <Step title="Configure your client">
+    Point your MCP client at the server URL and pass the token in an `Authorization: Bearer` header. Both are required.
+
+    <CodeGroup>
+    ```json Streamable HTTP client
+    {
+      "mcpServers": {
+        "goody": {
+          "url": "https://api.ongoody.com/mcp/v1",
+          "headers": {
+            "Authorization": "Bearer YOUR_PERSONAL_MCP_TOKEN"
+          }
+        }
+      }
+    }
+    ```
+
+    ```json Via mcp-remote (stdio-only clients)
+    {
+      "mcpServers": {
+        "goody": {
+          "command": "npx",
+          "args": [
+            "-y", "mcp-remote",
+            "https://api.ongoody.com/mcp/v1",
+            "--header", "Authorization: Bearer YOUR_PERSONAL_MCP_TOKEN"
+          ]
+        }
+      }
+    }
+    ```
+    </CodeGroup>
+
+    Use the direct Streamable HTTP form when your client supports remote MCP servers with custom headers. Use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) bridge for clients that only speak stdio.
+  </Step>
+</Steps>
+
+<Warning>
+  A personal MCP token is a credential — anyone with it can act with the scopes you granted, including spending money if you selected **Send gifts**. Store it like a password, scope it to only what the automation needs, and revoke it from the same page if it's exposed.
+</Warning>
+
+See [Authentication & permissions](/mcp/authentication) for how the two methods compare and what each permission allows.
+
+## Supported clients
+
+Any MCP client that supports remote servers works. **Interactive clients** (Claude on web, desktop, and mobile; Cursor; ChatGPT's MCP support) connect over OAuth with no setup beyond the server URL. **Scripts and automations** connect with a personal MCP token. The server uses the standard Streamable HTTP transport, so no local proxy or command-line setup is required.

@@ -1,0 +1,154 @@
+---
+title: "goody_order_batches_price"
+sidebarTitle: "order_batches_price"
+description: "Quick price estimate — cart subtotal, tax, shipping, and total — before sending."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+A quick price estimate — cart subtotal, tax, shipping, and total — before sending. Use it when the user just wants a number; use [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview) for the richer confirm-against-it step that returns a shareable link. Nothing is charged.
+
+<Note>
+  Relay the total, the `from_name`, and the `notification_preview` before calling [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).
+</Note>
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Scopes the estimate to this workspace.
+</ParamField>
+
+<ParamField body="product_id" type="string">
+  A single product UUID — from [`goody_products_search`](/mcp-reference/tools/products-search). Use this **or** `cart`, never both.
+</ParamField>
+
+<ParamField body="quantity" type="integer" default="1">
+  Quantity for `product_id`. Defaults to `1`.
+</ParamField>
+
+<ParamField body="variable_price" type="integer">
+  Amount to fund, in cents, for a variable-amount Gift of Choice or variable gift card. Must fall within the gift's `[price_min, price_max]`. Only applies to `product_id`.
+</ParamField>
+
+<ParamField body="cart" type="object">
+  A multi-item cart — an object with an `items` array (not a bare array). Use this **or** `product_id`, never both.
+  <Expandable title="cart">
+    <ParamField body="items" type="object[]" required>
+      One entry per product in the gift.
+      <Expandable title="item">
+        <ParamField body="product_id" type="string" required>Product UUID.</ParamField>
+        <ParamField body="quantity" type="integer" default="1">Quantity of this product.</ParamField>
+        <ParamField body="variable_price" type="integer">Amount in cents for a variable-amount gift, within its `[price_min, price_max]`.</ParamField>
+        <ParamField body="variants" type="string[]">Selected variant option IDs (e.g. size, color) for products that offer them.</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="contact_id" type="string">
+  A single saved-contact UUID — from [`goody_contacts_search`](/mcp-reference/tools/contacts-search). Use this **or** `recipients`.
+</ParamField>
+
+<ParamField body="recipients" type="object[]">
+  The people to send to. Use this **or** `contact_id`.
+  <Expandable title="recipient">
+    <ParamField body="name" type="string">
+      Full name — split on the **first** space (first token → first name, the rest → last name). Use this or `first_name` + `last_name`.
+    </ParamField>
+    <ParamField body="first_name" type="string">First name. Pair with `last_name`.</ParamField>
+    <ParamField body="last_name" type="string">Last name.</ParamField>
+    <ParamField body="email" type="string">Recipient email.</ParamField>
+    <ParamField body="phone" type="string">Recipient phone, when sending by text.</ParamField>
+    <ParamField body="contact_id" type="string">Link this recipient to an existing saved contact.</ParamField>
+    <ParamField body="mailing_address" type="object">
+      Required on every recipient when `send_method` is `direct_send`.
+      <Expandable title="mailing_address">
+        <ParamField body="first_name" type="string">Recipient first name for the shipping label.</ParamField>
+        <ParamField body="last_name" type="string">Recipient last name for the shipping label.</ParamField>
+        <ParamField body="address_1" type="string" required>Street address.</ParamField>
+        <ParamField body="address_2" type="string">Apartment, suite, etc.</ParamField>
+        <ParamField body="city" type="string" required>City.</ParamField>
+        <ParamField body="state" type="string" required>State or province.</ParamField>
+        <ParamField body="postal_code" type="string" required>ZIP or postal code.</ParamField>
+        <ParamField body="country" type="string" required>Country.</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="send_method" type="string" default="link_single">
+  How the recipient receives the gift. One of `link_single`, `email_and_link`, or `direct_send` (ships a physical product — requires a `mailing_address` on every recipient). Affects shipping in the estimate.
+</ParamField>
+
+<ParamField body="swap" type="string" default="single">
+  Whether the recipient may swap the gift. One of `single` (swap once), `multiple` (swap freely), or `disabled` (no swapping).
+</ParamField>
+
+<ParamField body="from_name" type="string">
+  The "From" name the recipient sees. When the user states a From name, pass it. Defaults to the authenticated user.
+</ParamField>
+
+<ParamField body="payment_method_id" type="string">
+  Optional. A funding source — from [`goody_payment_methods_list`](/mcp-reference/tools/payment-methods-list). When supplied, the result echoes the resolved `payment_method` so the user can confirm where the charge would land.
+</ParamField>
+
+## Returns
+
+<ResponseField name="cart_price" type="object">
+  The cart subtotal before tax and shipping.
+</ResponseField>
+
+<ResponseField name="total_price" type="object">
+  The full total — subtotal, tax, and shipping. Relay this to the user.
+</ResponseField>
+
+<ResponseField name="from_name" type="string">
+  The resolved sender name. Show it to the user so they can confirm who the gift is from.
+</ResponseField>
+
+<ResponseField name="notification_preview" type="string">
+  How recipients are reached for the chosen `send_method` (e.g. emailed a link, or shipped directly). State this before sending.
+</ResponseField>
+
+<ResponseField name="payment_method" type="object | null">
+  The resolved funding source — present only when a `payment_method_id` was supplied.
+  <Expandable title="payment_method">
+    <ResponseField name="id" type="string">The payment-method UUID, or the `BALANCE` / `WORKSPACE_BALANCE` / `CORPORATE_ACCOUNT` sentinel.</ResponseField>
+    <ResponseField name="name" type="string">Display name, e.g. "Visa 1234".</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"How much to send the Brightland olive oil set to Jane Doe (jane@acme.com)?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_order_batches_price",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "product_id": "9a17…",
+    "recipients": [
+      { "name": "Jane Doe", "email": "jane@acme.com" }
+    ]
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "cart_price": { "subtotal": 5200, "currency": "USD" },
+  "total_price": { "subtotal": 5200, "tax": 442, "shipping": 0, "total": 5642, "currency": "USD" },
+  "from_name": "Jordan at Acme",
+  "notification_preview": "Goody will email Jane Doe a link to claim the gift.",
+  "payment_method": null
+}
+```
+</CodeGroup>
+
+<Tip>
+  For a shareable preview link the user can review before sending, use [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview). When the user confirms, send it with [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).
+</Tip>

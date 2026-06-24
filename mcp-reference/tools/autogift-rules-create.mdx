@@ -1,0 +1,175 @@
+---
+title: "goody_autogift_rules_create"
+sidebarTitle: "autogift_rules_create"
+description: "Create a paused autogift rule — clone a past gift or build one from scratch."
+---
+
+**Permission:** `Send gifts` · **Workspace:** required (from `goody_workspaces_list`)
+
+Creates a **paused** autogift rule — a recurring gift that sends automatically when a recipient hits a birthday, work anniversary, or onboarding milestone.
+
+There are two ways to supply the gift contents — pick exactly one:
+
+- **(A) Clone** a recently-sent gift batch with `source_order_batch_id`. The cart, card, message, From name, payment method, and shipping are all pulled from that batch.
+- **(B) Build from scratch** (no prior send) — a cart plus `card_id`, `message`, and `payment_method_id`.
+
+<Note>
+  The rule is created **paused**. Call [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate) once the user confirms — activation is what commits the recurring spend.
+</Note>
+
+## Parameters
+
+### Required
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The rule is created in this workspace.
+</ParamField>
+
+<ParamField body="event_type" type="string" required>
+  The occasion that triggers a send — one of `birthday`, `work_anniversary`, or `onboarding`.
+</ParamField>
+
+<ParamField body="contact_list_id" type="string">
+  An existing contact list — from [`goody_contact_lists_list`](/mcp-reference/tools/contact-lists-list) or [`goody_contact_lists_create`](/mcp-reference/tools/contact-lists-create). Mutually exclusive with `contact_ids`; supply exactly one.
+</ParamField>
+
+<ParamField body="contact_ids" type="string[]">
+  Contact UUIDs to gift. The tool creates an implicit list from them. Mutually exclusive with `contact_list_id`; supply exactly one.
+</ParamField>
+
+<ParamField body="source_order_batch_id" type="string">
+  The gift batch to clone, from [`goody_order_batches_list`](/mcp-reference/tools/order-batches-list). Mutually exclusive with a from-scratch cart; supply exactly one.
+</ParamField>
+
+### From-scratch path
+
+Supply these instead of `source_order_batch_id` to build the gift without a prior send.
+
+<ParamField body="product_id" type="string">
+  A single product to gift, from [`goody_products_search`](/mcp-reference/tools/products-search). Use this or `cart`.
+  <Expandable title="alongside product_id">
+    <ResponseField name="quantity" type="integer">How many of the product to include.</ResponseField>
+    <ResponseField name="variable_price" type="integer">Funded amount in cents, for a Gift of Choice.</ResponseField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="cart" type="object">
+  Multiple products to gift. Use this or `product_id`.
+  <Expandable title="cart">
+    <ResponseField name="items" type="object[]">Each item names a `product_id` and optional `quantity` / `variable_price`.</ResponseField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="card_id" type="string">
+  Greeting card UUID — from [`goody_cards_list`](/mcp-reference/tools/cards-list).
+</ParamField>
+
+<ParamField body="message" type="string">
+  The gift-card message. Personalization tags (e.g. the recipient's first name) are filled per-recipient at send time.
+</ParamField>
+
+<ParamField body="from_name" type="string">
+  The "From" name recipients see. Defaults to the authenticated user.
+</ParamField>
+
+<ParamField body="payment_method_id" type="string">
+  The autopay payment method the rule charges on activation — from [`goody_payment_methods_list`](/mcp-reference/tools/payment-methods-list). Recommended. Without it the rule is created but won't activate.
+</ParamField>
+
+<ParamField body="international_shipping_tier" type="string">
+  Shipping tier to apply for recipients outside the US.
+</ParamField>
+
+<ParamField body="alcohol_age_verification_attested" type="boolean">
+  Required `true` when the cart contains alcohol.
+</ParamField>
+
+<ParamField body="settings" type="object">
+  Rule settings.
+  <Expandable title="settings">
+    <ResponseField name="gift_cards_enabled" type="boolean">Set `true` to include international gift cards.</ResponseField>
+  </Expandable>
+</ParamField>
+
+### Optional (both paths)
+
+<ParamField body="tenure_min" type="integer">
+  Lowest years of service the rule applies to. Meaningful for `work_anniversary`.
+</ParamField>
+
+<ParamField body="tenure_max" type="integer">
+  Highest years of service the rule applies to. Meaningful for `work_anniversary`.
+</ParamField>
+
+<ParamField body="anchor_date_send_option" type="string">
+  When to send relative to the occasion — `send_on_anchor_date`, `send_before_anchor_date`, or `send_after_anchor_date`.
+</ParamField>
+
+<ParamField body="anchor_date_number_of_days_delta" type="integer">
+  How many days before or after the occasion to send. Required when the send option is before or after.
+</ParamField>
+
+<ParamField body="anchor_date_type" type="string">
+  Which date the occasion anchors to — `start_date` or `added_to_hris_date`. Only for `onboarding`.
+</ParamField>
+
+<ParamField body="allow_occasion_mismatch" type="boolean" default="false">
+  Clone path only. When the source card's occasion doesn't match the event type, the request is rejected; set `true` to override.
+</ParamField>
+
+## Returns
+
+<ResponseField name="autogift_rule" type="object">
+  The newly created, paused rule.
+  <Expandable title="autogift_rule">
+    <ResponseField name="id" type="string">Rule UUID — pass to [`goody_autogift_rules_preview`](/mcp-reference/tools/autogift-rules-preview) or [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate).</ResponseField>
+    <ResponseField name="status" type="string">Always `paused` on creation.</ResponseField>
+    <ResponseField name="event_type" type="string">The occasion that triggers a send.</ResponseField>
+    <ResponseField name="contact_list_id" type="string">The contact list the rule watches.</ResponseField>
+    <ResponseField name="card_id" type="string | null">The greeting card chosen for the rule.</ResponseField>
+    <ResponseField name="message" type="string | null">The gift-card message template.</ResponseField>
+    <ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Set up a $50 birthday autogift for my Clients list with the Cold Brew Kit and a birthday card."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_autogift_rules_create",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "event_type": "birthday",
+    "contact_list_id": "d052…",
+    "product_id": "0f3c…",
+    "card_id": "a7f9…",
+    "message": "Happy birthday, {{firstname}}!",
+    "from_name": "Jordan at Acme",
+    "payment_method_id": "pm_4c19…"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "autogift_rule": {
+    "id": "6d2a…",
+    "status": "paused",
+    "event_type": "birthday",
+    "contact_list_id": "d052…",
+    "card_id": "a7f9…",
+    "message": "Happy birthday, {{firstname}}!",
+    "from_name": "Jordan at Acme"
+  }
+}
+```
+</CodeGroup>
+
+<Tip>
+  Confirm the gift first with [`goody_autogift_rules_preview`](/mcp-reference/tools/autogift-rules-preview), then turn it on with [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate). To group recipients into a reusable list, use [`goody_contact_lists_create`](/mcp-reference/tools/contact-lists-create).
+</Tip>

@@ -1,0 +1,106 @@
+---
+title: "goody_products_search"
+sidebarTitle: "products_search"
+description: "Search Goody's catalog by intent, budget, and filters — returns up to 5 curated matches."
+---
+
+**Permission:** `Read` · **Workspace:** not required (global catalog)
+
+Searches Goody's product catalog and returns up to **5** candidate products. There's no pagination — to refine, call again with tighter filters. This is the discovery half of the gifting flow.
+
+Most results are fixed-price SKUs. Some are a **Gift of Choice** (`price_type` `variable`, `is_flex_gift` true): the recipient picks from a curated set and the sender funds any amount within `[price_min, price_max]`. To list Gifts of Choice directly, use [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list).
+
+## Parameters
+
+<ParamField body="query" type="string">
+  Free-text intent — recipient interests, vibe, or occasion (e.g. "tea lover", "Vermont maple syrup"). Matched across product name, description, and brand.
+</ParamField>
+
+<ParamField body="price_min" type="integer">
+  Minimum price, in cents (e.g. `2500` for $25). Strings are accepted and coerced.
+</ParamField>
+
+<ParamField body="price_max" type="integer">
+  Maximum price, in cents.
+</ParamField>
+
+<ParamField body="exclude_alcohol" type="boolean" default="true">
+  Defaults to true. Set false only if the user explicitly asked for alcohol gifts.
+</ParamField>
+
+<ParamField body="shipping_tier" type="string" default="domestic_us">
+  One of `domestic_us` (default), `international` (recipient outside the US), or `any`.
+</ParamField>
+
+<ParamField body="category_id" type="string">
+  UUID of a Goody category. Advanced — usually omitted.
+</ParamField>
+
+## Returns
+
+<ResponseField name="products" type="object[]">
+  Up to 5 matching products.
+  <Expandable title="product">
+    <ResponseField name="id" type="string">Product UUID — pass as `product_id` to [`goody_products_get`](/mcp-reference/tools/products-get), [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview), or [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create).</ResponseField>
+    <ResponseField name="name" type="string">Product name.</ResponseField>
+    <ResponseField name="brand" type="string | null">Brand name.</ResponseField>
+    <ResponseField name="image_key" type="string | null">Opaque image key for the product photo.</ResponseField>
+    <ResponseField name="price_cents" type="integer | null">Price in cents for fixed-price products.</ResponseField>
+    <ResponseField name="price_type" type="string | null">`fixed`, `variable`, or `tiers`.</ResponseField>
+    <ResponseField name="is_flex_gift" type="boolean">True for a Gift of Choice (recipient picks; sender funds an amount).</ResponseField>
+    <ResponseField name="price_min" type="integer | null">Lowest amount (cents) the sender may fund, for a Gift of Choice.</ResponseField>
+    <ResponseField name="price_max" type="integer | null">Highest fundable amount; `null` means unlimited.</ResponseField>
+    <ResponseField name="alcohol" type="boolean">True if the product contains alcohol (extra requirements apply to send).</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Find a thank-you gift under $50 for a client who loves coffee."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_products_search",
+  "arguments": { "query": "coffee gift for a client", "price_max": 5000 }
+}
+```
+
+```json ↩️ Result
+{
+  "products": [
+    {
+      "id": "0f3c…",
+      "name": "Cold Brew Starter Kit",
+      "brand": "Grady's",
+      "image_key": "products/cold-brew-starter-kit.png",
+      "price_cents": 4200,
+      "price_type": "fixed",
+      "is_flex_gift": false,
+      "price_min": null,
+      "price_max": null,
+      "alcohol": false
+    },
+    {
+      "id": "9a17…",
+      "name": "Single-Origin Coffee Trio",
+      "brand": "Driftaway Coffee",
+      "image_key": "products/coffee-trio.png",
+      "price_cents": 3600,
+      "price_type": "fixed",
+      "is_flex_gift": false,
+      "price_min": null,
+      "price_max": null,
+      "alcohol": false
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Pair with [`goody_products_get`](/mcp-reference/tools/products-get) for richer detail before committing, or
+  [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list) when the recipient's taste is unknown — let them pick.
+</Tip>

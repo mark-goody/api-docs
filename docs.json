@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
-  "name": "Goody",
+  "name": "Goody Developers",
   "colors": {
     "primary": "#9159D6",
     "light": "#B584F1",
@@ -47,6 +47,16 @@
               "automation-api/webhooks",
               "automation-api/access-the-catalog",
               "automation-api/zapier"
+            ]
+          },
+          {
+            "group": "MCP server",
+            "pages": [
+              "mcp/overview",
+              "mcp/connect",
+              "mcp/authentication",
+              "mcp/gifting-flow",
+              "mcp/data-handling"
             ]
           },
           {
@@ -192,6 +202,88 @@
                   "api-reference/schemas/recipientinput"
                 ]
               }
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "MCP Reference",
+        "icon": "robot",
+        "groups": [
+          {
+            "group": "Reference",
+            "pages": [
+              "mcp-reference/capabilities",
+              "mcp-reference/example-prompts",
+              "mcp-reference/tools"
+            ]
+          },
+          {
+            "group": "Account & workspaces",
+            "pages": [
+              "mcp-reference/tools/me-get",
+              "mcp-reference/tools/workspaces-list"
+            ]
+          },
+          {
+            "group": "Discover gifts & cards",
+            "pages": [
+              "mcp-reference/tools/products-search",
+              "mcp-reference/tools/products-get",
+              "mcp-reference/tools/collections-list",
+              "mcp-reference/tools/gift-of-choice-list",
+              "mcp-reference/tools/cards-list"
+            ]
+          },
+          {
+            "group": "Contacts",
+            "pages": [
+              "mcp-reference/tools/contacts-search",
+              "mcp-reference/tools/contacts-get",
+              "mcp-reference/tools/contacts-create",
+              "mcp-reference/tools/contacts-update",
+              "mcp-reference/tools/contact-lists-list",
+              "mcp-reference/tools/contact-lists-create"
+            ]
+          },
+          {
+            "group": "Messages",
+            "pages": [
+              "mcp-reference/tools/messages-generate"
+            ]
+          },
+          {
+            "group": "Payment methods",
+            "pages": [
+              "mcp-reference/tools/payment-methods-list"
+            ]
+          },
+          {
+            "group": "Send & track gifts",
+            "pages": [
+              "mcp-reference/tools/order-batches-preview",
+              "mcp-reference/tools/order-batches-price",
+              "mcp-reference/tools/order-batches-create",
+              "mcp-reference/tools/order-batches-list",
+              "mcp-reference/tools/order-batches-get",
+              "mcp-reference/tools/orders-list",
+              "mcp-reference/tools/orders-cancel"
+            ]
+          },
+          {
+            "group": "Autogifts",
+            "pages": [
+              "mcp-reference/tools/autogift-rules-list",
+              "mcp-reference/tools/autogift-rules-create",
+              "mcp-reference/tools/autogift-rules-preview",
+              "mcp-reference/tools/autogift-rules-activate",
+              "mcp-reference/tools/autogift-rules-pause"
+            ]
+          },
+          {
+            "group": "Feedback",
+            "pages": [
+              "mcp-reference/tools/feedback-create"
             ]
           }
         ]

@@ -1,0 +1,68 @@
+---
+title: "goody_contact_lists_create"
+sidebarTitle: "contact_lists_create"
+description: "Create a new contact list, optionally with an initial set of members."
+---
+
+**Permission:** `Write` · **Workspace:** required (from `goody_workspaces_list`)
+
+Creates a new active contact list in the workspace, optionally seeded with members. Use the returned id with [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create).
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. The list is created in this workspace.
+</ParamField>
+
+<ParamField body="name" type="string" required>
+  The visible list name (e.g. "Q3 onboarding cohort").
+</ParamField>
+
+<ParamField body="contact_ids" type="string[]">
+  Optional initial members — contact UUIDs from [`goody_contacts_search`](/mcp-reference/tools/contacts-search) or [`goody_contacts_get`](/mcp-reference/tools/contacts-get). Contacts that aren't in this workspace are silently skipped.
+</ParamField>
+
+## Returns
+
+<ResponseField name="contact_list" type="object">
+  The created list.
+  <Expandable title="contact_list">
+    <ResponseField name="id" type="string">Contact list UUID — pass as `contact_list_id` to [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create).</ResponseField>
+    <ResponseField name="name" type="string">The visible list name.</ResponseField>
+    <ResponseField name="contact_count" type="integer">Number of contacts added to the list.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Make an 'Onboarding' list with these three contacts."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_contact_lists_create",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "name": "Onboarding",
+    "contact_ids": ["7b21…", "9c44…", "a1d7…"]
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "contact_list": {
+    "id": "d052…",
+    "name": "Onboarding",
+    "contact_count": 3
+  }
+}
+```
+</CodeGroup>
+
+<Tip>
+  Find members first with [`goody_contacts_search`](/mcp-reference/tools/contacts-search), then point an
+  [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create) rule at the new list.
+</Tip>

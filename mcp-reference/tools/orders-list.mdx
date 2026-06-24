@@ -1,0 +1,100 @@
+---
+title: "goody_orders_list"
+sidebarTitle: "orders_list"
+description: "List individual orders (one per recipient), across a workspace or within one batch."
+---
+
+**Permission:** `Read` · **Workspace:** required (from `goody_workspaces_list`)
+
+Lists individual orders — one per recipient. Without `order_batch_id`, it lists all orders in the workspace, newest first. With it, it lists the orders in that batch, oldest first.
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Listing is always scoped to this workspace.
+</ParamField>
+
+<ParamField body="order_batch_id" type="string">
+  Optional filter to one batch — from [`goody_order_batches_list`](/mcp-reference/tools/order-batches-list). Omit to list all orders in the workspace.
+</ParamField>
+
+<ParamField body="page" type="integer" default="1">
+  Page number, starting at `1`.
+</ParamField>
+
+<ParamField body="per_page" type="integer" default="25">
+  Orders per page. Defaults to `25`, max `100`.
+</ParamField>
+
+## Returns
+
+<ResponseField name="orders" type="object[]">
+  The matching orders, one per recipient.
+  <Expandable title="order">
+    <ResponseField name="id" type="string">Order UUID — pass as `order_id` to [`goody_orders_cancel`](/mcp-reference/tools/orders-cancel).</ResponseField>
+    <ResponseField name="status" type="string">Where the order is in its lifecycle.</ResponseField>
+    <ResponseField name="recipient_first_name" type="string | null">Recipient's given name.</ResponseField>
+    <ResponseField name="recipient_last_name" type="string | null">Recipient's family name.</ResponseField>
+    <ResponseField name="recipient_email" type="string | null">Recipient's email.</ResponseField>
+    <ResponseField name="card_id" type="string | null">The gift card chosen for this order.</ResponseField>
+    <ResponseField name="message" type="string | null">The gift-card message.</ResponseField>
+    <ResponseField name="cart" type="object | null">The gift contents (products).</ResponseField>
+    <ResponseField name="amounts" type="object | null">The order's monetary breakdown.</ResponseField>
+    <ResponseField name="shipments" type="object[]">Shipment records for the order, if any.</ResponseField>
+    <ResponseField name="sender" type="object | null">Who sent the order.</ResponseField>
+    <ResponseField name="workspace_id" type="string | null">The workspace the order belongs to.</ResponseField>
+    <ResponseField name="order_batch_id" type="string | null">The batch this order belongs to.</ResponseField>
+    <ResponseField name="reference_id" type="string | null">Caller-supplied reference, if one was set.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="total_count" type="integer">
+  Total number of orders across all pages.
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Who received the gifts in that batch?"
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_orders_list",
+  "arguments": { "workspace_id": "3f8a…", "order_batch_id": "b92e…" }
+}
+```
+
+```json ↩️ Result
+{
+  "orders": [
+    {
+      "id": "1c4d…",
+      "status": "accepted",
+      "recipient_first_name": "Sarah",
+      "recipient_last_name": "Chen",
+      "recipient_email": "sarah@acme.com",
+      "card_id": "a7f9…",
+      "message": "Thank you for a great quarter, Sarah!",
+      "cart": { "items": [{ "product_id": "0f3c…", "name": "Cold Brew Starter Kit" }] },
+      "amounts": { "subtotal": 4200, "total": 4620 },
+      "shipments": [],
+      "sender": { "first_name": "Jordan", "last_name": "Lee", "email": "jordan@acme.com" },
+      "workspace_id": "3f8a…",
+      "order_batch_id": "b92e…",
+      "reference_id": null
+    }
+  ],
+  "total_count": 12
+}
+```
+</CodeGroup>
+
+<Note>
+  You'll get a not-found error if `order_batch_id` references a batch outside the resolved workspace.
+</Note>
+
+<Tip>
+  For the batch as a whole — cart, "From" name, send timing — use [`goody_order_batches_get`](/mcp-reference/tools/order-batches-get); to cancel an order that hasn't been accepted yet, use [`goody_orders_cancel`](/mcp-reference/tools/orders-cancel).
+</Tip>

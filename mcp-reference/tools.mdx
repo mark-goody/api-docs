@@ -1,0 +1,75 @@
+---
+title: "Tool reference"
+sidebarTitle: "Tools"
+description: "The 28 tools the Goody MCP server exposes, grouped by area, with the permission each one requires."
+---
+
+The server exposes 28 tools. Each is named `goody_<resource>_<verb>` and requires one of three permissions — **Read**, **Write**, or **Send gifts** (see [Authentication](/mcp/authentication)). Select a tool for its parameters, returns, and a worked `prompt → tool call → result` example.
+
+## Account & workspaces
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_me_get`](/mcp-reference/tools/me-get) | Read | Get the connected account's profile and the server's current time. |
+| [`goody_workspaces_list`](/mcp-reference/tools/workspaces-list) | Read | List the workspaces you can gift from. |
+
+## Discover gifts & cards
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_products_search`](/mcp-reference/tools/products-search) | Read | Search the catalog by intent, budget, and filters (up to 5 matches). |
+| [`goody_products_get`](/mcp-reference/tools/products-get) | Read | Retrieve full detail for a single product. |
+| [`goody_collections_list`](/mcp-reference/tools/collections-list) | Read | List curated gift collections. |
+| [`goody_gift_of_choice_list`](/mcp-reference/tools/gift-of-choice-list) | Read | List "let them pick" Gift of Choice options, optionally budget-framed. |
+| [`goody_cards_list`](/mcp-reference/tools/cards-list) | Read | List greeting cards, filterable by occasion. |
+
+## Contacts
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_contacts_search`](/mcp-reference/tools/contacts-search) | Read | Search workspace contacts by name or email. |
+| [`goody_contacts_get`](/mcp-reference/tools/contacts-get) | Read | Retrieve a single contact, with event dates. |
+| [`goody_contacts_create`](/mcp-reference/tools/contacts-create) | Write | Add a workspace contact. |
+| [`goody_contacts_update`](/mcp-reference/tools/contacts-update) | Write | Update an existing contact. |
+| [`goody_contact_lists_list`](/mcp-reference/tools/contact-lists-list) | Read | List contact lists. |
+| [`goody_contact_lists_create`](/mcp-reference/tools/contact-lists-create) | Write | Create a contact list, optionally with members. |
+
+## Messages
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_messages_generate`](/mcp-reference/tools/messages-generate) | Read | Draft three card-message options for an occasion. |
+
+## Payment methods
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_payment_methods_list`](/mcp-reference/tools/payment-methods-list) | Read | List saved payment methods, Goody Balance, and Corporate Account (display names only — never card numbers). |
+
+## Send & track gifts
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview) | Write | Build a shareable preview link and price a gift that hasn't been sent. The confirmation step. |
+| [`goody_order_batches_price`](/mcp-reference/tools/order-batches-price) | Write | Estimate the full price of a gift. A quick estimate; needs Write because it builds a draft order (see [Authentication](/mcp/authentication)). |
+| [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create) | Send gifts | Send a gift. Requires explicit confirmation of the price. |
+| [`goody_order_batches_list`](/mcp-reference/tools/order-batches-list) | Read | List past gift batches. |
+| [`goody_order_batches_get`](/mcp-reference/tools/order-batches-get) | Read | Retrieve a single gift batch. |
+| [`goody_orders_list`](/mcp-reference/tools/orders-list) | Read | List individual orders, optionally within a batch. |
+| [`goody_orders_cancel`](/mcp-reference/tools/orders-cancel) | Write | Cancel a single order the recipient hasn't accepted yet. |
+
+## Autogifts
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_autogift_rules_list`](/mcp-reference/tools/autogift-rules-list) | Read | List autogift rules. |
+| [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create) | Send gifts | Create a recurring autogift — clone a past send or build from scratch (always created paused). |
+| [`goody_autogift_rules_preview`](/mcp-reference/tools/autogift-rules-preview) | Read | Preview a paused rule's gift and per-send cost before activating. |
+| [`goody_autogift_rules_activate`](/mcp-reference/tools/autogift-rules-activate) | Send gifts | Activate a paused autogift rule. |
+| [`goody_autogift_rules_pause`](/mcp-reference/tools/autogift-rules-pause) | Write | Pause an active autogift rule. |
+
+## Feedback
+
+| Tool | Permission | Description |
+|---|---|---|
+| [`goody_feedback_create`](/mcp-reference/tools/feedback-create) | Write | Send the user's feedback about Goody to the Goody team. Never charges. |

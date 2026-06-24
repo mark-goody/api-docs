@@ -1,0 +1,75 @@
+---
+title: "goody_feedback_create"
+sidebarTitle: "feedback_create"
+description: "Send the user's feedback about Goody to the Goody team."
+---
+
+**Permission:** `Write` · **Workspace:** optional
+
+Sends the user's feedback about Goody to the Goody team — a comment, suggestion, bug report, or reaction. This tool never sends a gift or charges anything. It's a good thing to offer after a successful send ("Want me to pass any feedback to the Goody team?").
+
+## Parameters
+
+<ParamField body="message" type="string" required>
+  The feedback, in the user's own words.
+</ParamField>
+
+<ParamField body="sentiment" type="string">
+  How the user feels — one of `positive`, `neutral`, or `negative`.
+</ParamField>
+
+<ParamField body="workspace_id" type="string">
+  Optional. Associates the feedback with a workspace — from `goody_workspaces_list`.
+</ParamField>
+
+<ParamField body="order_batch_id" type="string">
+  Optional. Ties the feedback to a specific gift batch the user is reacting to — from [`goody_order_batches_list`](/mcp-reference/tools/order-batches-list).
+</ParamField>
+
+## Returns
+
+<ResponseField name="feedback" type="object">
+  The recorded feedback.
+  <Expandable title="feedback">
+    <ResponseField name="id" type="string">Feedback UUID.</ResponseField>
+    <ResponseField name="message" type="string">The feedback message as recorded.</ResponseField>
+    <ResponseField name="sentiment" type="string | null">The sentiment, if one was given.</ResponseField>
+    <ResponseField name="created_at" type="string">When the feedback was recorded.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="confirmation" type="string">A short confirmation message to relay to the user.</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Tell the Goody team the preview link was super helpful."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_feedback_create",
+  "arguments": {
+    "message": "The preview link was super helpful.",
+    "sentiment": "positive"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "feedback": {
+    "id": "f10c…",
+    "message": "The preview link was super helpful.",
+    "sentiment": "positive",
+    "created_at": "2026-06-23T16:40:00Z"
+  },
+  "confirmation": "Thanks — your feedback has been sent to the Goody team."
+}
+```
+</CodeGroup>
+
+<Tip>
+  After a successful send with [`goody_order_batches_create`](/mcp-reference/tools/order-batches-create), pass along the `order_batch_id` here to tie a reaction to that specific gift.
+</Tip>

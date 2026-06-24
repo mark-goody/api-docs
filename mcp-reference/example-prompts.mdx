@@ -1,0 +1,94 @@
+---
+title: "Example prompts"
+sidebarTitle: "Example prompts"
+description: "Real flows the Goody MCP server supports today, with illustrative responses."
+---
+
+These are real flows the Goody MCP server supports today. Responses are illustrative — your products, prices, and contacts will differ — but the shape matches how the Goody MCP server actually behaves.
+
+<Note>
+  A few defaults to know: gift searches return up to **5 curated matches** (ask
+  for changes to refine), **US shipping** is the default (say so for
+  international recipients), **alcohol** is excluded unless you ask for it, and
+  **you always see a preview and price before anything is sent**.
+</Note>
+
+## Find a gift under a budget
+
+> "Find a thank-you gift under $50 for a client who loves coffee."
+
+The assistant searches the catalog with your intent and budget, and typically also offers a **Gift of Choice** — Goody's "let them pick" option where the recipient chooses from a curated collection and you fund the amount.
+
+```text Example response
+Here are five great options under $50:
+
+1. Single-Origin Coffee Trio — Driftaway Coffee, $36
+2. Cold Brew Starter Kit — Grady's, $42
+3. Ceramic Pour-Over Set — Yield Design, $48
+4. Espresso Chocolate Collection — Compartés, $34
+5. Coffee + Mug Gift Box — Bean Box, $45
+
+There's also a Goody Gift of Choice at your $50 budget — they'd pick their own
+gift and you only pay what you fund. Want me to preview one of these?
+```
+
+## Preview, confirm, and send to one recipient
+
+> "Send the Cold Brew Starter Kit to Sarah Chen at sarah@acme.com with a thank-you card. Email it to her."
+
+The assistant assembles the send — greeting card, optional message, payment method — then **builds a preview link and prices it**, and asks you to confirm before sending:
+
+```text Example response
+Here's a preview of the gift before I send anything:
+
+🔗 Preview: https://ongoody.com/p/preview/2f9c…  (this is what Sarah will see)
+
+- Gift: Cold Brew Starter Kit — $42.00
+- Recipient: Sarah Chen (sarah@acme.com) — she'll get an email with her gift link
+- Card: "Thank You" with the message we drafted
+- From: Alex Rivera
+- Payment: Visa ending 4242
+- Estimated total: $51.83 ($42.00 gift + $6.00 shipping + $3.83 estimated tax)
+
+Shall I send it?
+```
+
+After you say yes, it sends and confirms whether the recipient was notified. Sarah enters her own shipping details when she accepts — and can swap the gift unless you disable swapping.
+
+<Tip>
+  Prefer to ship straight to an address? Say "ship it directly to 123 Main St…"
+  and the assistant uses **direct send** — no email or link, the physical gift
+  goes to the address you give. Want to send later? "Schedule it for next
+  Monday" works too (up to 3 months out).
+</Tip>
+
+## Add contacts and build a list
+
+> "Add these three new hires to my workspace and put them in an 'Onboarding' list: Maya Patel (maya@northwind.com, birthday March 12), James Okafor (james@northwind.com), and Lena Fischer (lena@northwind.com)."
+
+```text Example response
+Done — I added all three contacts and created the list "Onboarding" with all 3
+in it. You can use this list for a group send or a recurring autogift.
+```
+
+If a contact with the same email already exists, the assistant won't silently overwrite it — it tells you and offers to update the existing contact instead.
+
+## Turn a gift into a recurring autogift
+
+> "Set up a birthday autogift for my Clients list, using that gift I just sent to Sarah as the template."
+
+You can clone a past send like this, or build a brand-new rule from scratch ("set up a $50 birthday autogift for my Clients list with the Cold Brew Kit and a birthday card"). Either way the rule is created paused:
+
+```text Example response
+Here's a preview of the autogift rule before I activate anything:
+
+- Trigger: each client's birthday, every year
+- Gift: Cold Brew Starter Kit, with a "Happy Birthday" card and message
+- Payment: Visa ending 4242
+- Expected cost per send: ~$51.83
+
+⏸️ The rule is created paused — autogifts are always created paused so a recurring
+charge is never set up by accident. Want me to activate it now?
+```
+
+Only after you explicitly say yes does the assistant activate the rule. You can ask it to list, pause, or re-activate your autogifts any time ("what autogifts do I have running?").

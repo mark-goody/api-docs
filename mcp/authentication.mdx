@@ -1,0 +1,58 @@
+---
+title: "Authentication & permissions"
+sidebarTitle: "Authentication"
+description: "How the Goody MCP server authenticates — OAuth for interactive clients, personal tokens for scripts and automations — and what the Read, Write, and Send gifts permissions allow."
+---
+
+The Goody MCP server supports two ways to authenticate, both built on the same permissions and safeguards. Interactive AI clients use **OAuth**; scripts and automations use a **personal MCP token**. Either way, what a connection can do is governed by the three permissions below — and **Send gifts** is the only one that can spend money.
+
+## Two ways to connect
+
+<Tabs>
+  <Tab title="OAuth (interactive clients)">
+    Claude (web, desktop, mobile), Cursor, ChatGPT's MCP support, and other interactive AI clients connect through **OAuth** — authorization code flow with PKCE, refresh tokens, and Dynamic Client Registration. You add Goody as a connector, sign in once in the browser, and approve the permissions; the client then stores and silently refreshes short-lived tokens. There's nothing to paste into a config file.
+
+    This is the [Connect](/mcp/connect) path — use it for any client a person drives in a chat. Manage these connections in **Goody for Business → account settings → Connect AI tools**.
+  </Tab>
+  <Tab title="Personal MCP token (scripts & automations)">
+    For scripts, n8n / Zapier / Make workflows, cron jobs, or headless agent frameworks — anywhere a browser sign-in isn't an option — mint a **personal MCP token** in **Goody for Business → account settings → Personal MCP token**, and paste it together with the [server URL](/mcp/connect) into your client's config.
+
+    When you create a token you choose:
+
+    - a **name** (e.g. "Zapier — Marketing") so you can identify and revoke it later,
+    - its **scopes** — any of `mcp.read`, `mcp.write`, `mcp.gifts` (see [Permissions](#permissions)), and
+    - an **expiry** — 30 days, 90 days (recommended), 1 year, or no expiry.
+
+    The full token is shown **once**, at creation — store it somewhere safe. You can hold several active tokens and revoke any of them at any time.
+  </Tab>
+</Tabs>
+
+It's the same server, the same scopes, and the same enforcement either way — the only difference is how the credential is obtained.
+
+## Permissions
+
+Whether granted via OAuth consent or selected as a token's scopes, a connection carries one or more of three permissions:
+
+| Permission | Scope | What it allows |
+|---|---|---|
+| **Read** | `mcp.read` | See your account basics — profile, workspaces, contacts, contact lists, past gifts and orders, and saved payment methods (display names only, never card numbers) — and browse Goody's gift catalog and greeting cards. |
+| **Write** | `mcp.write` | Create and edit things that don't cost money: add or update contacts, create contact lists, cancel an unaccepted order, and price or preview a gift before sending. Preview/price need Write because they build a draft order to estimate the total — a create-style preview, not a charge. |
+| **Send gifts** | `mcp.gifts` | Send gifts and activate recurring autogifts using your payment methods. **This is the only permission that can spend money.** With an interactive client a person still confirms each send; with an unattended token, this is the permission that lets an automation spend on your behalf — see [Automatic & agentic sends](/mcp/gifting-flow#automatic--agentic-sends). |
+
+<Warning>
+  Pricing and previewing a gift never charge anything — they're free. Only the **Send
+  gifts** permission moves money. Grant it only to connections or tokens you intend to let spend.
+</Warning>
+
+## Spending limits
+
+Beyond per-gift confirmation, gifts sent through AI connectors are held under a **rolling daily spend limit** for your account. You can review and adjust it — including raising it, lowering it, or setting it to zero to block AI-initiated spend entirely — in **Goody for Business → account settings → [Connect AI tools](#disconnecting)**. The limit applies across every AI tool and token you connect, not per connection — so it backstops unattended automations as well as interactive sessions.
+
+## Disconnecting
+
+You're in control of every connection from either side:
+
+- **From Goody:** open **Goody for Business → account settings**. **Connect AI tools** lists every OAuth-connected AI tool — when it connected and its permissions — with **Disconnect** to revoke it instantly. **Personal MCP token** lists your active tokens, each with **Revoke**.
+- **From the client:** remove or disable the Goody connector in the client's settings (in Claude: **Settings → Connectors**), or delete the token from your script's config.
+
+A disconnected tool or revoked token must be re-authorized — or a new token minted — before it can access your account again.

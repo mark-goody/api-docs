@@ -1,0 +1,69 @@
+---
+title: "Goody MCP Server"
+sidebarTitle: "Overview"
+description: "Send and manage business gifts directly from Claude and other MCP clients — discover a gift, write the card, see the price, and send, all in one conversation."
+---
+
+The **Goody MCP server** brings Goody's business gifting platform into Claude and any other [Model Context Protocol](https://modelcontextprotocol.io) client. Once connected, you can ask the assistant to find the right gift for a budget and occasion, draft the card message, show you the exact price, and send the gift — without ever needing the recipient's mailing address.
+
+It's not just one-off sends. The assistant can also manage the work around a send — look up and save contacts, organize them into lists, review past gifts and orders, and set up recurring "autogifts." Anything that spends money always works the same way: **you see the full price first, and nothing is charged until you say yes.**
+
+## Endpoint
+
+<CodeGroup>
+```text Production
+https://api.ongoody.com/mcp/v1
+```
+
+```text Sandbox
+https://api.sandbox.ongoody.com/mcp/v1
+```
+</CodeGroup>
+
+The server speaks the standard MCP **Streamable HTTP** transport. Interactive clients (Claude, Cursor, …) authenticate with OAuth — they need only the URL above and walk you through sign-in. Scripts and automations connect with a personal token instead. See [Authentication](/mcp/authentication).
+
+## Sandbox vs production
+
+The two endpoints are independent environments backed by separate Goody for Business accounts. Sign in to production to send real gifts; sign in to sandbox to test sends without being charged. Point your MCP client at the environment you want and authorize with that environment's account — sign-in is per-environment, and credentials and data do not carry over between the two.
+
+## What you can do
+
+<CardGroup cols={2}>
+  <Card title="Discover the right gift" icon="gift">
+    Search the catalog by intent, budget, and occasion; browse curated collections and greeting cards; or offer a Gift of Choice the recipient picks themselves.
+  </Card>
+  <Card title="Send with confirmation" icon="paper-plane">
+    Preview the assembled gift, review the total, and send by link, email, or direct shipping — only after you confirm.
+  </Card>
+  <Card title="Manage contacts" icon="address-book">
+    Find, create, and update workspace contacts and organize them into lists.
+  </Card>
+  <Card title="Automate recurring gifts" icon="repeat">
+    Turn a past send into a birthday, work-anniversary, or onboarding autogift — always created paused until you activate it.
+  </Card>
+</CardGroup>
+
+## Get started
+
+<CardGroup cols={2}>
+  <Card title="Connect Goody" icon="plug" href="/mcp/connect">
+    Add Goody in Claude from the connectors directory or as a custom connector.
+  </Card>
+  <Card title="Authentication & permissions" icon="lock" href="/mcp/authentication">
+    How OAuth sign-in works and what the Read / Write / Send gifts permissions mean.
+  </Card>
+  <Card title="The gifting flow" icon="route" href="/mcp/gifting-flow">
+    How a gift goes from idea to sent — and how the spend-confirmation safeguards work.
+  </Card>
+  <Card title="Example prompts" icon="comments" href="/mcp-reference/example-prompts">
+    Real prompts that work today, with illustrative responses.
+  </Card>
+</CardGroup>
+
+## Tools
+
+The server exposes **28 tools** across discovery, contacts, sending, and automation. See the [tool reference](/mcp-reference/tools) for the full list and the permission each one requires.
+
+## Data & support
+
+The Goody MCP server records only non-identifying usage telemetry — never your conversation or tool arguments. See [Data handling](/mcp/data-handling) for specifics and how to reach support.

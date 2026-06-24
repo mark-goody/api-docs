@@ -1,0 +1,223 @@
+---
+title: "goody_order_batches_create"
+sidebarTitle: "order_batches_create"
+description: "Send a gift batch — charges the payment method and generates the gift links."
+---
+
+**Permission:** `Send gifts` · **Workspace:** required (from `goody_workspaces_list`)
+
+Sends a gift batch — charges the payment method and generates the gift links.
+
+<Warning>
+  This spends real money and cannot be undone from here. Preview or price first, relay the total, and only call this **after** the user confirms both the price and the recipients.
+</Warning>
+
+## Parameters
+
+<ParamField body="workspace_id" type="string" required>
+  Workspace UUID — from `goody_workspaces_list`. Charges and sends from this workspace.
+</ParamField>
+
+<ParamField body="payment_method_id" type="string" required>
+  The funding source — from [`goody_payment_methods_list`](/mcp-reference/tools/payment-methods-list). A saved-card UUID, or the literal `BALANCE`, `WORKSPACE_BALANCE`, or `CORPORATE_ACCOUNT` sentinel.
+</ParamField>
+
+<ParamField body="card_id" type="string" required>
+  Card UUID — from [`goody_cards_list`](/mcp-reference/tools/cards-list). The card the recipient sees with the gift.
+</ParamField>
+
+<ParamField body="confirmed" type="boolean" required>
+  Must be the literal `true` — the tool rejects anything else. Pass `true` only after the user has approved the price and recipients.
+</ParamField>
+
+<ParamField body="send_method" type="string" required>
+  How each recipient receives the gift. **No default — you must choose one:**
+
+  - `link_single` — the recipient is **not** auto-notified; you share the link yourself.
+  - `email_and_link` — Goody emails each recipient their gift link.
+  - `direct_send` — Goody ships the physical product to each recipient's `mailing_address`, with no email. The `contact_id` shorthand can't be combined with `direct_send`.
+</ParamField>
+
+<ParamField body="product_id" type="string">
+  A single product UUID — from [`goody_products_search`](/mcp-reference/tools/products-search). Use this **or** `cart`, never both.
+</ParamField>
+
+<ParamField body="quantity" type="integer" default="1">
+  Quantity for `product_id`. Defaults to `1`.
+</ParamField>
+
+<ParamField body="variable_price" type="integer">
+  Amount to fund, in cents, for a variable-amount Gift of Choice or variable gift card. Must fall within the gift's `[price_min, price_max]`. Only applies to `product_id`.
+</ParamField>
+
+<ParamField body="cart" type="object">
+  A multi-item cart — an object with an `items` array (not a bare array). Use this **or** `product_id`, never both.
+  <Expandable title="cart">
+    <ParamField body="items" type="object[]" required>
+      One entry per product in the gift.
+      <Expandable title="item">
+        <ParamField body="product_id" type="string" required>Product UUID.</ParamField>
+        <ParamField body="quantity" type="integer" default="1">Quantity of this product.</ParamField>
+        <ParamField body="variable_price" type="integer">Amount in cents for a variable-amount gift, within its `[price_min, price_max]`.</ParamField>
+        <ParamField body="variants" type="string[]">Selected variant option IDs (e.g. size, color) for products that offer them.</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="contact_id" type="string">
+  A single saved-contact UUID — from [`goody_contacts_search`](/mcp-reference/tools/contacts-search). Use this **or** `recipients`. Cannot be combined with `direct_send`.
+</ParamField>
+
+<ParamField body="recipients" type="object[]">
+  The people to send to. Use this **or** `contact_id`.
+  <Expandable title="recipient">
+    <ParamField body="name" type="string">
+      Full name — split on the **first** space (first token → first name, the rest → last name). Use this or `first_name` + `last_name`.
+    </ParamField>
+    <ParamField body="first_name" type="string">First name. Pair with `last_name`.</ParamField>
+    <ParamField body="last_name" type="string">Last name.</ParamField>
+    <ParamField body="email" type="string">Recipient email.</ParamField>
+    <ParamField body="phone" type="string">Recipient phone, when sending by text.</ParamField>
+    <ParamField body="contact_id" type="string">Link this recipient to an existing saved contact.</ParamField>
+    <ParamField body="mailing_address" type="object">
+      Required on every recipient when `send_method` is `direct_send`.
+      <Expandable title="mailing_address">
+        <ParamField body="first_name" type="string">Recipient first name for the shipping label.</ParamField>
+        <ParamField body="last_name" type="string">Recipient last name for the shipping label.</ParamField>
+        <ParamField body="address_1" type="string" required>Street address.</ParamField>
+        <ParamField body="address_2" type="string">Apartment, suite, etc.</ParamField>
+        <ParamField body="city" type="string" required>City.</ParamField>
+        <ParamField body="state" type="string" required>State or province.</ParamField>
+        <ParamField body="postal_code" type="string" required>ZIP or postal code.</ParamField>
+        <ParamField body="country" type="string" required>Country.</ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="message" type="string">
+  The note shown on the gift card. Use [`goody_messages_generate`](/mcp-reference/tools/messages-generate) to draft one.
+</ParamField>
+
+<ParamField body="from_name" type="string">
+  The "From" name the recipient sees. Defaults to the authenticated user.
+</ParamField>
+
+<ParamField body="swap" type="string" default="single">
+  Whether the recipient may swap the gift. One of `single` (swap once), `multiple` (swap freely), or `disabled` (no swapping).
+</ParamField>
+
+<ParamField body="scheduled_send_on" type="string">
+  ISO 8601 datetime to delay sending. Must be in the future and at most 3 months out — anchor "now" to [`goody_me_get`](/mcp-reference/tools/me-get)'s `server_time`.
+</ParamField>
+
+<ParamField body="expires_at" type="string">
+  ISO 8601 datetime the gift expires if the recipient hasn't accepted it. **Required when paying from `BALANCE`.** The standard default is about 10 weeks. Mutually exclusive with `expires_on`.
+</ParamField>
+
+<ParamField body="expires_on" type="string">
+  Date alias `YYYY-MM-DD`, coerced to end of day. Mutually exclusive with `expires_at`.
+</ParamField>
+
+<ParamField body="alcohol_age_verification_attested" type="boolean">
+  Must be `true` when the cart contains alcohol.
+</ParamField>
+
+<ParamField body="international_shipping_tier" type="string" default="disabled">
+  How far the gift can ship. One of `disabled` (default; US & Canada only), `standard`, or `full` (global, 140+ countries; up to about $55/order in taxes, tariffs, and freight).
+</ParamField>
+
+<ParamField body="international_gift_cards_enabled" type="boolean">
+  Lets recipients outside supported regions swap their gift for a gift card.
+</ParamField>
+
+<ParamField body="custom_form_id" type="string">
+  Attach an existing custom form's recipient questions to the gift.
+</ParamField>
+
+<Note>
+  **Alcohol gifts** require the account to be alcohol-enabled, cannot be paid from `BALANCE`, and require `alcohol_age_verification_attested: true`.
+</Note>
+
+## Returns
+
+<ResponseField name="order_batch" type="object">
+  The created batch.
+  <Expandable title="order_batch">
+    <ResponseField name="id" type="string">Batch UUID — pass as `order_batch_id` to [`goody_order_batches_get`](/mcp-reference/tools/order-batches-get) or [`goody_orders_list`](/mcp-reference/tools/orders-list).</ResponseField>
+    <ResponseField name="public_id" type="string">The batch's public identifier.</ResponseField>
+    <ResponseField name="status" type="string">Where the batch is in its lifecycle.</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="preview_url" type="string | null">
+  A shareable URL that renders the sent gift. **Lead your reply with this.**
+</ResponseField>
+
+<ResponseField name="sender_preview_urls" type="string[]">
+  Per-recipient sender-view links.
+</ResponseField>
+
+<ResponseField name="payment_method" type="object | null">
+  The funding source that was charged.
+  <Expandable title="payment_method">
+    <ResponseField name="id" type="string">The payment-method UUID, or the `BALANCE` / `WORKSPACE_BALANCE` / `CORPORATE_ACCOUNT` sentinel.</ResponseField>
+    <ResponseField name="name" type="string">Display name, e.g. "Visa 1234".</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="notification_summary" type="string | null">
+  Whether and how recipients were notified. State this to the user.
+</ResponseField>
+
+<ResponseField name="suggested_next_steps" type="string[]">
+  Follow-on actions you can offer the user.
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```text 💬 Prompt
+"Yes, send it."
+```
+
+```json 🔧 Tool call
+{
+  "name": "goody_order_batches_create",
+  "arguments": {
+    "workspace_id": "3f8a…",
+    "confirmed": true,
+    "card_id": "7c20…",
+    "payment_method_id": "c41d…",
+    "product_id": "0f3c…",
+    "contact_id": "5b6e…",
+    "send_method": "email_and_link",
+    "message": "Thanks for everything this quarter, Sarah!",
+    "from_name": "Jordan at Acme"
+  }
+}
+```
+
+```json ↩️ Result
+{
+  "order_batch": {
+    "id": "b92e…",
+    "public_id": "gift_2f9c…",
+    "status": "sent"
+  },
+  "preview_url": "https://www.ongoody.com/preview/2f9c…",
+  "sender_preview_urls": ["https://www.ongoody.com/s/8d41…"],
+  "payment_method": { "id": "c41d…", "name": "Visa 1234" },
+  "notification_summary": "Goody emailed Sarah Chen a link to claim her gift.",
+  "suggested_next_steps": [
+    "Track whether Sarah opens her gift with goody_orders_list.",
+    "Set this up to recur for future occasions with goody_autogift_rules_create."
+  ]
+}
+```
+</CodeGroup>
+
+<Tip>
+  Build the confirmation step with [`goody_order_batches_preview`](/mcp-reference/tools/order-batches-preview) before calling this. To make a one-off gift recurring, offer [`goody_autogift_rules_create`](/mcp-reference/tools/autogift-rules-create).
+</Tip>

@@ -1563,10 +1563,10 @@
         "type": "object",
         "description": "The price for an order batch (all in cents).",
         "properties": {
-          "cart_price_estimate": {
+          "cart_price": {
             "$ref": "#/components/schemas/OrderBatchPriceCart"
           },
-          "total_price_estimate": {
+          "total_price": {
             "$ref": "#/components/schemas/OrderBatchPriceTotal"
           }
         },

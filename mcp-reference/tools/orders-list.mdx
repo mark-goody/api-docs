@@ -42,6 +42,7 @@ Lists individual orders — one per recipient. Without `order_batch_id`, it list
     <ResponseField name="amounts" type="object | null">The order's monetary breakdown.</ResponseField>
     <ResponseField name="shipments" type="object[]">Shipment records for the order, if any.</ResponseField>
     <ResponseField name="sender" type="object | null">Who sent the order.</ResponseField>
+    <ResponseField name="payment_method_id" type="string | null">The funding source used for the order. Card payments return the Goody payment method UUID; account-funded payments return `BALANCE`, `WORKSPACE_BALANCE`, `COMMERCE_STORED_VALUE`, or `CORPORATE_ACCOUNT`.</ResponseField>
     <ResponseField name="workspace_id" type="string | null">The workspace the order belongs to.</ResponseField>
     <ResponseField name="order_batch_id" type="string | null">The batch this order belongs to.</ResponseField>
     <ResponseField name="reference_id" type="string | null">Caller-supplied reference, if one was set.</ResponseField>
@@ -81,6 +82,7 @@ Lists individual orders — one per recipient. Without `order_batch_id`, it list
       "amounts": { "subtotal": 4200, "total": 4620 },
       "shipments": [],
       "sender": { "first_name": "Jordan", "last_name": "Lee", "email": "jordan@acme.com" },
+      "payment_method_id": "79eec4e2-9022-4d4d-b9e1-81ca2807db2f",
       "workspace_id": "3f8a…",
       "order_batch_id": "b92e…",
       "reference_id": null

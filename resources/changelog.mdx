@@ -3,6 +3,10 @@ title: "Changelog"
 description: "Updates to the Goody API and MCP server"
 ---
 
+### September 2, 2026
+
+- **Payment method visibility.** Order and order-batch detail responses, plus the MCP order history tools, now return `payment_method_id`. Card payments return the Goody payment method UUID; account-funded payments return an identifier such as `BALANCE`, `WORKSPACE_BALANCE`, `COMMERCE_STORED_VALUE`, or `CORPORATE_ACCOUNT`.
+
 ### June 25, 2026
 
 - **Goody MCP server (beta).** Connect Goody to Claude and other MCP clients to send and manage gifts in conversation — discover gifts, draft a card message, preview and price a gift, and send with your confirmation, plus contacts and recurring autogifts. See the [MCP overview](/mcp/overview).

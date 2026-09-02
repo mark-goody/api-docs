@@ -32,6 +32,7 @@ Lists previously-sent gift batches in a workspace, most recent first. This is ho
     <ResponseField name="send_status" type="string">Where the batch is in its lifecycle.</ResponseField>
     <ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
     <ResponseField name="message" type="string | null">The gift-card message.</ResponseField>
+    <ResponseField name="payment_method_id" type="string | null">The funding source used for the batch. Card payments return the Goody payment method UUID; account-funded payments return `BALANCE`, `WORKSPACE_BALANCE`, `COMMERCE_STORED_VALUE`, or `CORPORATE_ACCOUNT`.</ResponseField>
     <ResponseField name="orders_count" type="integer">Number of orders in the batch.</ResponseField>
     <ResponseField name="recipients_count" type="integer">Number of recipients.</ResponseField>
     <ResponseField name="scheduled_send_on" type="string | null">When the batch is scheduled to send, if scheduled.</ResponseField>
@@ -65,6 +66,7 @@ Lists previously-sent gift batches in a workspace, most recent first. This is ho
       "send_status": "sent",
       "from_name": "Jordan at Acme",
       "message": "Thank you for a great quarter, {{firstname}}!",
+      "payment_method_id": "79eec4e2-9022-4d4d-b9e1-81ca2807db2f",
       "orders_count": 12,
       "recipients_count": 12,
       "scheduled_send_on": null
@@ -75,6 +77,7 @@ Lists previously-sent gift batches in a workspace, most recent first. This is ho
       "send_status": "scheduled",
       "from_name": "The Acme Team",
       "message": "Welcome aboard, {{firstname}}!",
+      "payment_method_id": "WORKSPACE_BALANCE",
       "orders_count": 3,
       "recipients_count": 3,
       "scheduled_send_on": "2026-07-01T09:00:00Z"

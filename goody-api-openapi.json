@@ -110,8 +110,9 @@
           },
           "payment_method_id": {
             "type": "string",
+            "format": "uuid",
             "nullable": true,
-            "description": "Returned by detail endpoints. The payment method used for this order batch. Card payments return the Goody payment method UUID; account-funded payments return `BALANCE`, `WORKSPACE_BALANCE`, `COMMERCE_STORED_VALUE`, or `CORPORATE_ACCOUNT`."
+            "description": "Goody card payment method UUID, including inactive cards. Null for other or unknown funding sources. Orders reflect a successfully recovered legacy card; batches describe their selected funding source, not a combined payment result."
           },
           "sender": {
             "$ref": "#/components/schemas/Sender",
@@ -135,6 +136,11 @@
             "type": "string",
             "nullable": true,
             "description": "A unique client-supplied reference for this order batch, provided on creation to prevent duplicate order batches. Returns the value sent when the batch was created, or `null` if none was provided."
+          },
+          "funding_source": {
+            "type": "string",
+            "nullable": true,
+            "description": "Sender funding source: card, balance, workspace_balance, corporate_account, or commerce_stored_value. Null when unknown."
           }
         },
         "required": [
@@ -219,8 +225,9 @@
           },
           "payment_method_id": {
             "type": "string",
+            "format": "uuid",
             "nullable": true,
-            "description": "Returned by detail endpoints. The payment method used for this order. Card payments return the Goody payment method UUID; account-funded payments return `BALANCE`, `WORKSPACE_BALANCE`, `COMMERCE_STORED_VALUE`, or `CORPORATE_ACCOUNT`."
+            "description": "Goody card payment method UUID, including inactive cards. Null for other or unknown funding sources. Orders reflect a successfully recovered legacy card; batches describe their selected funding source, not a combined payment result."
           },
           "message": {
             "type": "string",
@@ -390,6 +397,11 @@
           "reference_id": {
             "type": "string",
             "description": "The reference ID displayed on receipts and other locations as the ID for this order."
+          },
+          "funding_source": {
+            "type": "string",
+            "nullable": true,
+            "description": "Sender funding source: card, balance, workspace_balance, corporate_account, or commerce_stored_value. Null when unknown."
           }
         },
         "required": [

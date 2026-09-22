@@ -3,9 +3,9 @@ title: "Changelog"
 description: "Updates to the Goody API and MCP server"
 ---
 
-### September 2, 2026
+### Upcoming
 
-- **Payment method visibility.** Order and order-batch detail responses, plus the MCP order history tools, now return `payment_method_id`. Card payments return the Goody payment method UUID; account-funded payments return an identifier such as `BALANCE`, `WORKSPACE_BALANCE`, `COMMERCE_STORED_VALUE`, or `CORPORATE_ACCOUNT`.
+- **Payment method visibility.** Order and order-batch responses will include `funding_source` and a nullable `payment_method_id`. Cards use a Goody UUID; account-funded payments use a null ID and a separate funding source. Order reads reflect the collected card after a successful legacy repayment.
 
 ### June 25, 2026
 

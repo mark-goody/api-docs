@@ -42,8 +42,8 @@ Lists individual orders — one per recipient. Without `order_batch_id`, it list
     <ResponseField name="amounts" type="object | null">The order's monetary breakdown.</ResponseField>
     <ResponseField name="shipments" type="object[]">Shipment records for the order, if any.</ResponseField>
     <ResponseField name="sender" type="object | null">Who sent the order.</ResponseField>
-    <ResponseField name="funding_source" type="string | null">`card`, `balance`, `workspace_balance`, `corporate_account`, or `commerce_stored_value`; null when unknown. For an order, a successful legacy repayment uses the card that collected the payment.</ResponseField>
-    <ResponseField name="payment_method_id" type="string (uuid) | null">Goody card payment method UUID, including inactive cards. Null for account funding or when the card is unknown.</ResponseField>
+    <ResponseField name="funding_source" type="string | null">`card`, `balance`, `workspace_balance`, `corporate_account`, or `commerce_stored_value`; null when unknown or for commerce app orders. For an order, a successful legacy repayment uses the card that collected the payment.</ResponseField>
+    <ResponseField name="payment_method_id" type="string (uuid) | null">Goody card payment method UUID, including inactive cards. Null for account funding, commerce app orders, or when the card is unknown.</ResponseField>
     <ResponseField name="workspace_id" type="string | null">The workspace the order belongs to.</ResponseField>
     <ResponseField name="order_batch_id" type="string | null">The batch this order belongs to.</ResponseField>
     <ResponseField name="reference_id" type="string | null">Caller-supplied reference, if one was set.</ResponseField>

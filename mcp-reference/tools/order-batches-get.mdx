@@ -43,8 +43,8 @@ Fetches full detail for a single gift batch — read back the cart, see who rece
 <ResponseField name="expires_at" type="string | null">When the gift expires. `null` means it does not expire on a fixed date.</ResponseField>
 <ResponseField name="send_method" type="string | null">How recipients are notified.</ResponseField>
 <ResponseField name="card_id" type="string | null">The gift card chosen for the batch.</ResponseField>
-<ResponseField name="funding_source" type="string | null">`card`, `balance`, `workspace_balance`, `corporate_account`, or `commerce_stored_value`; null when unknown. For a batch, this describes the selected funding source, not a combined payment result for its orders.</ResponseField>
-<ResponseField name="payment_method_id" type="string (uuid) | null">Goody card payment method UUID, including inactive cards. Null for account funding or when the card is unknown.</ResponseField>
+<ResponseField name="funding_source" type="string | null">`card`, `balance`, `workspace_balance`, `corporate_account`, or `commerce_stored_value`; null when unknown or for commerce app orders. For a batch, this describes the selected funding source, not a combined payment result for its orders.</ResponseField>
+<ResponseField name="payment_method_id" type="string (uuid) | null">Goody card payment method UUID, including inactive cards. Null for account funding, commerce app orders, or when the card is unknown.</ResponseField>
 <ResponseField name="workspace_id" type="string | null">The workspace the batch belongs to.</ResponseField>
 <ResponseField name="workspace_name" type="string | null">The workspace's name.</ResponseField>
 <ResponseField name="reference_id" type="string | null">Caller-supplied reference, if one was set.</ResponseField>

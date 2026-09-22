@@ -5,7 +5,7 @@ description: "Updates to the Goody API and MCP server"
 
 ### Upcoming
 
-- **Payment method visibility.** Order and order-batch responses will include `funding_source` and a nullable `payment_method_id`. Cards use a Goody UUID; account-funded payments use a null ID and a separate funding source. Order reads reflect the collected card after a successful legacy repayment.
+- **Payment method visibility.** Order and order-batch responses will include `funding_source` and a nullable `payment_method_id`. Cards use a Goody UUID; account-funded payments use a null ID and a separate funding source. Order reads reflect the collected card after a successful legacy repayment. Both fields are null for commerce app orders.
 
 ### June 25, 2026
 

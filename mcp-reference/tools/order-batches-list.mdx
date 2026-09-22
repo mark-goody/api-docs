@@ -32,8 +32,8 @@ Lists previously-sent gift batches in a workspace, most recent first. This is ho
     <ResponseField name="send_status" type="string">Where the batch is in its lifecycle.</ResponseField>
     <ResponseField name="from_name" type="string | null">The "From" name recipients see.</ResponseField>
     <ResponseField name="message" type="string | null">The gift-card message.</ResponseField>
-    <ResponseField name="funding_source" type="string | null">`card`, `balance`, `workspace_balance`, `corporate_account`, or `commerce_stored_value`; null when unknown. For a batch, this describes the selected funding source, not a combined payment result for its orders.</ResponseField>
-    <ResponseField name="payment_method_id" type="string (uuid) | null">Goody card payment method UUID, including inactive cards. Null for account funding or when the card is unknown.</ResponseField>
+    <ResponseField name="funding_source" type="string | null">`card`, `balance`, `workspace_balance`, `corporate_account`, or `commerce_stored_value`; null when unknown or for commerce app orders. For a batch, this describes the selected funding source, not a combined payment result for its orders.</ResponseField>
+    <ResponseField name="payment_method_id" type="string (uuid) | null">Goody card payment method UUID, including inactive cards. Null for account funding, commerce app orders, or when the card is unknown.</ResponseField>
     <ResponseField name="orders_count" type="integer">Number of orders in the batch.</ResponseField>
     <ResponseField name="recipients_count" type="integer">Number of recipients.</ResponseField>
     <ResponseField name="scheduled_send_on" type="string | null">When the batch is scheduled to send, if scheduled.</ResponseField>

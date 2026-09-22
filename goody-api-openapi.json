@@ -112,7 +112,7 @@
             "type": "string",
             "format": "uuid",
             "nullable": true,
-            "description": "Goody card payment method UUID, including inactive cards. Null for other or unknown funding sources. Orders reflect a successfully recovered legacy card; batches describe their selected funding source, not a combined payment result."
+            "description": "Goody card payment method UUID, including inactive cards. Null for other or unknown funding sources. Orders reflect a successfully recovered legacy card; batches describe their selected funding source, not a combined payment result. Null for commerce app orders."
           },
           "sender": {
             "$ref": "#/components/schemas/Sender",
@@ -140,7 +140,7 @@
           "funding_source": {
             "type": "string",
             "nullable": true,
-            "description": "Sender funding source: card, balance, workspace_balance, corporate_account, or commerce_stored_value. Null when unknown."
+            "description": "Sender funding source: card, balance, workspace_balance, corporate_account, or commerce_stored_value. Null when unknown. Null for commerce app orders."
           }
         },
         "required": [
@@ -227,7 +227,7 @@
             "type": "string",
             "format": "uuid",
             "nullable": true,
-            "description": "Goody card payment method UUID, including inactive cards. Null for other or unknown funding sources. Orders reflect a successfully recovered legacy card; batches describe their selected funding source, not a combined payment result."
+            "description": "Goody card payment method UUID, including inactive cards. Null for other or unknown funding sources. Orders reflect a successfully recovered legacy card; batches describe their selected funding source, not a combined payment result. Null for commerce app orders."
           },
           "message": {
             "type": "string",
@@ -401,7 +401,7 @@
           "funding_source": {
             "type": "string",
             "nullable": true,
-            "description": "Sender funding source: card, balance, workspace_balance, corporate_account, or commerce_stored_value. Null when unknown."
+            "description": "Sender funding source: card, balance, workspace_balance, corporate_account, or commerce_stored_value. Null when unknown. Null for commerce app orders."
           }
         },
         "required": [

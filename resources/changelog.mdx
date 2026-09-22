@@ -3,6 +3,10 @@ title: "Changelog"
 description: "Updates to the Goody API and MCP server"
 ---
 
+### Upcoming
+
+- **Payment method visibility.** Order and order-batch responses will include `funding_source` and a nullable `payment_method_id`. Cards use a Goody UUID; account-funded payments use a null ID and a separate funding source. Order reads reflect the collected card after a successful legacy repayment. Both fields are null for commerce app orders.
+
 ### June 25, 2026
 
 - **Goody MCP server (beta).** Connect Goody to Claude and other MCP clients to send and manage gifts in conversation — discover gifts, draft a card message, preview and price a gift, and send with your confirmation, plus contacts and recurring autogifts. See the [MCP overview](/mcp/overview).

@@ -206,7 +206,6 @@
                   "api-reference/schemas/cartiteminput",
                   "api-reference/schemas/orderbatchsendmethod",
                   "api-reference/schemas/recipientinput",
-                  "api-reference/schemas/commerce",
                   "api-reference/schemas/recipientinput"
                 ]
               }

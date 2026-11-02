@@ -2,3 +2,19 @@
 openapi: "GET /v1/order_batches"
 title: "List all order batches"
 ---
+
+## Recover an order batch after an ambiguous response
+
+If a create request times out, look up the batch using the same credentials and the nonblank `customer_reference_id` you supplied when creating it:
+
+```bash
+curl --get 'https://api.ongoody.com/v1/order_batches' \
+  --header "Authorization: Bearer $GOODY_API_KEY" \
+  --data-urlencode 'customer_reference_id=your-reference-id'
+```
+
+The filter matches the reference exactly and returns the normal paginated list response. Matching batches appear in `data`, including their `id` and `send_status`. Only batches accessible to those credentials are returned.
+
+If `data` is empty immediately after a timeout, the original request may still be processing. Check again before deciding to retry creation.
+
+Omitting `customer_reference_id` leaves the normal list behavior unchanged. An empty or whitespace-only string is still an exact filter; use the original nonblank reference for recovery. Arrays and objects are rejected with HTTP 400.

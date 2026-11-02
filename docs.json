@@ -15,7 +15,7 @@
       "keywords": "Goody API, Goody MCP server, gifting API, gift API, MCP server, send gifts with AI, Claude gifting connector, business gifting, autogift"
     }
   },
-  "favicon": "/favicon.png",
+  "favicon": "/brand-2026/favicon.png",
   "navigation": {
     "anchors": [
       {
@@ -298,8 +298,8 @@
     ]
   },
   "logo": {
-    "light": "/logo.svg",
-    "dark": "/logo.svg"
+    "light": "/brand-2026/goody-lockup-purple.svg",
+    "dark": "/brand-2026/goody-lockup-white.svg"
   },
   "api": {
     "openapi": "goody-api-openapi.json",

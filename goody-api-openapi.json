@@ -3505,6 +3505,15 @@
             },
             "description": "Items per page for pagination",
             "required": false
+          },
+          {
+            "name": "customer_reference_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact customer reference ID to filter by",
+            "required": false
           }
         ],
         "responses": {
@@ -3856,6 +3865,23 @@
                       "$ref": "#/components/schemas/ListMeta"
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request when customer_reference_id is not a string",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Invalid customer reference ID": {
+                    "value": {
+                      "error": "customer_reference_id must be a string"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }

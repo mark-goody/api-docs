@@ -7,6 +7,10 @@ description: "Updates to the Goody API and MCP server"
 
 - **Payment method visibility.** Order and order-batch responses will include `funding_source` and a nullable `payment_method_id`. Cards use a Goody UUID; account-funded payments use a null ID and a separate funding source. Order reads reflect the collected card after a successful legacy repayment. Both fields are null for commerce app orders.
 
+### November 16, 2026
+
+- Add `categories` to products returned by [List all active products (/v1/products)](/api-reference/products/list-all-active-products) and [Retrieve a product (/v1/products/:id)](/api-reference/products/retrieve-a-product). Each entry is a storefront category the product is in, with the subcategories it is in nested under it. `sets` lists which store navigation the category appears in: `categories`, `occasions`, both, or neither. See the [Product schema](/api-reference/schemas/product).
+
 ### June 25, 2026
 
 - **Goody MCP server (beta).** Connect Goody to Claude and other MCP clients to send and manage gifts in conversation — discover gifts, draft a card message, preview and price a gift, and send with your confirmation, plus contacts and recurring autogifts. See the [MCP overview](/mcp/overview).

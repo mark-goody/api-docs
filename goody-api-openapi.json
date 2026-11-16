@@ -741,6 +741,13 @@
             "nullable": true,
             "description": "The maximum price of the product, in cents. Only used if price_is_variable is true."
           },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductCategory"
+            },
+            "description": "The storefront categories this product is in, with the subcategories it is in nested under each. Excludes the catch-all \"All\" category. Only included on the products endpoints."
+          },
           "restricted_states": {
             "type": "array",
             "items": {
@@ -790,6 +797,58 @@
           "price",
           "price_is_variable",
           "restricted_states"
+        ]
+      },
+      "ProductCategory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "categories",
+                "occasions"
+              ]
+            },
+            "description": "The store navigation sets this category appears in: \"categories\", \"occasions\", both, or neither (an empty array)."
+          },
+          "subcategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductSubcategory"
+            },
+            "description": "The subcategories of this category that the product is in."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "sets",
+          "subcategories"
+        ]
+      },
+      "ProductSubcategory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
         ]
       },
       "Brand": {

@@ -49,6 +49,8 @@ You can access the list of shipments under the `shipments` field. Note that for 
         "status": "shipped",
         "brand_name": "Cookie Company",
         "tracking_carrier": "UPS",
+        "tracking_number": null,
+        "tracking_url": null,
         "shipped_at": "2023-01-23T00:00:00Z",
         "delivered_at": null,
         "delivery_eta": "2023-01-26T00:00:00Z"
@@ -76,6 +78,88 @@ You can access the list of shipments under the `shipments` field. Note that for 
   }
 }
 ```
+
+## Example: tracking numbers enabled
+
+`tracking_number` and `tracking_url` are only populated for approved distribution partners. When they are enabled on your app, both fields are filled in on every shipment in the payload. Nothing else about the payload changes, and no fields are added or removed — the two fields are always present, and enabling them changes their value from `null` to the shipment's tracking details.
+
+```json
+{
+  "event_type": "order.shipped",
+  "id": "ad097c47-bf12-45c9-8feb-0536a0012c09",
+  "data": {
+    "id": "10c588dd-d566-45bf-86e9-c23bd1f1587b",
+    "status": "shipped",
+    "individual_gift_link": "https://gifts.ongoody.com/gift/vWtUe8lQRJuoyYzKlYeHMkbV",
+    "recipient_first_name": "Alena",
+    "recipient_last_name": "Kenter",
+    "recipient_email": "alena@ongoody.com",
+    "card_id": "ae4cb4ce-75fc-4782-a9ab-2f30d9b7b41d",
+    "message": "Thank you!",
+    "thank_you_note": null,
+    "view_count_recipient": 0,
+    "is_swapped": false,
+    "order_batch_id": "4133078a-c35f-441e-8e92-57645342b299",
+    "expires_at": null,
+    "cart": {
+      "id": "39b04e91-6a40-468d-8ed4-f59e9059afae",
+      "items": [
+        {
+          "id": "d59dead0-a44c-44df-885f-030612038a48",
+          "quantity": 1,
+          "product": {
+            "id": "c399bafb-3fbc-40c5-bef3-9158b7a19abc",
+            "name": "Cookies",
+            "brand": {
+              "id": "db631527-c59c-409c-823f-42a24c972283",
+              "name": "Cookie Company"
+            }
+          }
+        }
+      ]
+    },
+    "shipments": [
+      {
+        "id": "9a1a2003-bb03-4409-b7fd-243b2e600e46",
+        "status": "shipped",
+        "brand_name": "Cookie Company",
+        "tracking_carrier": "UPS",
+        "tracking_number": "1Z999AA10123456784",
+        "tracking_url": "https://www.ups.com/track?loc=en_US&tracknum=1Z999AA10123456784",
+        "shipped_at": "2023-01-23T00:00:00Z",
+        "delivered_at": null,
+        "delivery_eta": "2023-01-26T00:00:00Z"
+      }
+    ],
+    "amounts": {
+      "amount_product": 1000,
+      "amount_shipping": 1000,
+      "amount_processing_fee": 100,
+      "amount_pre_tax_total": 2100,
+      "amount_tax": 150,
+      "amount_total": 2250,
+      "amount_global_relay_cost": null
+    },
+    "sender": {
+      "first_name": "Test",
+      "last_name": "User",
+      "email": "15556038009@test.ongoody.com"
+    },
+    "workspace_id": "8779bb01-ca47-4e9e-a845-d05f509c4be3",
+    "workspace_name": "Test Team",
+    "original_cart": null,
+    "original_amounts": null,
+    "reference_id": "PCI7GLZ3KFIEN8MWWSD5LDCF"
+  }
+}
+```
+
+<Note>
+  `tracking_url` is the carrier's public tracking page for the shipment. It can
+  still be `null` when the carrier does not provide a tracking page, even with
+  tracking numbers enabled, so treat it as optional rather than assuming a
+  `tracking_number` always comes with a URL.
+</Note>
 
 ## Schema
 <ParamField query="event_type" type="string" required>
@@ -155,6 +239,9 @@ You can access the list of shipments under the `shipments` field. Note that for 
       </ResponseField>
       <ResponseField name="tracking_number" type="string">
       Only for approved distribution partners.
+      </ResponseField>
+      <ResponseField name="tracking_url" type="string">
+      The carrier's public tracking page for this shipment. Only for approved distribution partners.
       </ResponseField>
       <ResponseField name="shipped_at" type="string<date-time>">
       ISO 8601

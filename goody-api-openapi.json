@@ -5573,6 +5573,33 @@
                           "images": [],
                           "price": 1000,
                           "price_is_variable": false,
+                          "categories": [
+                            {
+                              "id": "3f8a2c1e-7b4d-4e9a-9c2f-1d6e8b0a5c47",
+                              "name": "Food & Drink",
+                              "sets": [
+                                "categories"
+                              ],
+                              "subcategories": [
+                                {
+                                  "id": "b2e4d7a9-5c1f-4a8e-8d3b-6f0c2e9a1b74",
+                                  "name": "Sweets"
+                                },
+                                {
+                                  "id": "c7a1e5f3-2d9b-4f6c-a0e8-4b3d7f1c9e26",
+                                  "name": "Baked Goods"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "e9d3b6a2-4f7c-4b1e-9a5d-8c2f0e6b3a91",
+                              "name": "Birthday",
+                              "sets": [
+                                "occasions"
+                              ],
+                              "subcategories": []
+                            }
+                          ],
                           "restricted_states": [],
                           "attributes": [
                             {
@@ -5625,6 +5652,30 @@
                           "images": [],
                           "price": 1000,
                           "price_is_variable": false,
+                          "categories": [
+                            {
+                              "id": "3f8a2c1e-7b4d-4e9a-9c2f-1d6e8b0a5c47",
+                              "name": "Food & Drink",
+                              "sets": [
+                                "categories"
+                              ],
+                              "subcategories": [
+                                {
+                                  "id": "c7a1e5f3-2d9b-4f6c-a0e8-4b3d7f1c9e26",
+                                  "name": "Baked Goods"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "5a0f8e3d-1c6b-4d2a-b7e9-3e4a9c8f2d15",
+                              "name": "Thank You",
+                              "sets": [
+                                "categories",
+                                "occasions"
+                              ],
+                              "subcategories": []
+                            }
+                          ],
                           "restricted_states": [],
                           "attributes": [],
                           "updated_at": "2026-06-03T12:25:19Z",
@@ -5738,6 +5789,42 @@
                           "images": [],
                           "price": 1000,
                           "price_is_variable": false,
+                          "categories": [
+                            {
+                              "id": "3f8a2c1e-7b4d-4e9a-9c2f-1d6e8b0a5c47",
+                              "name": "Food & Drink",
+                              "sets": [
+                                "categories"
+                              ],
+                              "subcategories": [
+                                {
+                                  "id": "b2e4d7a9-5c1f-4a8e-8d3b-6f0c2e9a1b74",
+                                  "name": "Sweets"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "8c6e1a4f-9b2d-4e7a-a3c5-0d9f7b2e4a68",
+                              "name": "Holiday",
+                              "sets": [
+                                "occasions"
+                              ],
+                              "subcategories": [
+                                {
+                                  "id": "1d4b8f2e-6a3c-4c9d-8e1f-7b5a0c3d9e82",
+                                  "name": "Winter Holidays"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "e9d3b6a2-4f7c-4b1e-9a5d-8c2f0e6b3a91",
+                              "name": "Birthday",
+                              "sets": [
+                                "occasions"
+                              ],
+                              "subcategories": []
+                            }
+                          ],
                           "restricted_states": [],
                           "attributes": [],
                           "updated_at": "2026-06-03T12:25:19Z",
@@ -5848,6 +5935,33 @@
                       "images": [],
                       "price": 1000,
                       "price_is_variable": false,
+                      "categories": [
+                        {
+                          "id": "3f8a2c1e-7b4d-4e9a-9c2f-1d6e8b0a5c47",
+                          "name": "Food & Drink",
+                          "sets": [
+                            "categories"
+                          ],
+                          "subcategories": [
+                            {
+                              "id": "b2e4d7a9-5c1f-4a8e-8d3b-6f0c2e9a1b74",
+                              "name": "Sweets"
+                            },
+                            {
+                              "id": "c7a1e5f3-2d9b-4f6c-a0e8-4b3d7f1c9e26",
+                              "name": "Baked Goods"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "e9d3b6a2-4f7c-4b1e-9a5d-8c2f0e6b3a91",
+                          "name": "Birthday",
+                          "sets": [
+                            "occasions"
+                          ],
+                          "subcategories": []
+                        }
+                      ],
                       "restricted_states": [],
                       "attributes": [],
                       "updated_at": "2026-06-03T12:25:20Z",

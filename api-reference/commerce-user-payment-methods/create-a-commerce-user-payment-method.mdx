@@ -21,4 +21,25 @@ If your app shows Goody's purchase terms to the purchaser before they save a car
 - `notification_email` (required): the purchaser's email address, where Goody sends notices about the purchase terms.
 - `ip_address` (optional): the IPv4 or IPv6 address of the browser that accepted the terms.
 
+```json
+{
+  "cardholder_name": "John Doe",
+  "commerce_end_user_id": "test_user_pm_2331d26e",
+  "payment_method_type": "card",
+  "interim_card_key": "X9edbacqt1CBCRRKRLkuiINj",
+  "billing_address": {
+    "address_1": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "postal_code": "10001",
+    "country": "US"
+  },
+  "purchase_terms_acceptance": {
+    "accepted_at": "2026-11-23T18:04:00Z",
+    "notification_email": "purchaser@example.com",
+    "ip_address": "203.0.113.7"
+  }
+}
+```
+
 `purchase_terms_acceptance` is optional unless Goody has set up your app to require it. When your app requires it, a request without it returns `400` with `Purchase terms acceptance is required`. When you send it, Goody validates it whether or not your app requires it, and an invalid acceptance returns `400` before the card is saved.

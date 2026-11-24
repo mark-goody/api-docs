@@ -1787,6 +1787,31 @@
               "postal_code",
               "country"
             ]
+          },
+          "purchase_terms_acceptance": {
+            "type": "object",
+            "description": "The purchaser's acceptance of Goody's purchase terms, collected in your app before the card is saved. Optional, unless Goody has set up your app to require purchase terms acceptance.",
+            "properties": {
+              "accepted_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When the purchaser accepted the purchase terms, ISO 8601 format."
+              },
+              "notification_email": {
+                "type": "string",
+                "format": "email",
+                "description": "Email address of the purchaser, where Goody sends notices about the purchase terms."
+              },
+              "ip_address": {
+                "type": "string",
+                "nullable": true,
+                "description": "IPv4 or IPv6 address of the browser that accepted the purchase terms."
+              }
+            },
+            "required": [
+              "accepted_at",
+              "notification_email"
+            ]
           }
         },
         "required": [
@@ -2344,6 +2369,11 @@
                     "value": {
                       "error": "Cardholder name is required"
                     }
+                  },
+                  "Purchase terms acceptance missing": {
+                    "value": {
+                      "error": "Purchase terms acceptance is required"
+                    }
                   }
                 },
                 "schema": {
@@ -2374,6 +2404,11 @@
                       "state": "NY",
                       "postal_code": "10001",
                       "country": "US"
+                    },
+                    "purchase_terms_acceptance": {
+                      "accepted_at": "2026-11-23T18:04:00Z",
+                      "notification_email": "purchaser@example.com",
+                      "ip_address": "203.0.113.7"
                     }
                   }
                 }
